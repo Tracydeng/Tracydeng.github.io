@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <title>iOS 集合的深复制与浅复制</title>
+  <meta name="description" content="iOS 集合的深复制与浅复制">
+  <meta name="author" content="Wei Wang">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="iOS 集合的深复制与浅复制">
+  <meta name="twitter:description" content="iOS 集合的深复制与浅复制">
+  
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="iOS 集合的深复制与浅复制">
+  <meta property="og:description" content="iOS 集合的深复制与浅复制">
+  
+  <link rel="icon" type="image/png" href="/assets/images/favicon.png" />
+  <link href="/assets/images/favicon.png" rel="shortcut icon" type="image/png">
+  
+  <link rel="stylesheet" href="/css/main.css">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
+  <link rel="canonical" href="http://localhost:4000/2016/05/oc-copy-mutablecopy/">
+  <link rel="alternate" type="application/rss+xml" title="Coder iSteven" href="http://localhost:4000/feed.xml">
+  
+  <meta name="google-site-verification" content="1-1ZlHoRvM0T2FqPbW2S-qLgYXN6rsn52kErlMPd_gw" />
+  
+</head>
+
+
+  <body>
+
+    <span class="mobile btn-mobile-menu">
+        <i class="fa fa-list btn-mobile-menu__icon"></i>
+        <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
+    </span>
+    
+    <header class="panel-cover panel-cover--collapsed" style="background-image: url('/assets/images/background-cover.jpg')">
+  <div class="panel-main">
+
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        <a href="/#blog" title="前往 Coder iSteven 的主页" class="blog-button"><img src="/assets/images/avatar.jpg" width="80" alt="Coder iSteven logo" class="panel-cover__logo logo" /></a>
+        <h1 class="panel-cover__title panel-title"><a href="/#blog" title="link to homepage for Coder iSteven" class="blog-button">Coder iSteven</a></h1>
+        
+        <span class="panel-cover__subtitle panel-subtitle">上善若水</span>
+        
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">记录自己的点滴</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+        
+        
+        
+        <div class="navigation-wrapper">
+          <div>
+            <nav class="cover-navigation cover-navigation--primary">
+              <ul class="navigation">
+                <li class="navigation__item"><a href="/#blog" title="Visit blog" class="blog-button">Blog</a></li>
+                
+              </ul>
+            </nav>
+          </div>
+          
+          <div><nav class="cover-navigation navigation--social">
+  <ul class="navigation">
+
+  
+  <!-- Weibo -->
+  <li class="navigation__item">
+    <a href="http://weibo.com/736029053" title="@736029053 的微博" target="_blank">
+      <i class='social fa fa-weibo'></i>
+      <span class="label">Weibo</span>
+    </a>
+  </li>
+  
+
+  
+  <!-- Github -->
+  <li class="navigation__item">
+    <a href="https://github.com/tracydeng" title="@tracydeng 的 Github" target="_blank">
+      <i class='social fa fa-github'></i>
+      <span class="label">Github</span>
+    </a>
+  </li>
+  
+  
+  
+
+  
+
+  <!-- RSS -->
+  <li class="navigation__item">
+    <a href="/feed.xml" rel="author" title="RSS" target="_blank">
+      <i class='social fa fa-rss'></i>
+      <span class="label">RSS</span>
+    </a>
+  </li>
+
+  
+  <!-- Email -->
+  <li class="navigation__item">
+    <a href="mailto:coderisteven@gmail.com" title="Contact me">
+      <i class='social fa fa-envelope'></i>
+      <span class="label">Email</span>
+    </a>
+  </li>
+  
+
+  </ul>
+</nav>
+</div>
+        </div>
+      </div>
+    </div>
+    
+    
+    <div class="panel-cover--overlay cover-green"></div>
+    
+  </div>
+</header>
+
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <article class="post-container post-container--single" itemscope itemtype="http://schema.org/BlogPosting">
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2016-05-20 00:00:00 +0800" itemprop="datePublished" class="post-meta__date date">2016-05-20</time> &#8226; <span class="post-meta__tags tags"></span>
+    </div>
+    <h1 class="post-title">iOS 集合的深复制与浅复制</h1>
+  </header>
+
+  <section class="post">
+    <h1 id="ios-集合的深复制与浅复制">iOS 集合的深复制与浅复制</h1>
+
+<h3 id="1-概念">1. 概念</h3>
+
+<p>对象拷贝有两种方式：浅复制和深复制。顾名思义，浅复制，并不拷贝对象本身，仅仅是拷贝指向对象的指针；深复制是直接拷贝整个对象内存到另一块内存中。</p>
+
+<p>再简单些说：浅复制就是指针拷贝；深复制就是内容拷贝。</p>
+
+<h3 id="2-系统对象的copy与mutablecopy方法">2. 系统对象的copy与mutableCopy方法</h3>
+
+<p>不管是集合类对象，还是非集合类对象，接收到copy和mutableCopy消息时，都遵循以下准则：</p>
+
+<ul>
+  <li>copy返回imutable对象；所以，如果对copy返回值使用mutable对象接口就会crash；</li>
+  <li>mutableCopy返回mutable对象；</li>
+</ul>
+
+<ol>
+  <li>非集合类对象的copy与mutableCopy</li>
+</ol>
+
+<p>系统非集合类对象指的是 NSString, NSNumber … 之类的对象。下面先看个非集合类immutable对象拷贝的例子</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>NSString *string = @"origin";
+NSString *stringCopy = [string copy];
+NSMutableString *stringMCopy = [string mutableCopy];
+</code></pre>
+</div>
+
+<p>通过查看内存，可以看到 stringCopy 和 string 的地址是一样，进行了指针拷贝；而 stringMCopy 的地址和 string 不一样，进行了内容拷贝；</p>
+
+<p>再看mutable对象拷贝例子</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>NSMutableString *string = [NSMutableString stringWithString: @"origin"];
+//copy
+NSString *stringCopy = [string copy];
+NSMutableString *mStringCopy = [string copy];
+NSMutableString *stringMCopy = [string mutableCopy];
+//change value
+[mStringCopy appendString:@"mm"]; //crash
+[string appendString:@" origion!"];
+[stringMCopy appendString:@"!!"];
+</code></pre>
+</div>
+
+<p>运行以上代码，会在第7行crash，原因就是 copy 返回的对象是 immutable 对象。注释第7行后再运行，查看内存，发现 string、stringCopy、mStringCopy、stringMCopy 四个对象的内存地址都不一样，说明此时都是做内容拷贝。</p>
+
+<p>综上两个例子，我们可以得出结论：</p>
+
+<blockquote>
+  <p>在非集合类对象中：对immutable对象进行copy操作，是指针复制，mutableCopy操作时内容复制；对mutable对象进行copy和mutableCopy都是内容复制。用代码简单表示如下：</p>
+</blockquote>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>[immutableObject copy] // 浅复制
+[immutableObject mutableCopy] //深复制
+[mutableObject copy] //深复制
+[mutableObject mutableCopy] //深复制
+</code></pre>
+</div>
+
+<ol>
+  <li>
+    <p>集合类对象的copy与mutableCopy</p>
+
+    <p>与非集合对象一样，可以试一下</p>
+  </li>
+</ol>
+
+
+  </section>
+</article>
+
+<section class="read-more">
+   
+   
+   <div class="read-more-item">
+       <span class="read-more-item-dim">最近的文章</span>
+       <h2 class="post-list__post-title post-title"><a href="/2016/07/hugo/" title="link to hugo+github pages搭建静态博客">hugo+github pages搭建静态博客</a></h2>
+       <p class="excerpt">hugo + github pages搭建静态博客  由于最近换工作，到新公司领到了新电脑，然后就得给新Mac搭建各种环境，再次安装hugo的时候就想纪录一下这个过程，有什么不对的地方请指出来。一. 安装hugohugo有两种安装方式，homebrew包管理工具安装以及github源码下载安装      homebrew安装          homebrew简称brew, 是Mac OSX上的软件包管理工具，能在Mac中方便的安装软件或者卸载软件        通过下面命令就可以安装br...&hellip;</p>
+       <div class="post-list__meta"><time datetime="2016-07-27 00:00:00 +0800" class="post-list__meta--date date">2016-07-27</time> &#8226; <span class="post-list__meta--tags tags"></span><a class="btn-border-small" href=/2016/07/hugo/>继续阅读</a></div>
+   </div>
+   
+   
+   
+   
+   <div class="read-more-item">
+       <span class="read-more-item-dim">更早的文章</span>
+       <h2 class="post-list__post-title post-title"><a href="/2016/04/load-initialize/" title="link to +load和+initialize">+load和+initialize</a></h2>
+       <p class="excerpt">+load+load 方法是当类或分类被添加到 Objective-C runtime 时被调用的，实现这个方法可以让我们在类加载的时候执行一些类相关的行为。子类的 +load 方法会在它的所有父类的 +load 方法之后执行，而分类的 +load 方法会在它的主类的 +load 方法之后执行。但是不同的类之间的 +load 方法的调用顺序是不确定的。+initialize+initialize 方法是在类或它的子类收到第一条消息之前被调用的，这里所指的消息包括实例方法和类方法的调用。也就...&hellip;</p>
+       <div class="post-list__meta"><time datetime="2016-04-14 00:00:00 +0800" class="post-list__meta--date date">2016-04-14</time> &#8226; <span class="post-list__meta--tags tags"></span><a class="btn-border-small" href=/2016/04/load-initialize/>继续阅读</a></div>
+   </div>
+   
+</section>
+
+<section class="post-comments">
+  
+    <div id="disqus_thread"></div>
+    <script>
+    
+    var disqus_config = function () {
+        this.page.url = "http://localhost:4000/2016/05/oc-copy-mutablecopy/";
+        this.page.identifier = "/2016/05/oc-copy-mutablecopy/";
+    };
+
+    var disqus_shortname = 'vno-jekyll';
+    
+    (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
+    <noscript>要查看<a href="http://disqus.com/?ref_noscript"> Disqus </a>评论，请启用 JavaScript</noscript>
+    
+  
+  
+  
+  
+</section>
+
+
+            <section class="footer">
+    <footer>
+    	<span class="footer__copyright">本站点采用<a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享 署名-非商业性使用-相同方式共享 4.0 国际 许可协议</a></span>
+        <span class="footer__copyright">由 <a href="https://jekyllrb.com">Jekyll</a> 于 2017-03-18 生成，感谢 <a href="https://pages.github.com">Github Pages</a> 为本站提供稳定的 VPS 服务</span>
+        <span class="footer__copyright">本站由 <a href="http://gcgbz.com.cn">@iSteven</a> 创建，采用 <a href="https://github.com/onevcat/vno-jekyll">Vno - Jekyll</a> 作为主题，您可以在 GitHub 找到<a href="https://github.com/onevcat/OneV-s-Den">本站源码</a> - &copy; 2017</span>
+    </footer>
+</section>
+
+        </div>
+    </div>
+    
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+
+<script type="text/javascript" src="/js/main.js"></script>
+
+
+
+    
+  </body>
+
+</html>

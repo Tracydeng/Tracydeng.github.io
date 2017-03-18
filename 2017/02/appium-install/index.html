@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <title>我的Appium踩坑之旅</title>
+  <meta name="description" content="背景      Appium目前最新的版本是 1.6.3 ，appium客户端(appium server的GUI图形化操作界面)最新版本是 1.5.3， 但是appium GUI目前支持的还只是iOS10以下的UIAutomation框架基础上测试，而iOS10以后苹果使用的却是基于XCUITest    我们...">
+  <meta name="author" content="Wei Wang">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="我的Appium踩坑之旅">
+  <meta name="twitter:description" content="背景      Appium目前最新的版本是 1.6.3 ，appium客户端(appium server的GUI图形化操作界面)最新版本是 1.5.3， 但是appium GUI目前支持的还只是iOS10以下的UIAutomation框架基础上测试，而iOS10以后苹果使用的却是基于XCUITest    我们...">
+  
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="我的Appium踩坑之旅">
+  <meta property="og:description" content="背景      Appium目前最新的版本是 1.6.3 ，appium客户端(appium server的GUI图形化操作界面)最新版本是 1.5.3， 但是appium GUI目前支持的还只是iOS10以下的UIAutomation框架基础上测试，而iOS10以后苹果使用的却是基于XCUITest    我们...">
+  
+  <link rel="icon" type="image/png" href="/assets/images/favicon.png" />
+  <link href="/assets/images/favicon.png" rel="shortcut icon" type="image/png">
+  
+  <link rel="stylesheet" href="/css/main.css">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
+  <link rel="canonical" href="http://localhost:4000/2017/02/appium-install/">
+  <link rel="alternate" type="application/rss+xml" title="Coder iSteven" href="http://localhost:4000/feed.xml">
+  
+  <meta name="google-site-verification" content="1-1ZlHoRvM0T2FqPbW2S-qLgYXN6rsn52kErlMPd_gw" />
+  
+</head>
+
+
+  <body>
+
+    <span class="mobile btn-mobile-menu">
+        <i class="fa fa-list btn-mobile-menu__icon"></i>
+        <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
+    </span>
+    
+    <header class="panel-cover panel-cover--collapsed" style="background-image: url('/assets/images/background-cover.jpg')">
+  <div class="panel-main">
+
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        <a href="/#blog" title="前往 Coder iSteven 的主页" class="blog-button"><img src="/assets/images/avatar.jpg" width="80" alt="Coder iSteven logo" class="panel-cover__logo logo" /></a>
+        <h1 class="panel-cover__title panel-title"><a href="/#blog" title="link to homepage for Coder iSteven" class="blog-button">Coder iSteven</a></h1>
+        
+        <span class="panel-cover__subtitle panel-subtitle">上善若水</span>
+        
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">记录自己的点滴</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+        
+        
+        
+        <div class="navigation-wrapper">
+          <div>
+            <nav class="cover-navigation cover-navigation--primary">
+              <ul class="navigation">
+                <li class="navigation__item"><a href="/#blog" title="Visit blog" class="blog-button">Blog</a></li>
+                
+              </ul>
+            </nav>
+          </div>
+          
+          <div><nav class="cover-navigation navigation--social">
+  <ul class="navigation">
+
+  
+  <!-- Weibo -->
+  <li class="navigation__item">
+    <a href="http://weibo.com/736029053" title="@736029053 的微博" target="_blank">
+      <i class='social fa fa-weibo'></i>
+      <span class="label">Weibo</span>
+    </a>
+  </li>
+  
+
+  
+  <!-- Github -->
+  <li class="navigation__item">
+    <a href="https://github.com/tracydeng" title="@tracydeng 的 Github" target="_blank">
+      <i class='social fa fa-github'></i>
+      <span class="label">Github</span>
+    </a>
+  </li>
+  
+  
+  
+
+  
+
+  <!-- RSS -->
+  <li class="navigation__item">
+    <a href="/feed.xml" rel="author" title="RSS" target="_blank">
+      <i class='social fa fa-rss'></i>
+      <span class="label">RSS</span>
+    </a>
+  </li>
+
+  
+  <!-- Email -->
+  <li class="navigation__item">
+    <a href="mailto:coderisteven@gmail.com" title="Contact me">
+      <i class='social fa fa-envelope'></i>
+      <span class="label">Email</span>
+    </a>
+  </li>
+  
+
+  </ul>
+</nav>
+</div>
+        </div>
+      </div>
+    </div>
+    
+    
+    <div class="panel-cover--overlay cover-green"></div>
+    
+  </div>
+</header>
+
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <article class="post-container post-container--single" itemscope itemtype="http://schema.org/BlogPosting">
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2017-02-25 00:00:00 +0800" itemprop="datePublished" class="post-meta__date date">2017-02-25</time> &#8226; <span class="post-meta__tags tags"></span>
+    </div>
+    <h1 class="post-title">我的Appium踩坑之旅</h1>
+  </header>
+
+  <section class="post">
+    <h3 id="背景">背景</h3>
+
+<ol>
+  <li>
+    <p>Appium目前最新的版本是 1.6.3 ，appium客户端(appium server的GUI图形化操作界面)最新版本是 1.5.3， 但是appium GUI目前支持的还只是<strong>iOS10</strong>以下的<strong>UIAutomation</strong>框架基础上测试，而<strong>iOS10</strong>以后苹果使用的却是基于<strong>XCUITest</strong></p>
+  </li>
+  <li>我们项目中想要做到开发代码无侵染的方式来达到自动化测试目的（这就需要通过Xpath的方式去查找页面元素）</li>
+  <li>项目是React Native开发的跨平台应用</li>
+</ol>
+
+<p>综合这三个背景，并且iOS + React Native结合的相关资料又比较少，就注定我要在自动化测试的道路上踩坑，写这篇这个也是想给后面玩的同学们一个肯定回答：<strong>appium + iOS10.2 + Xcode8.2.1 +React Native</strong>即使不在代码加accessibilityLabel或TestID，就用Xpath照样玩得转</p>
+
+<h3 id="开发环境">开发环境</h3>
+
+<ul>
+  <li>系统：macOS Sierra （10.12.3）</li>
+  <li>开发工具：Xcode 8.2.1（iOS10.2）+ Xcode7.3.1（iOS9.3）</li>
+</ul>
+
+<h3 id="前期准备">前期准备</h3>
+
+<p>需要安装的辅助工具</p>
+
+<ul>
+  <li>homebrew</li>
+  <li>npm／cnpm</li>
+  <li>node</li>
+</ul>
+
+<h3 id="环境搭建">环境搭建</h3>
+
+<p>经过一个星期的折腾，最终搭建满足以上两套框架测试的环境：</p>
+
+<ul>
+  <li>
+    <p><strong>iOS10</strong> 以下支持UIAutomation</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code>appium GUI1.5.3 + Xcode7.3.1(iOS9.3) + appium-python-client
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p><strong>iOS10</strong> 以上支持XCUITest</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code>appium1.6.3 + app-inspector + Xcode8.2.1(iOS10.2) + appium-python-client
+</code></pre>
+    </div>
+  </li>
+</ul>
+
+<h4 id="1-使用npm或cnpm安装appiumappium-doctor">1. 使用npm或cnpm安装appium，appium-doctor</h4>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>$ install -g appium
+$ install -g appium-doctor
+</code></pre>
+</div>
+
+<p>appium的安装有2个主要的过程</p>
+
+<ul>
+  <li>安装依赖包</li>
+  <li>下载chromedriver</li>
+</ul>
+
+<p>执行安装命令时出现：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>npm WARN engine appium@1.6.3: 
+wanted: {"node":"&gt;=4","npm":"&gt;=3"} 
+(current: {"node":"4.4.7","npm":"2.15.8"})
+</code></pre>
+</div>
+
+<p>警告，并且安装失败，此时只需执行 npm install -g npm 命令更新最新的npm，再次执行安装命令，就成功安装。</p>
+
+<h4 id="2-下载appium-gui">2. 下载appium GUI</h4>
+
+<p>appium和appium GUI只要安装其中一项就可以启动服务，但是如果要用到其中的inpector去检查元素的xpath，所以还是安装了</p>
+
+<p><a href="https://bitbucket.org/appium/appium.app/downloads/">下载地址</a></p>
+
+<p>安装最新的版本1.5.3就行，但是即使最新的，也只能支持iOS10以下系统的元素检查。</p>
+
+<h4 id="3-使用appium-doctor检查appium环境">3. 使用appium-doctor检查appium环境</h4>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>$ appium-doctor  //appium-doctor --ios  只检测iOS环境
+info AppiumDoctor Appium Doctor v.1.4.1
+info AppiumDoctor ### Diagnostic starting ###
+info AppiumDoctor  ✔ The Node.js binary was found at: /usr/local/bin/node
+info AppiumDoctor  ✔ Node version is 6.3.1
+info AppiumDoctor  ✔ Xcode is installed at: /Applications/Xcode_7.3.1.app/Contents/Developer
+info AppiumDoctor  ✔ Xcode Command Line Tools are installed.
+info AppiumDoctor  ✔ DevToolsSecurity is enabled.
+info AppiumDoctor  ✔ The Authorization DB is set up properly.
+info AppiumDoctor  ✔ Carthage was found at: /usr/local/bin/carthage
+info AppiumDoctor  ✔ HOME is set to: /Users/iSteven
+info AppiumDoctor  ✔ ANDROID_HOME is set to: /Users/iSteven/Library/Android/sdk
+info AppiumDoctor  ✔ JAVA_HOME is set to: /Library/Java/JavaVirtualMachines/jdk1.8.0_101.jdk/Contents/Home
+info AppiumDoctor  ✔ adb exists at: /Users/iSteven/Library/Android/sdk/platform-tools/adb
+info AppiumDoctor  ✔ android exists at: /Users/iSteven/Library/Android/sdk/tools/android
+info AppiumDoctor  ✔ emulator exists at: /Users/iSteven/Library/Android/sdk/tools/emulator
+info AppiumDoctor  ✔ Bin directory of $JAVA_HOME is set
+info AppiumDoctor ### Diagnostic completed, no fix needed. ###
+info AppiumDoctor 
+info AppiumDoctor Everything looks good, bye!
+info AppiumDoctor 
+</code></pre>
+</div>
+<p>环境常见问题解决：</p>
+
+<ul>
+  <li>
+    <p>✖ Xcode Command Line Tools are NOT installed!</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code>$ xcode-select --install   #按照提示安装即可
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p>✖ Carthage was NOT found!</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code>$ brew install carthage    #carthage：类似cocoapods管理第三方代 码，自动将工程编译为动态库，所以仅支持iOS8以上
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p>WARN AppiumDoctor  ✖ ANDROID_HOME is NOT set!</p>
+  </li>
+  <li>
+    <p>建议安装AS，可以解决其他Android环境的其他问题 <a href="https://developer.android.com/studio/index.html?hl=zh-cn">Android Studio</a></p>
+  </li>
+  <li><a href="http://stackoverflow.com/questions/19986214/setting-android-home-enviromental-variable-on-mac-os-x">设置 ANDROID_HOME 路径</a></li>
+  <li><a href="http://stackoverflow.com/questions/6588390/where-is-java-home-on-osx-sierra-10-12-el-captain-10-11-yosemite-10-10">设置 JAVA_HOME 路径</a></li>
+  <li>
+    <p><a href="http://blog.csdn.net/done58/article/details/51138057">Mac OS X 下查看和设置JAVA_HOME</a></p>
+  </li>
+  <li>
+    <p>在.bash_profile/.zshrc文件中设置JAVA和Android环境变量</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code>#android sdk
+export ANDROID_HOME=~/Library/Android/sdk
+export PATH="$HOME/.yarn/bin:$PATH"
+
+#java_home
+export JAVA_HOME=$(/usr/libexec/java_home)
+export PATH=$JAVA_HOME/bin:$PATH
+export CLASS_PATH=$JAVA_HOME/lib
+</code></pre>
+    </div>
+    <h4 id="4-安装appium-client端">4. 安装appium client端</h4>
+  </li>
+</ul>
+
+<h5 id="python版">python版</h5>
+
+<ol>
+  <li>
+    <p>pip安装</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code> pip install Appium-Python-Client
+</code></pre>
+    </div>
+  </li>
+</ol>
+
+<p>如果安装过程出现 <strong>could not create ‘/Library/Python/2.7/site-packages/appium’: Permission denied</strong> 错误，</p>
+
+<p>使用 <strong>pip install Appium-Python-Client –user</strong> 命令可以安装成功</p>
+
+<ol>
+  <li>源码安装</li>
+</ol>
+
+<p>在Pipy上下载源码安装</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>  tar -xvf Appium-Python-Client-X.X.tar.gz
+  cd Appium-Python-Client-X.X
+  python setup.py install
+</code></pre>
+</div>
+
+<ol>
+  <li>github安装</li>
+</ol>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>  git clone git@github.com:appium/python-client.git
+  cd python-client
+  python setup.py install
+</code></pre>
+</div>
+<h5 id="ruby版一定要在线安装">ruby版（一定要在线安装）</h5>
+
+<p>ruby的appium client叫做appium lib，为什么是这样就不解释了，总之是历史原因。</p>
+
+<p>首先update rubygem和bundler(说老实话，真的不需要，但官方文档上这么写)</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>  gem update --system 
+  gem update bundler
+</code></pre>
+</div>
+<p>然后使用gem安装</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>  gem uninstall -aIx appium_lib \\(这个也不是必须的)
+  gem install --no-rdoc --no-ri appium_lib
+</code></pre>
+</div>
+<h5 id="java版在线安装">java版（在线安装）</h5>
+
+<p>java的话用maven安装就可以了</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>  &lt;dependency&gt;
+     &lt;groupId&gt;io.appium&lt;/groupId&gt;
+     &lt;artifactId&gt;java-client&lt;/artifactId&gt;
+     &lt;version&gt;1.3.0&lt;/version&gt;
+  &lt;/dependency&gt;
+</code></pre>
+</div>
+<p>也可以自己下载jar包，请自行选择最新版本。</p>
+
+<h4 id="5-其他相关安装真机调试需要">5. 其他相关安装(真机调试需要)</h4>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>brew install libimobiledevice --HEAD
+brew install ideviceinstaller 
+npm install -g ios-deploy 
+sudo gem install xcpretty
+</code></pre>
+</div>
+<h4 id="6-安装app-inspectorios10以上系统获取页面元素xpath">6. 安装app-inspector（iOS10以上系统获取页面元素Xpath）</h4>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>npm install app-inspector -g
+</code></pre>
+</div>
+<p>到这里所有相关的环境就已经安装好了，下面就可以开始撸起袖子干了，也是大家的踩坑时间了</p>
+
+<p>如果以上安装还有问题，可以参考：</p>
+
+<p><a href="https://testerhome.com/topics/6962">在 MAC 上搭建 appium1.6.3 过程</a></p>
+
+<p><a href="http://www.jianshu.com/p/05943804c25e">appium1-macOS10.12下如何丝滑的使用appium?</a></p>
+
+<h3 id="运行demo">运行Demo</h3>
+
+<ol>
+  <li><a href="https://github.com/appium/sample-code">下载demo</a>。</li>
+  <li>
+    <p>启动appium 服务</p>
+
+    <p><code class="highlighter-rouge">
+  	 appium
+  	</code></p>
+  </li>
+  <li>
+    <p>cd到<strong>sample-code-master/sample-code/examples/python</strong>目录下，运行下面命令就可以成功运行示例了</p>
+
+    <p><code class="highlighter-rouge">
+ 	 python ios_simple.py
+ 	</code>
+ 	成功运行截图：</p>
+  </li>
+</ol>
+
+ 	Server端成功运行：
+
+ 	<img src="/assets/image/appium/appium_server.png" alt="" />
+ 	Client端成功运行:
+
+ 	<img src="/assets/image/appium/appium_client.png" alt="" />
+
+ 	 要成功运行，得满足以下条件：
+
+ 	 * 有安装python
+ 	 * 保证/apps/TestApp/build/release-iphonesimulator/TestApp.app路径下存在TestApp.app这个文件
+ 	 * 保证	ios_simple.py示例中的platVersion填的是你Xcode版本有的iOS系统版本
+
+<p>到这里不出问题的话，恭喜你已经可以成功使用Appium自动化测试框架了</p>
+
+<h3 id="踩过的坑">踩过的坑</h3>
+
+<h4 id="1-通过appium-inspector-xpath获取到的react-native页面封装的textinput不能使用sendkeys或set_value输入">1. 通过appium inspector Xpath获取到的React Native页面封装的TextInput不能使用sendkeys或set_Value输入。</h4>
+
+<p>下图便是appium inspector+Xcode7.3.1+iOS9.3上react native页面元素，后面和android端同事比对下xpath路径，发现iOS这边路径明显比安卓短很多，后面通过app-inspector获取到也是要长很多，应该appium inspector对rn的适配还没那么好导致的。</p>
+
+<p><img src="/assets/image/appium/inspector.png" alt="" /></p>
+
+<p>解决方法：app-inspector检查元素得到xpath即可正常输入。（尝试过WebDriveAgent获取xpath，rn页面整个是个label文字显示；也尝试过查找键盘上对应健再click，速度太慢不能接受）</p>
+
+<p>app-inspector使用方法:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code> app-inspector -u &lt;设备/模拟器UDID&gt;  //加 --verbose可查看详情
+</code></pre>
+</div>
+<p><img src="/assets/image/appium/app-inspector.png" alt="" /></p>
+
+<h4 id="2-app-inspector模拟器运行报错">2. app-inspector模拟器运行报错</h4>
+
+<div class="highlighter-rouge"><pre class="highlight"><code> server.js:16:12 [master] pid:32216 server start with config:
+	{ port: 5678,
+	verbose: true,
+	udid: 'DC8E88DF-EDA7-487A-9D34-77AA58B3ADB5',
+	ip: '10.180.185.87',
+	host: 'iStevendeMacBook-Pro.local',
+	loaded_time: '2017-02-27 16:42:19' }
+	app-inspector.js:42:10 [master] pid:32216 server start at: http://10.180.185.87:5678
+	xctest-client.js:56:14 [master] pid:32216 project path: /Users/iSteven/.nvm/versions/node/v6.3.1/lib/node_modules/app-inspector/node_modules/xctest-client/node_modules/webdriveragent/WebDriverAgent/WebDriverAgent.xcodeproj
+	xctest-client start with port: 8900
+	xctest-client.js:233:14 [master] pid:32216 xcode version: 7.3.1
+	WebDriverAgent version: 1.0.41
+	xctest-client.js:99:16 [master] pid:32216 tail: /Users/iSteven/Library/Logs/CoreSimulator/DC8E88DF-EDA7-487A-9D34-77AA58B3ADB5/system.log: No such file or directory
+	xctest-client.js:107:16 [master] pid:32216 simulator log process exit with code: 1, signal: null
+	xctest-client.js:255:14 [master] pid:32216 Fail to start xctest: undefined
+	xctest-client.js:267:14 [master] pid:32216 killing deviceLogProc pid: 32220
+	xctest-client.js:272:14 [master] pid:32216 killing runnerProc pid: 32221
+	app-inspector:66:44 [master] pid:32216 undefined
+	xctest-client.js:181:14 [master] pid:32216 xctest client exit with code: null, signal: SIGKILL
+</code></pre>
+</div>
+<p>这个问题还去提了issue，但是后面自己卸载再重装就好了,也不知道是什么东西没装好还是咋的，希望有清楚的可以回答下</p>
+
+<p>遇到这样问题可按这里配置下环境试试<a href="https://macacajs.github.io/zh/environment-setup">macaca环境配置</a></p>
+
+<p>成功运行之后就是可以看到下图，并且会自动打开浏览器，load模拟器或者真机。
+ <img src="/assets/image/appium/app-inspector-client.png" alt="" /></p>
+
+<h4 id="3-app-inspector真机运行报错">3. app-inspector真机运行报错</h4>
+
+<div class="highlighter-rouge"><pre class="highlight"><code> 	&gt;&gt; xctest-client.js:171:14 [master] pid:11850 please check project: /Users/iSteven/.nvm/versions/node/v6.3.1/lib/node_modules/app-inspector/node_modules/webdriveragent/WebDriverAgent/WebDriverAgent.xcodeproj
+	&gt;&gt; xctest-client.js:170:14 [master] pid:11850 2017-03-03 16:09:44.301 xcodebuild[11856:248062] Error Domain=com.apple.dtdevicekit Code=-402652994 "App installation failed" UserInfo={NSLocalizedFailureReason=This application's application-identifier entitlement does not match that of the installed application. These values must match for an upgrade to be allowed., com.apple.dtdevicekit.stacktrace=(
+	0   DTDeviceKitBase                     0x000000011145537b DTDKCreateNSError + 113
+	1   DTDeviceKitBase                     0x0000000111455ab9 DTDK_AMDErrorToNSError + 791
+	2   DTDeviceKitBase                     0x00000001114959df __90-[DTDKRemoteDeviceToken installApplicationBundleAtPath:withOptions:andError:withCallback:]_block_invoke + 158
+	3   DVTFoundation                       0x0000000108686989 DVTInvokeWithStrongOwnership + 75
+	4   DTDeviceKitBase                     0x0000000111495725 -[DTDKRemoteDeviceToken installApplicationBundleAtPath:withOptions:andError:withCallback:] + 1181
+	5   IDEiOSSupportCore                   0x000000011138be1f __118-[DVTiOSDevice(DVTiPhoneApplicationInstallation) processAppInstallSet:appUninstallSet:installOptions:completionBlock:]_block_invoke.336 + 4597
+	6   DVTFoundation                       0x00000001087aacb7 __DVTDispatchAsync_block_invoke + 827
+	7   libdispatch.dylib                   0x00007fffacd96ef7 _dispatch_call_block_and_release + 12
+	8   libdispatch.dylib                   0x00007fffacd8e0b8 _dispatch_client_callout + 8
+	9   libdispatch.dylib                   0x00007fffacda4ae5 _dispatch_queue_serial_drain + 896
+	10  libdispatch.dylib                   0x00007fffacd96cd9 _dispatch_queue_invoke + 1046
+	11  libdispatch.dylib                   0x00007fffacd8fe70 _dispatch_root_queue_drain + 476
+	12  libdispatch.dylib                   0x00007fffacd8fc47 _dispatch_worker_thread3 + 99
+	13  libsystem_pthread.dylib             0x00007fffacfdb712 _pthread_wqthread + 1299
+	14  libsystem_pthread.dylib             0x00007fffacfdb1ed start_wqthread + 13
+	), NSLocalizedRecoverySuggestion=This application's 	application-identifier entitlement does not match that of the installed application. These values must match for an upgrade to be allowed., NSLocalizedDescription=App installation failed}
+
+	&gt;&gt; xctest-client.js:171:14 [master] pid:11850 please check project: /Users/iSteven/.nvm/versions/node/v6.3.1/lib/node_modules/app-inspector/node_modules/webdriveragent/WebDriverAgent/WebDriverAgent.xcodeproj
+	&gt;&gt; xctest-client.js:170:14 [master] pid:11850 2017-03-03 16:09:44.301 xcodebuild[11856:248062] Error Domain=IDETestOperationsObserverErrorDomain Code=5 "Early unexpected exit, operation never finished bootstrapping - no restart will be attempted" UserInfo={NSLocalizedDescription=Early unexpected exit, operation never finished bootstrapping - no restart will be attempted}
+
+	&gt;&gt; xctest-client.js:171:14 [master] pid:11850 please check project: /Users/iSteven/.nvm/versions/node/v6.3.1/lib/node_modules/app-inspector/node_modules/webdriveragent/WebDriverAgent/WebDriverAgent.xcodeproj
+	&gt;&gt; xctest-client.js:170:14 [master] pid:11850 
+	Testing failed:
+	Test target WebDriverAgentRunner encountered an error (Early unexpected exit, operation never finished bootstrapping - no restart will be attempted)
+
+	&gt;&gt; xctest-client.js:171:14 [master] pid:11850 please check project: /Users/iSteven/.nvm/versions/node/v6.3.1/lib/node_modules/app-inspector/node_modules/webdriveragent/WebDriverAgent/WebDriverAgent.xcodeproj
+	&gt;&gt; xctest-client.js:170:14 [master] pid:11850 ** TEST FAILED **
+
+
+	&gt;&gt; xctest-client.js:171:14 [master] pid:11850 please check project: /Users/iSteven/.nvm/versions/node/v6.3.1/lib/node_modules/app-inspector/node_modules/webdriveragent/WebDriverAgent/WebDriverAgent.xcodeproj
+	&gt;&gt; xctest-client.js:267:14 [master] pid:11850 killing deviceLogProc pid: 11853
+	&gt;&gt; xctest-client.js:272:14 [master] pid:11850 killing runnerProc pid: 11856
+	&gt;&gt; xctest-client.js:278:14 [master] pid:11850 killing iproxyProc pid: 11855
+	&gt;&gt; xctest-client.js:181:14 [master] pid:11850 xctest client exit with code: 65, signal: null
+	&gt;&gt; xctest-client.js:209:14 [master] pid:11850 iproxy exit with code: null, signal: SIGKILL
+	&gt;&gt; xctest-client.js:145:16 [master] pid:11850 deviceconsole exit with code: null, signal: SIGKILL
+	&gt;&gt; xctest-client.js:255:14 [master] pid:11850 Fail to start xctest: undefined
+	&gt;&gt; app-inspector:66:44 [master] pid:11850 undefined
+</code></pre>
+</div>
+
+<p>捕捉关键信息</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code> &gt;&gt; xctest-client.js:171:14 [master] pid:11850 please check project: /Users/iSteven/.nvm/versions/node/v6.3.1/lib/node_modules/app-inspector/node_modules/webdriveragent/WebDriverAgent/WebDriverAgent.xcodeproj
+	&gt;&gt; xctest-client.js:170:14 [master] pid:11850 
+ 2017-03-03 16:09:44.301 xcodebuild[11856:248062] Error Domain=com.apple.dtdevicekit Code=-402652994 "App installation failed" UserInfo={NSLocalizedFailureReason=This application's application-identifier entitlement does not match that of the installed application. These values must match for an upgrade to be allowed., 
+</code></pre>
+</div>
+
+<p>从上面看就是bundle-id错误,进到WebDriverAgent工程目录下修改工程bundle-id重新运行即可</p>
+
+<h3 id="参考资料">参考资料</h3>
+
+<ul>
+  <li><a href="https://testerhome.com">testerhome论坛</a></li>
+  <li><a href="https://github.com/appium/appium">appium源码地址</a></li>
+  <li><a href="http://appium.io/">appium官网地址</a></li>
+  <li><a href="https://macacajs.github.io/app-inspector/cn/">app-inspector</a></li>
+  <li><a href="https://macacajs.github.io/zh/environment-setup">macaca</a></li>
+  <li><a href="http://appium.io/slate/cn/master/?ruby#about-appium">appium中文说明文档</a></li>
+  <li><a href="http://www.jianshu.com/p/05943804c25e">http://www.jianshu.com/p/05943804c25e</a></li>
+</ul>
+
+
+  </section>
+</article>
+
+<section class="read-more">
+   
+   
+   <div class="read-more-item">
+       <span class="read-more-item-dim">最近的文章</span>
+       <h2 class="post-list__post-title post-title"><a href="/2017/02/appium-exception/" title="link to Appium FAQ">Appium FAQ</a></h2>
+       <p class="excerpt">Q1: 真机运行报无法安装错误  环境：xcode7.3.1+appium1.5.3+iOS8.4desired_capabilities设置如下：app = 'com.tzbank.pingAnFF'self.driver = webdriver.Remote(	command_executor='http://127.0.0.1:4723/wd/hub',	desired_capabilities={		'deviceName': 'iPhone 6',		'app': app,		'...&hellip;</p>
+       <div class="post-list__meta"><time datetime="2017-02-26 00:00:00 +0800" class="post-list__meta--date date">2017-02-26</time> &#8226; <span class="post-list__meta--tags tags"></span><a class="btn-border-small" href=/2017/02/appium-exception/>继续阅读</a></div>
+   </div>
+   
+   
+   
+   
+   <div class="read-more-item">
+       <span class="read-more-item-dim">更早的文章</span>
+       <h2 class="post-list__post-title post-title"><a href="/2017/02/WebdriverAgent/" title="link to WebDriverAgent">WebDriverAgent</a></h2>
+       <p class="excerpt">      下载WebDriverAgent     git clone https://github.com/facebook/WebDriverAgent.git            安装    下载工程后还需通过Carthage安装工程相关的依赖，进到工程目录下，执行以下命令:     ./Scripts/bootstrap.sh -d            运行        模拟器      xcodebuild -project WebDriverAgent.xcodepro...&hellip;</p>
+       <div class="post-list__meta"><time datetime="2017-02-23 00:00:00 +0800" class="post-list__meta--date date">2017-02-23</time> &#8226; <span class="post-list__meta--tags tags"></span><a class="btn-border-small" href=/2017/02/WebdriverAgent/>继续阅读</a></div>
+   </div>
+   
+</section>
+
+<section class="post-comments">
+  
+    <div id="disqus_thread"></div>
+    <script>
+    
+    var disqus_config = function () {
+        this.page.url = "http://localhost:4000/2017/02/appium-install/";
+        this.page.identifier = "/2017/02/appium-install/";
+    };
+
+    var disqus_shortname = 'vno-jekyll';
+    
+    (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
+    <noscript>要查看<a href="http://disqus.com/?ref_noscript"> Disqus </a>评论，请启用 JavaScript</noscript>
+    
+  
+  
+  
+  
+</section>
+
+
+            <section class="footer">
+    <footer>
+    	<span class="footer__copyright">本站点采用<a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享 署名-非商业性使用-相同方式共享 4.0 国际 许可协议</a></span>
+        <span class="footer__copyright">由 <a href="https://jekyllrb.com">Jekyll</a> 于 2017-03-18 生成，感谢 <a href="https://pages.github.com">Github Pages</a> 为本站提供稳定的 VPS 服务</span>
+        <span class="footer__copyright">本站由 <a href="http://gcgbz.com.cn">@iSteven</a> 创建，采用 <a href="https://github.com/onevcat/vno-jekyll">Vno - Jekyll</a> 作为主题，您可以在 GitHub 找到<a href="https://github.com/onevcat/OneV-s-Den">本站源码</a> - &copy; 2017</span>
+    </footer>
+</section>
+
+        </div>
+    </div>
+    
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+
+<script type="text/javascript" src="/js/main.js"></script>
+
+
+
+    
+  </body>
+
+</html>

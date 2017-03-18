@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <title>Pod创建私有库</title>
+  <meta name="description" content="===">
+  <meta name="author" content="Wei Wang">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Pod创建私有库">
+  <meta name="twitter:description" content="===">
+  
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Pod创建私有库">
+  <meta property="og:description" content="===">
+  
+  <link rel="icon" type="image/png" href="/assets/images/favicon.png" />
+  <link href="/assets/images/favicon.png" rel="shortcut icon" type="image/png">
+  
+  <link rel="stylesheet" href="/css/main.css">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
+  <link rel="canonical" href="http://localhost:4000/2017/02/pod-spec/">
+  <link rel="alternate" type="application/rss+xml" title="Coder iSteven" href="http://localhost:4000/feed.xml">
+  
+  <meta name="google-site-verification" content="1-1ZlHoRvM0T2FqPbW2S-qLgYXN6rsn52kErlMPd_gw" />
+  
+</head>
+
+
+  <body>
+
+    <span class="mobile btn-mobile-menu">
+        <i class="fa fa-list btn-mobile-menu__icon"></i>
+        <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
+    </span>
+    
+    <header class="panel-cover panel-cover--collapsed" style="background-image: url('/assets/images/background-cover.jpg')">
+  <div class="panel-main">
+
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        <a href="/#blog" title="前往 Coder iSteven 的主页" class="blog-button"><img src="/assets/images/avatar.jpg" width="80" alt="Coder iSteven logo" class="panel-cover__logo logo" /></a>
+        <h1 class="panel-cover__title panel-title"><a href="/#blog" title="link to homepage for Coder iSteven" class="blog-button">Coder iSteven</a></h1>
+        
+        <span class="panel-cover__subtitle panel-subtitle">上善若水</span>
+        
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">记录自己的点滴</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+        
+        
+        
+        <div class="navigation-wrapper">
+          <div>
+            <nav class="cover-navigation cover-navigation--primary">
+              <ul class="navigation">
+                <li class="navigation__item"><a href="/#blog" title="Visit blog" class="blog-button">Blog</a></li>
+                
+              </ul>
+            </nav>
+          </div>
+          
+          <div><nav class="cover-navigation navigation--social">
+  <ul class="navigation">
+
+  
+  <!-- Weibo -->
+  <li class="navigation__item">
+    <a href="http://weibo.com/736029053" title="@736029053 的微博" target="_blank">
+      <i class='social fa fa-weibo'></i>
+      <span class="label">Weibo</span>
+    </a>
+  </li>
+  
+
+  
+  <!-- Github -->
+  <li class="navigation__item">
+    <a href="https://github.com/tracydeng" title="@tracydeng 的 Github" target="_blank">
+      <i class='social fa fa-github'></i>
+      <span class="label">Github</span>
+    </a>
+  </li>
+  
+  
+  
+
+  
+
+  <!-- RSS -->
+  <li class="navigation__item">
+    <a href="/feed.xml" rel="author" title="RSS" target="_blank">
+      <i class='social fa fa-rss'></i>
+      <span class="label">RSS</span>
+    </a>
+  </li>
+
+  
+  <!-- Email -->
+  <li class="navigation__item">
+    <a href="mailto:coderisteven@gmail.com" title="Contact me">
+      <i class='social fa fa-envelope'></i>
+      <span class="label">Email</span>
+    </a>
+  </li>
+  
+
+  </ul>
+</nav>
+</div>
+        </div>
+      </div>
+    </div>
+    
+    
+    <div class="panel-cover--overlay cover-green"></div>
+    
+  </div>
+</header>
+
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <article class="post-container post-container--single" itemscope itemtype="http://schema.org/BlogPosting">
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2017-02-06 00:00:00 +0800" itemprop="datePublished" class="post-meta__date date">2017-02-06</time> &#8226; <span class="post-meta__tags tags"></span>
+    </div>
+    <h1 class="post-title">Pod创建私有库</h1>
+  </header>
+
+  <section class="post">
+    <p>===</p>
+
+<h3 id="1-创建spec文件">1. 创建spec文件</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>pod spec create https://github.com/GetuiLaboratory/getui-sdk-ios-cocoapods.git
+</code></pre>
+</div>
+
+<p>会在当前目录创建.podspec文件，创建的文件是个完整的配置模板，根据字面意思以及注释，大体上都能弄明白。不清楚的地方可以[参考]，github上也有很多开源代码可以参考。</p>
+
+<h3 id="2-验证spec文件有效性">2. 验证spec文件有效性</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>pod spec lint .podspec
+</code></pre>
+</div>
+
+<h3 id="3-创建spec-repositoryspec-仓库">3. 创建spec repository（spec 仓库）</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>├─Specs  
+├──getui-sdk-ios-cocoapods/  
+├── 1.4.1
+        └── getui-sdk-ios-cocoapods.podspec
+</code></pre>
+</div>
+
+<h3 id="4-添加私有repo到cocoapods中">4. 添加私有repo到CocoaPods中</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>pod repo add GetuiLaboratory https://github.com/GetuiLaboratory/Specs.git
+</code></pre>
+</div>
+
+<p>后面如果还要往REPO_NAME里添加新包，只需运行下面命令:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>pod repo push REPO_NAME SPEC_NAME.podspec
+</code></pre>
+</div>
+
+<p>如要删除私有repo：</p>
+
+ 	pod repo remove [name]
+
+<h3 id="5-添加包到工程的podfile中如下">5. 添加包到工程的Podfile中如下：</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>source 'https://github.com/GetuiLaboratory/Specs.git'
+source 'https://github.com/CocoaPods/Specs.git'
+ 
+platform :ios, "7.0"
+pod 'Reachability'
+pod 'GTSDK'
+</code></pre>
+</div>
+
+<h3 id="6-运行">6. 运行</h3>
+
+<p>到工程目录下运行</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>pod update
+</code></pre>
+</div>
+
+  </section>
+</article>
+
+<section class="read-more">
+   
+   
+   <div class="read-more-item">
+       <span class="read-more-item-dim">最近的文章</span>
+       <h2 class="post-list__post-title post-title"><a href="/2017/02/ssh-login-with-publickey/" title="link to SSH原理与运用（一）：远程登录">SSH原理与运用（一）：远程登录</a></h2>
+       <p class="excerpt">转载自阮一峰SSH是每一台Linux电脑的标准配置。随着Linux设备从电脑逐渐扩展到手机、外设和家用电器，SSH的使用范围也越来越广。不仅程序员离不开它，很多普通用户也每天使用。SSH具备多种功能，可以用于很多场合。有些事情，没有它就是办不成。本文是我的学习笔记，总结和解释了SSH的常见用法，希望对大家有用。虽然本文内容只涉及初级应用，较为简单，但是需要读者具备最基本的”Shell知识”和了解”公钥加密”的概念。如果你对它们不熟悉，我推荐先阅读《UNIX / Linux 初学者教程》和《...&hellip;</p>
+       <div class="post-list__meta"><time datetime="2017-02-17 00:00:00 +0800" class="post-list__meta--date date">2017-02-17</time> &#8226; <span class="post-list__meta--tags tags"></span><a class="btn-border-small" href=/2017/02/ssh-login-with-publickey/>继续阅读</a></div>
+   </div>
+   
+   
+   
+   
+   <div class="read-more-item">
+       <span class="read-more-item-dim">更早的文章</span>
+       <h2 class="post-list__post-title post-title"><a href="/2017/01/oc-paff-swizz/" title="link to 拆轮子系列(一)--PAFFSwizz">拆轮子系列(一)--PAFFSwizz</a></h2>
+       <p class="excerpt">代码片段一/** *	@brief	所有进入我们webview的界面，默认返回 */+ (void)swizzWebView {    Class class = [PAFFBaseWebViewController class];    SEL selector = @selector(viewWillAppear:);    SEL swizzledSelector = [PAFFSwizz swizzledSelectorForSelector:selector];    Metho...&hellip;</p>
+       <div class="post-list__meta"><time datetime="2017-01-26 00:00:00 +0800" class="post-list__meta--date date">2017-01-26</time> &#8226; <span class="post-list__meta--tags tags"></span><a class="btn-border-small" href=/2017/01/oc-paff-swizz/>继续阅读</a></div>
+   </div>
+   
+</section>
+
+<section class="post-comments">
+  
+    <div id="disqus_thread"></div>
+    <script>
+    
+    var disqus_config = function () {
+        this.page.url = "http://localhost:4000/2017/02/pod-spec/";
+        this.page.identifier = "/2017/02/pod-spec/";
+    };
+
+    var disqus_shortname = 'vno-jekyll';
+    
+    (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
+    <noscript>要查看<a href="http://disqus.com/?ref_noscript"> Disqus </a>评论，请启用 JavaScript</noscript>
+    
+  
+  
+  
+  
+</section>
+
+
+            <section class="footer">
+    <footer>
+    	<span class="footer__copyright">本站点采用<a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享 署名-非商业性使用-相同方式共享 4.0 国际 许可协议</a></span>
+        <span class="footer__copyright">由 <a href="https://jekyllrb.com">Jekyll</a> 于 2017-03-18 生成，感谢 <a href="https://pages.github.com">Github Pages</a> 为本站提供稳定的 VPS 服务</span>
+        <span class="footer__copyright">本站由 <a href="http://gcgbz.com.cn">@iSteven</a> 创建，采用 <a href="https://github.com/onevcat/vno-jekyll">Vno - Jekyll</a> 作为主题，您可以在 GitHub 找到<a href="https://github.com/onevcat/OneV-s-Den">本站源码</a> - &copy; 2017</span>
+    </footer>
+</section>
+
+        </div>
+    </div>
+    
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+
+<script type="text/javascript" src="/js/main.js"></script>
+
+
+
+    
+  </body>
+
+</html>

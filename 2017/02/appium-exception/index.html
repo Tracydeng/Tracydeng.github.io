@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <title>Appium FAQ</title>
+  <meta name="description" content="Q1: 真机运行报无法安装错误">
+  <meta name="author" content="Wei Wang">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Appium FAQ">
+  <meta name="twitter:description" content="Q1: 真机运行报无法安装错误">
+  
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Appium FAQ">
+  <meta property="og:description" content="Q1: 真机运行报无法安装错误">
+  
+  <link rel="icon" type="image/png" href="/assets/images/favicon.png" />
+  <link href="/assets/images/favicon.png" rel="shortcut icon" type="image/png">
+  
+  <link rel="stylesheet" href="/css/main.css">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
+  <link rel="canonical" href="http://localhost:4000/2017/02/appium-exception/">
+  <link rel="alternate" type="application/rss+xml" title="Coder iSteven" href="http://localhost:4000/feed.xml">
+  
+  <meta name="google-site-verification" content="1-1ZlHoRvM0T2FqPbW2S-qLgYXN6rsn52kErlMPd_gw" />
+  
+</head>
+
+
+  <body>
+
+    <span class="mobile btn-mobile-menu">
+        <i class="fa fa-list btn-mobile-menu__icon"></i>
+        <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
+    </span>
+    
+    <header class="panel-cover panel-cover--collapsed" style="background-image: url('/assets/images/background-cover.jpg')">
+  <div class="panel-main">
+
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        <a href="/#blog" title="前往 Coder iSteven 的主页" class="blog-button"><img src="/assets/images/avatar.jpg" width="80" alt="Coder iSteven logo" class="panel-cover__logo logo" /></a>
+        <h1 class="panel-cover__title panel-title"><a href="/#blog" title="link to homepage for Coder iSteven" class="blog-button">Coder iSteven</a></h1>
+        
+        <span class="panel-cover__subtitle panel-subtitle">上善若水</span>
+        
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">记录自己的点滴</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+        
+        
+        
+        <div class="navigation-wrapper">
+          <div>
+            <nav class="cover-navigation cover-navigation--primary">
+              <ul class="navigation">
+                <li class="navigation__item"><a href="/#blog" title="Visit blog" class="blog-button">Blog</a></li>
+                
+              </ul>
+            </nav>
+          </div>
+          
+          <div><nav class="cover-navigation navigation--social">
+  <ul class="navigation">
+
+  
+  <!-- Weibo -->
+  <li class="navigation__item">
+    <a href="http://weibo.com/736029053" title="@736029053 的微博" target="_blank">
+      <i class='social fa fa-weibo'></i>
+      <span class="label">Weibo</span>
+    </a>
+  </li>
+  
+
+  
+  <!-- Github -->
+  <li class="navigation__item">
+    <a href="https://github.com/tracydeng" title="@tracydeng 的 Github" target="_blank">
+      <i class='social fa fa-github'></i>
+      <span class="label">Github</span>
+    </a>
+  </li>
+  
+  
+  
+
+  
+
+  <!-- RSS -->
+  <li class="navigation__item">
+    <a href="/feed.xml" rel="author" title="RSS" target="_blank">
+      <i class='social fa fa-rss'></i>
+      <span class="label">RSS</span>
+    </a>
+  </li>
+
+  
+  <!-- Email -->
+  <li class="navigation__item">
+    <a href="mailto:coderisteven@gmail.com" title="Contact me">
+      <i class='social fa fa-envelope'></i>
+      <span class="label">Email</span>
+    </a>
+  </li>
+  
+
+  </ul>
+</nav>
+</div>
+        </div>
+      </div>
+    </div>
+    
+    
+    <div class="panel-cover--overlay cover-green"></div>
+    
+  </div>
+</header>
+
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <article class="post-container post-container--single" itemscope itemtype="http://schema.org/BlogPosting">
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2017-02-26 00:00:00 +0800" itemprop="datePublished" class="post-meta__date date">2017-02-26</time> &#8226; <span class="post-meta__tags tags"></span>
+    </div>
+    <h1 class="post-title">Appium FAQ</h1>
+  </header>
+
+  <section class="post">
+    <p>Q1: 真机运行报无法安装错误</p>
+
+<ul>
+  <li>环境：xcode7.3.1+appium1.5.3+iOS8.4</li>
+</ul>
+
+<p>desired_capabilities设置如下：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>app = 'com.tzbank.pingAnFF'
+self.driver = webdriver.Remote(
+	command_executor='http://127.0.0.1:4723/wd/hub',
+	desired_capabilities={
+		'deviceName': 'iPhone 6',
+		'app': app,
+		'platformName': 'iOS',                                   
+		'udid':'26900f10fd440aa0acf68a60d11046fcddfac054
+		#b0bd8418fd45d05837514c16d576a5c79ebb4c89 77625565e253cb0cbb42c6b19eb3b1f72b71e52f
+   })
+
+</code></pre>
+</div>
+
+<p>错误log如下：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Traceback (most recent call last):
+  File "guiyang_register.py", line 38, in setUp
+    'udid':'26900f10fd440aa0acf68a60d11046fcddfac054'
+  File "/usr/local/lib/python2.7/site-packages/appium/webdriver/webdriver.py", line 36, in __init__
+    super(WebDriver, self).__init__(command_executor, desired_capabilities, browser_profile, proxy, keep_alive)
+  File "/usr/local/lib/python2.7/site-packages/selenium/webdriver/remote/webdriver.py", line 90, in __init__
+    self.start_session(desired_capabilities, browser_profile)
+  File "/usr/local/lib/python2.7/site-packages/selenium/webdriver/remote/webdriver.py", line 177, in start_session
+    response = self.execute(Command.NEW_SESSION, capabilities)
+  File "/usr/local/lib/python2.7/site-packages/selenium/webdriver/remote/webdriver.py", line 236, in execute
+    self.error_handler.check_response(response)
+  File "/usr/local/lib/python2.7/site-packages/selenium/webdriver/remote/errorhandler.py", line 192, in check_response
+    raise exception_class(message, screen, stacktrace)
+WebDriverException: Message: An unknown server-side error occurred while processing the command. Original error: Installing com.tzbank.pingAnFF failed
+</code></pre>
+</div>
+<p>Q2:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Traceback (most recent call last):
+File "guiyang_register2.py", line 40, in setUp
+    'udid':'b0bd8418fd45d05837514c16d576a5c79ebb4c89'
+  File "/Users/dengwenbo/Library/Python/2.7/lib/python/site-packages/appium/webdriver/webdriver.py", line 36, in __init__
+    super(WebDriver, self).__init__(command_executor, desired_capabilities, browser_profile, proxy, keep_alive)
+  	File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/webdriver.py", line 92, in __init__
+    self.start_session(desired_capabilities, browser_profile)
+  	File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/webdriver.py", line 179, in start_session
+    response = self.execute(Command.NEW_SESSION, capabilities)
+  	File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/webdriver.py", line 236, in execute
+    self.error_handler.check_response(response)
+  	File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/errorhandler.py", line 192, in check_response
+    raise exception_class(message, screen, stacktrace)
+	WebDriverException: Message: An unknown server-side error occurred while processing the command. Original error: Unable to start WebDriverAgent: Error: Command 'idevicedate -u b0bd8418fd45d05837514c16d576a5c79ebb4c89' exited with code 255
+
+
+	----------------------------------------------------------------------
+	Ran 1 test in 6.144s
+
+	FAILED (errors=1)
+	
+</code></pre>
+</div>
+<p>解决办法，重新安装libimobiledevice</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>brew reinstall libimobiledevice --HEAD
+再执行 sudo chmod 777 /var/db/lockdown
+</code></pre>
+</div>
+
+<p>Q3.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>[HTTP] --&gt; POST /wd/hub/session 		{"requiredCapabilities":{},"desiredCapabilities":{"udid":"b0bd8418fd45d05837514c16d576a5c79ebb4c89","deviceName":"iPhone 6s","app":"com.tzbank.pingAnFF","platformName":"iOS","automationName":"xcuitest"}}
+	[debug] [MJSONWP] Calling AppiumDriver.createSession() with args: [{"udid":"b0bd8418fd45d05837514c16d576a5c79ebb4c89","deviceName":"iPhone 6s","app":"com.tzbank.pingAnFF","platformName":"iOS","automationName":"xcuitest"},{},null,null,null]
+	[Appium] Creating new XCUITestDriver session
+	[Appium] Capabilities:
+	[Appium]   udid: 'b0bd8418fd45d05837514c16d576a5c79ebb4c89'
+	[Appium]   deviceName: 'iPhone 6s'
+	[Appium]   app: 'com.tzbank.pingAnFF'
+	[Appium]   platformName: 'iOS'
+	[Appium]   automationName: 'xcuitest'
+	[debug] [XCUITest] XCUITestDriver version: 2.4.2
+	[BaseDriver] Session created with session id: 43857d7b-cbba-4ea1-bba0-28a3f4efa610
+	[debug] [XCUITest] Xcode version set to '8.2.1'
+	[debug] [XCUITest] iOS SDK Version set to '10.2'
+	[debug] [XCUITest] Available devices: b0bd8418fd45d05837514c16d576a5c79ebb4c89, b0bd8418fd45d05837514c16d576a5c79ebb4c89
+	[debug] [XCUITest] Creating iDevice object with udid b0bd8418fd45d05837514c16d576a5c79ebb4c89
+	[XCUITest] Determining device to run tests on: udid: 'b0bd8418fd45d05837514c16d576a5c79ebb4c89', real device: true
+	[debug] [XCUITest] App is an iOS bundle, will attempt to run as pre-existing
+	[debug] [iOSLog] Attempting iOS device log capture via libimobiledevice idevicesyslog
+	[debug] [iOSLog] Found idevicesyslog: '/usr/local/bin/idevicesyslog'
+	[XCUITest] Setting up real device
+	[XCUITest] Using WDA path: '/Users/dengwenbo/.nvm/versions/node/v6.9.5/lib/node_modules/appium/node_modules/appium-xcuitest-driver/WebDriverAgent'
+	[XCUITest] Using WDA agent: '/Users/dengwenbo/.nvm/versions/node/v6.9.5/lib/node_modules/appium/node_modules/appium-xcuitest-driver/WebDriverAgent/WebDriverAgent.xcodeproj'
+	[XCUITest] Launching WebDriverAgent on the device
+	[debug] [XCUITest] Carthage found: /usr/local/bin/carthage
+	[debug] [XCUITest] Killing hanging processes
+	[debug] [XCUITest] Using real device logger 'idevicesyslog'
+	[debug] [XCUITest] Beginning test with command 'xcodebuild build test -project /Users/dengwenbo/.nvm/versions/node/v6.9.5/lib/node_modules/appium/node_modules/appium-xcuitest-driver/WebDriverAgent/WebDriverAgent.xcodeproj -scheme WebDriverAgentRunner -destination id=b0bd8418fd45d05837514c16d576a5c79ebb4c89 -configuration Debug' in directory '/Users/dengwenbo/.nvm/versions/node/v6.9.5/lib/node_modules/appium/node_modules/appium-xcuitest-driver/WebDriverAgent'
+	[XCUITest] Waiting for WebDriverAgent to start on device
+	[debug] [XCUITest] Log file for xcodebuild test: /Users/dengwenbo/Library/Developer/Xcode/DerivedData/WebDriverAgent-hbhffnpetojvtsetwfwkjrmkaccw/Logs/Test/A576E8E1-FAF9-4BCF-9343-CDA670E7C4B2/Session-WebDriverAgentRunner-2017-03-03_220428-utKHCk.log
+	[debug] [WebDriverAgent] Device: Mar  3 22:04:35 iStevende-iPhone XCTRunner[20827] &lt;Notice&gt;: Running tests...
+	[debug] [WebDriverAgent] Device: Mar  3 22:04:35 iStevende-iPhone XCTRunner[20827] &lt;Notice&gt;: Continuing to run tests in the background with task ID 1
+	[debug] [XCUITest] Waiting for WebDriverAgent server to finish loading...
+</code></pre>
+</div>
+
+<p>Q4： appium GUI 不支持iOS10 and later，并且iOS10以后苹果从UIAutomation改成XCUITest框架，之前通过appium1.5.3上inspector 通过UIAutomation获取的页面元素xpath在iOS10上不可用</p>
+
+<p>解决办法：</p>
+
+<p>通过安装app-inspector安装</p>
+
+<h3 id="参考资料">参考资料</h3>
+
+<ul>
+  <li><a href="http://www.jianshu.com/p/05943804c25e">http://www.jianshu.com/p/05943804c25e</a></li>
+  <li><a href="https://testerhome.com">testerhome论坛</a></li>
+  <li><a href="https://github.com/appium/appium">appium源码地址</a></li>
+  <li><a href="http://appium.io/">appium官网地址</a></li>
+  <li><a href="http://appium.io/slate/cn/master/?ruby#about-appium">appium中文说明文档</a></li>
+</ul>
+
+
+  </section>
+</article>
+
+<section class="read-more">
+   
+   
+   
+   
+   <div class="read-more-item">
+       <span class="read-more-item-dim">更早的文章</span>
+       <h2 class="post-list__post-title post-title"><a href="/2017/02/appium-install/" title="link to 我的Appium踩坑之旅">我的Appium踩坑之旅</a></h2>
+       <p class="excerpt">背景      Appium目前最新的版本是 1.6.3 ，appium客户端(appium server的GUI图形化操作界面)最新版本是 1.5.3， 但是appium GUI目前支持的还只是iOS10以下的UIAutomation框架基础上测试，而iOS10以后苹果使用的却是基于XCUITest    我们项目中想要做到开发代码无侵染的方式来达到自动化测试目的（这就需要通过Xpath的方式去查找页面元素）  项目是React Native开发的跨平台应用综合这三个背景，并且iOS +...&hellip;</p>
+       <div class="post-list__meta"><time datetime="2017-02-25 00:00:00 +0800" class="post-list__meta--date date">2017-02-25</time> &#8226; <span class="post-list__meta--tags tags"></span><a class="btn-border-small" href=/2017/02/appium-install/>继续阅读</a></div>
+   </div>
+   
+</section>
+
+<section class="post-comments">
+  
+    <div id="disqus_thread"></div>
+    <script>
+    
+    var disqus_config = function () {
+        this.page.url = "http://localhost:4000/2017/02/appium-exception/";
+        this.page.identifier = "/2017/02/appium-exception/";
+    };
+
+    var disqus_shortname = 'vno-jekyll';
+    
+    (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
+    <noscript>要查看<a href="http://disqus.com/?ref_noscript"> Disqus </a>评论，请启用 JavaScript</noscript>
+    
+  
+  
+  
+  
+</section>
+
+
+            <section class="footer">
+    <footer>
+    	<span class="footer__copyright">本站点采用<a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享 署名-非商业性使用-相同方式共享 4.0 国际 许可协议</a></span>
+        <span class="footer__copyright">由 <a href="https://jekyllrb.com">Jekyll</a> 于 2017-03-18 生成，感谢 <a href="https://pages.github.com">Github Pages</a> 为本站提供稳定的 VPS 服务</span>
+        <span class="footer__copyright">本站由 <a href="http://gcgbz.com.cn">@iSteven</a> 创建，采用 <a href="https://github.com/onevcat/vno-jekyll">Vno - Jekyll</a> 作为主题，您可以在 GitHub 找到<a href="https://github.com/onevcat/OneV-s-Den">本站源码</a> - &copy; 2017</span>
+    </footer>
+</section>
+
+        </div>
+    </div>
+    
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+
+<script type="text/javascript" src="/js/main.js"></script>
+
+
+
+    
+  </body>
+
+</html>

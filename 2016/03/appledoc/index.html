@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <title>iOS-appledoc文档添加</title>
+  <meta name="description" content="一.安装过程      下载安装    git clone git://github.com/tomaz/appledoc.gitcd ./appledocsudo sh install-appledoc.sh        稍等一会，安装OK        验证安装    appledoc --version ...">
+  <meta name="author" content="Wei Wang">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="iOS-appledoc文档添加">
+  <meta name="twitter:description" content="一.安装过程      下载安装    git clone git://github.com/tomaz/appledoc.gitcd ./appledocsudo sh install-appledoc.sh        稍等一会，安装OK        验证安装    appledoc --version ...">
+  
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="iOS-appledoc文档添加">
+  <meta property="og:description" content="一.安装过程      下载安装    git clone git://github.com/tomaz/appledoc.gitcd ./appledocsudo sh install-appledoc.sh        稍等一会，安装OK        验证安装    appledoc --version ...">
+  
+  <link rel="icon" type="image/png" href="/assets/images/favicon.png" />
+  <link href="/assets/images/favicon.png" rel="shortcut icon" type="image/png">
+  
+  <link rel="stylesheet" href="/css/main.css">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
+  <link rel="canonical" href="http://localhost:4000/2016/03/appledoc/">
+  <link rel="alternate" type="application/rss+xml" title="Coder iSteven" href="http://localhost:4000/feed.xml">
+  
+  <meta name="google-site-verification" content="1-1ZlHoRvM0T2FqPbW2S-qLgYXN6rsn52kErlMPd_gw" />
+  
+</head>
+
+
+  <body>
+
+    <span class="mobile btn-mobile-menu">
+        <i class="fa fa-list btn-mobile-menu__icon"></i>
+        <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
+    </span>
+    
+    <header class="panel-cover panel-cover--collapsed" style="background-image: url('/assets/images/background-cover.jpg')">
+  <div class="panel-main">
+
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        <a href="/#blog" title="前往 Coder iSteven 的主页" class="blog-button"><img src="/assets/images/avatar.jpg" width="80" alt="Coder iSteven logo" class="panel-cover__logo logo" /></a>
+        <h1 class="panel-cover__title panel-title"><a href="/#blog" title="link to homepage for Coder iSteven" class="blog-button">Coder iSteven</a></h1>
+        
+        <span class="panel-cover__subtitle panel-subtitle">上善若水</span>
+        
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">记录自己的点滴</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+        
+        
+        
+        <div class="navigation-wrapper">
+          <div>
+            <nav class="cover-navigation cover-navigation--primary">
+              <ul class="navigation">
+                <li class="navigation__item"><a href="/#blog" title="Visit blog" class="blog-button">Blog</a></li>
+                
+              </ul>
+            </nav>
+          </div>
+          
+          <div><nav class="cover-navigation navigation--social">
+  <ul class="navigation">
+
+  
+  <!-- Weibo -->
+  <li class="navigation__item">
+    <a href="http://weibo.com/736029053" title="@736029053 的微博" target="_blank">
+      <i class='social fa fa-weibo'></i>
+      <span class="label">Weibo</span>
+    </a>
+  </li>
+  
+
+  
+  <!-- Github -->
+  <li class="navigation__item">
+    <a href="https://github.com/tracydeng" title="@tracydeng 的 Github" target="_blank">
+      <i class='social fa fa-github'></i>
+      <span class="label">Github</span>
+    </a>
+  </li>
+  
+  
+  
+
+  
+
+  <!-- RSS -->
+  <li class="navigation__item">
+    <a href="/feed.xml" rel="author" title="RSS" target="_blank">
+      <i class='social fa fa-rss'></i>
+      <span class="label">RSS</span>
+    </a>
+  </li>
+
+  
+  <!-- Email -->
+  <li class="navigation__item">
+    <a href="mailto:coderisteven@gmail.com" title="Contact me">
+      <i class='social fa fa-envelope'></i>
+      <span class="label">Email</span>
+    </a>
+  </li>
+  
+
+  </ul>
+</nav>
+</div>
+        </div>
+      </div>
+    </div>
+    
+    
+    <div class="panel-cover--overlay cover-green"></div>
+    
+  </div>
+</header>
+
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <article class="post-container post-container--single" itemscope itemtype="http://schema.org/BlogPosting">
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2016-03-15 00:00:00 +0800" itemprop="datePublished" class="post-meta__date date">2016-03-15</time> &#8226; <span class="post-meta__tags tags"></span>
+    </div>
+    <h1 class="post-title">iOS-appledoc文档添加</h1>
+  </header>
+
+  <section class="post">
+    <h3 id="一安装过程">一.安装过程</h3>
+<ul>
+  <li>
+    <p>下载安装</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code>git clone git://github.com/tomaz/appledoc.git
+cd ./appledoc
+sudo sh install-appledoc.sh
+</code></pre>
+    </div>
+    <p>稍等一会，安装OK</p>
+  </li>
+  <li>
+    <p>验证安装</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code>appledoc --version
+</code></pre>
+    </div>
+  </li>
+</ul>
+
+<h3 id="二使用">二.使用</h3>
+
+<ul>
+  <li>
+    <p>进入工程代码所在文件夹：打开终端</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code>cd + "文件夹目录"  //直接拖到终端就行
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p>输出文档</p>
+  </li>
+</ul>
+
+<ol>
+  <li>project-name:项目名称</li>
+  <li>project-company:公司名称</li>
+</ol>
+
+<div class="highlighter-rouge"><pre class="highlight"><code> appledoc --project-name MaizuoMovie --project-company HYX ./
+</code></pre>
+</div>
+
+<p>之后你会在项目目录下多处一个文件，稍后会说这个文件的作用：</p>
+
+<p><img src="/assets/image/appledoc.png" alt="" /></p>
+
+<p>再到Xcode－&gt;Window-&gt;Documentation and API Refrence，你就已经可以查看到项目输出的文档了，和苹果官方文档一样的格式
+ <img src="/assets/image/docset.png" alt="" /></p>
+
+<p>如果想了解更多， 可以查看帮助：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code> appledoc --help
+</code></pre>
+</div>
+<ul>
+  <li>
+    <p>集成进我们的工程</p>
+  </li>
+  <li>
+    <p>在你的工程中创建新的Target，选择Other中的Aggregate,如图：</p>
+
+    <p><img src="/assets/image/target.png" alt="" /></p>
+  </li>
+  <li>
+    <p>在新创建的Target中的Build Phases中添加Run Script，如图</p>
+
+    <p><img src="/assets/image/run_script.png" alt="" /></p>
+  </li>
+  <li>
+    <p>打开Run Script, Shell下面的文档区域添加这样的模版</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code>#appledoc Xcode script  
+# Start constants  
+company="ACME";  
+ companyID="com.ACME";
+ companyURL="http://ACME.com";
+target="iphoneos";
+#target="macosx";
+outputPath="~/help";
+# End constants
+/usr/local/bin/appledoc \
+--project-name "${PROJECT_NAME}" \
+--project-company "${company}" \
+--company-id "${companyID}" \
+--docset-atom-filename "${company}.atom" \
+--docset-feed-url "${companyURL}/${company}/%DOCSETATOMFILENAME" \
+--docset-package-url "${companyURL}/${company}/%DOCSETPACKAGEFILENAME" \
+--docset-fallback-url "${companyURL}/${company}" \
+--output "${outputPath}" \
+--publish-docset \
+--docset-platform-family "${target}" \
+--logformat xcode \
+--keep-intermediate-files \
+--no-repeat-first-par \
+--no-warn-invalid-crossref \
+--exit-threshold 2 \
+"${PROJECT_DIR}"   
+</code></pre>
+    </div>
+  </li>
+  <li>Xcode左上方选择这个Target,然后Build编译</li>
+  <li>文档就会编译好并自动安装进Xcode了（重启Xcode生效）。</li>
+  <li>生成的文／Mitchell（简书作者）docset-installed.txt文件啦，打开它：看到以一个 Path 了吧：直接复制，然后在 Finder 中前往文件夹：
+<img src="/assets/image/docset_path.png" alt="" /></li>
+  <li>前往文件夹，就可以看到,右键－&gt;显示包内容，就可以看到所有注释导出来的文档了
+<img src="/assets/image/111.png" alt="" />
+<img src="/assets/image/docset_file.png" alt="" /></li>
+</ul>
+
+<h3 id="三-关于appledoc的一些问题">三. 关于appledoc的一些问题</h3>
+<ul>
+  <li>appledoc 支持的注释类型</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code> 
+	/// 这是单行注释。
+	/** 这也是单行注释 */
+	/*! 同样是单行注释 */
+	/** 这也是单行注释，
+	*  第二行会接上第一行。
+	*/
+</code></pre>
+</div>
+
+<ul>
+  <li>用法示例</li>
+</ul>
+
+<p>```</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="cm">/** 第一行是类的简介
+在简介的下面,就是类的详细介绍了。
+没有间隔换行会被消除，就像Html那样。
+下面是常用的markdown语法
+- - -
+无序列表: (每行以 '*'、'-'、'+' 开头):
+* this is the first line
+* this is the second line
+* this is the third line
+有序列表: (每行以 1.2.3、a.b.c 开头):
+a. this is the first line
+b. this is the secode line
+多级列表:
+* this is the first line
+ 	 a. this is line a
+ 	 b. this is line b
+* this is the second line
+  	 1. this in line 1
+  	 2. this is line 2
+标题:
+# This is an H1
+## This is an H2
+### This is an H3
+#### This is an h4
+##### This is an h5
+###### This is an H6
+链接:
+普通URL直接写上，appledoc会自动翻译成链接: http://blog.ibireme.com
+[这个](http://example.net/) 链接会隐藏实际URL.
+表格:
+| header1 | header2 | header3 |
+|---------|:-------:|--------:|
+| normal  |  center |  right  |
+| cell    | cell    | cell    |
+引用:
+这里会引用到方法 `someMethod:`，这里会引用到类 `YYColor`
+这里会引用到一个代码块
+ 	  void CMYK2RGB(float c, float m, float y, float k, 
+              float *r, float *g, float *b) {
+  	 *r = (1 - c) * (1 - k);
+ 	  *g = (1 - m) * (1 - k);
+ 	  *b = (1 - y) * (1 - k);
+  	 }
+@since iOS5.0
+*/</span>
+<span class="k">@interface</span> <span class="nc">AppledocExample</span> <span class="p">:</span> <span class="nc">NSObject</span>
+<span class="c1">///这里是属性的说明
+</span><span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">name</span><span class="p">;</span>
+<span class="cm">/** 
+@brief 这里是方法的简介。该Tag不能放到类注释里。
+@exception UIColorException 这里是方法抛出异常的说明
+@see YYColor
+@see someMethod:
+@warning 这里是警告，会显示成蓝色的框框
+@bug 这里是bug，会显示成黄色的框框
+@param red   这里是参数说明1
+@param green 这里是参数说明2
+@param blue   这里是参数说明3
+@return  这里是返回值说明
+*/</span>
+<span class="k">-</span> <span class="p">(</span><span class="n">UIColor</span> <span class="o">*</span><span class="p">)</span><span class="nf">initWithRed</span><span class="p">:(</span><span class="kt">int</span><span class="p">)</span><span class="nv">red</span> <span class="nf">green</span><span class="p">:(</span><span class="kt">int</span><span class="p">)</span><span class="nv">green</span> <span class="nf">blue</span><span class="p">:(</span><span class="kt">int</span><span class="p">)</span><span class="nv">blue</span><span class="p">;</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">someMethod</span><span class="p">:(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">str</span><span class="p">;</span>
+<span class="k">@end</span>
+</code></pre>
+</div>
+
+<p><a href="http://www.jianshu.com/p/f4c3bd04b887">转自Mitchell的简书</a></p>
+
+  </section>
+</article>
+
+<section class="read-more">
+   
+   
+   <div class="read-more-item">
+       <span class="read-more-item-dim">最近的文章</span>
+       <h2 class="post-list__post-title post-title"><a href="/2016/04/load-initialize/" title="link to +load和+initialize">+load和+initialize</a></h2>
+       <p class="excerpt">+load+load 方法是当类或分类被添加到 Objective-C runtime 时被调用的，实现这个方法可以让我们在类加载的时候执行一些类相关的行为。子类的 +load 方法会在它的所有父类的 +load 方法之后执行，而分类的 +load 方法会在它的主类的 +load 方法之后执行。但是不同的类之间的 +load 方法的调用顺序是不确定的。+initialize+initialize 方法是在类或它的子类收到第一条消息之前被调用的，这里所指的消息包括实例方法和类方法的调用。也就...&hellip;</p>
+       <div class="post-list__meta"><time datetime="2016-04-14 00:00:00 +0800" class="post-list__meta--date date">2016-04-14</time> &#8226; <span class="post-list__meta--tags tags"></span><a class="btn-border-small" href=/2016/04/load-initialize/>继续阅读</a></div>
+   </div>
+   
+   
+   
+</section>
+
+<section class="post-comments">
+  
+    <div id="disqus_thread"></div>
+    <script>
+    
+    var disqus_config = function () {
+        this.page.url = "http://localhost:4000/2016/03/appledoc/";
+        this.page.identifier = "/2016/03/appledoc/";
+    };
+
+    var disqus_shortname = 'vno-jekyll';
+    
+    (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
+    <noscript>要查看<a href="http://disqus.com/?ref_noscript"> Disqus </a>评论，请启用 JavaScript</noscript>
+    
+  
+  
+  
+  
+</section>
+
+
+            <section class="footer">
+    <footer>
+    	<span class="footer__copyright">本站点采用<a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享 署名-非商业性使用-相同方式共享 4.0 国际 许可协议</a></span>
+        <span class="footer__copyright">由 <a href="https://jekyllrb.com">Jekyll</a> 于 2017-03-18 生成，感谢 <a href="https://pages.github.com">Github Pages</a> 为本站提供稳定的 VPS 服务</span>
+        <span class="footer__copyright">本站由 <a href="http://gcgbz.com.cn">@iSteven</a> 创建，采用 <a href="https://github.com/onevcat/vno-jekyll">Vno - Jekyll</a> 作为主题，您可以在 GitHub 找到<a href="https://github.com/onevcat/OneV-s-Den">本站源码</a> - &copy; 2017</span>
+    </footer>
+</section>
+
+        </div>
+    </div>
+    
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+
+<script type="text/javascript" src="/js/main.js"></script>
+
+
+
+    
+  </body>
+
+</html>

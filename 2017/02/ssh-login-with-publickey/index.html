@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <title>SSH原理与运用（一）：远程登录</title>
+  <meta name="description" content="转载自阮一峰">
+  <meta name="author" content="Wei Wang">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="SSH原理与运用（一）：远程登录">
+  <meta name="twitter:description" content="转载自阮一峰">
+  
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="SSH原理与运用（一）：远程登录">
+  <meta property="og:description" content="转载自阮一峰">
+  
+  <link rel="icon" type="image/png" href="/assets/images/favicon.png" />
+  <link href="/assets/images/favicon.png" rel="shortcut icon" type="image/png">
+  
+  <link rel="stylesheet" href="/css/main.css">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
+  <link rel="canonical" href="http://localhost:4000/2017/02/ssh-login-with-publickey/">
+  <link rel="alternate" type="application/rss+xml" title="Coder iSteven" href="http://localhost:4000/feed.xml">
+  
+  <meta name="google-site-verification" content="1-1ZlHoRvM0T2FqPbW2S-qLgYXN6rsn52kErlMPd_gw" />
+  
+</head>
+
+
+  <body>
+
+    <span class="mobile btn-mobile-menu">
+        <i class="fa fa-list btn-mobile-menu__icon"></i>
+        <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
+    </span>
+    
+    <header class="panel-cover panel-cover--collapsed" style="background-image: url('/assets/images/background-cover.jpg')">
+  <div class="panel-main">
+
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        <a href="/#blog" title="前往 Coder iSteven 的主页" class="blog-button"><img src="/assets/images/avatar.jpg" width="80" alt="Coder iSteven logo" class="panel-cover__logo logo" /></a>
+        <h1 class="panel-cover__title panel-title"><a href="/#blog" title="link to homepage for Coder iSteven" class="blog-button">Coder iSteven</a></h1>
+        
+        <span class="panel-cover__subtitle panel-subtitle">上善若水</span>
+        
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">记录自己的点滴</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+        
+        
+        
+        <div class="navigation-wrapper">
+          <div>
+            <nav class="cover-navigation cover-navigation--primary">
+              <ul class="navigation">
+                <li class="navigation__item"><a href="/#blog" title="Visit blog" class="blog-button">Blog</a></li>
+                
+              </ul>
+            </nav>
+          </div>
+          
+          <div><nav class="cover-navigation navigation--social">
+  <ul class="navigation">
+
+  
+  <!-- Weibo -->
+  <li class="navigation__item">
+    <a href="http://weibo.com/736029053" title="@736029053 的微博" target="_blank">
+      <i class='social fa fa-weibo'></i>
+      <span class="label">Weibo</span>
+    </a>
+  </li>
+  
+
+  
+  <!-- Github -->
+  <li class="navigation__item">
+    <a href="https://github.com/tracydeng" title="@tracydeng 的 Github" target="_blank">
+      <i class='social fa fa-github'></i>
+      <span class="label">Github</span>
+    </a>
+  </li>
+  
+  
+  
+
+  
+
+  <!-- RSS -->
+  <li class="navigation__item">
+    <a href="/feed.xml" rel="author" title="RSS" target="_blank">
+      <i class='social fa fa-rss'></i>
+      <span class="label">RSS</span>
+    </a>
+  </li>
+
+  
+  <!-- Email -->
+  <li class="navigation__item">
+    <a href="mailto:coderisteven@gmail.com" title="Contact me">
+      <i class='social fa fa-envelope'></i>
+      <span class="label">Email</span>
+    </a>
+  </li>
+  
+
+  </ul>
+</nav>
+</div>
+        </div>
+      </div>
+    </div>
+    
+    
+    <div class="panel-cover--overlay cover-green"></div>
+    
+  </div>
+</header>
+
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <article class="post-container post-container--single" itemscope itemtype="http://schema.org/BlogPosting">
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2017-02-17 00:00:00 +0800" itemprop="datePublished" class="post-meta__date date">2017-02-17</time> &#8226; <span class="post-meta__tags tags"></span>
+    </div>
+    <h1 class="post-title">SSH原理与运用（一）：远程登录</h1>
+  </header>
+
+  <section class="post">
+    <p><a href="http://www.ruanyifeng.com/blog/2011/12/ssh_remote_login.html">转载自阮一峰</a></p>
+
+<p>SSH是每一台Linux电脑的标准配置。</p>
+
+<p>随着Linux设备从电脑逐渐扩展到手机、外设和家用电器，SSH的使用范围也越来越广。不仅程序员离不开它，很多普通用户也每天使用。</p>
+
+<p>SSH具备多种功能，可以用于很多场合。有些事情，没有它就是办不成。本文是我的学习笔记，总结和解释了SSH的常见用法，希望对大家有用。</p>
+
+<p>虽然本文内容只涉及初级应用，较为简单，但是需要读者具备最基本的”Shell知识”和了解”公钥加密”的概念。如果你对它们不熟悉，我推荐先阅读<a href="http://www.ee.surrey.ac.uk/Teaching/Unix/">《UNIX / Linux 初学者教程》和《数字签名是什么？》</a>。</p>
+
+<p><code class="highlighter-rouge">======================================</code></p>
+
+<h3 id="ssh原理与运用">SSH原理与运用</h3>
+
+<h4 id="一什么是ssh">一、什么是SSH？</h4>
+
+<p>简单说，SSH是一种网络协议，用于计算机之间的加密登录。</p>
+
+<p>如果一个用户从本地计算机，使用SSH协议登录另一台远程计算机，我们就可以认为，这种登录是安全的，即使被中途截获，密码也不会泄露。</p>
+
+<p>最早的时候，互联网通信都是明文通信，一旦被截获，内容就暴露无疑。1995年，芬兰学者Tatu Ylonen设计了SSH协议，将登录信息全部加密，成为互联网安全的一个基本解决方案，迅速在全世界获得推广，目前已经成为Linux系统的标准配置。</p>
+
+<p>需要指出的是，SSH只是一种协议，存在多种实现，既有商业实现，也有开源实现。本文针对的实现是<a href="http://www.openssh.com/">OpenSSH</a>，它是自由软件，应用非常广泛。</p>
+
+<p>此外，本文只讨论SSH在Linux Shell中的用法。如果要在Windows系统中使用SSH，会用到另一种软件<a href="http://www.chiark.greenend.org.uk/~sgtatham/putty">PuTTY</a>，这需要另文介绍。</p>
+
+<p>####二、最基本的用法</p>
+
+<p>SSH主要用于远程登录。假定你要以用户名user，登录远程主机host，只要一条简单命令就可以了。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>$ ssh user@host
+</code></pre>
+</div>
+
+<p>如果本地用户名与远程用户名一致，登录时可以省略用户名。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>$ ssh host
+</code></pre>
+</div>
+
+<p>SSH的默认端口是22，也就是说，你的登录请求会送进远程主机的22端口。使用p参数，可以修改这个端口。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>$ ssh -p 2222 user@host
+</code></pre>
+</div>
+
+<p>上面这条命令表示，ssh直接连接远程主机的2222端口。</p>
+
+<h4 id="三中间人攻击">三、中间人攻击</h4>
+
+<p>SSH之所以能够保证安全，原因在于它采用了公钥加密。</p>
+
+<p>整个过程是这样的：（1）远程主机收到用户的登录请求，把自己的公钥发给用户。（2）用户使用这个公钥，将登录密码加密后，发送回来。（3）远程主机用自己的私钥，解密登录密码，如果密码正确，就同意用户登录。</p>
+
+<p>这个过程本身是安全的，但是实施的时候存在一个风险：如果有人截获了登录请求，然后冒充远程主机，将伪造的公钥发给用户，那么用户很难辨别真伪。因为不像https协议，SSH协议的公钥是没有证书中心（CA）公证的，也就是说，都是自己签发的。</p>
+
+<p>可以设想，如果攻击者插在用户与远程主机之间（比如在公共的wifi区域），用伪造的公钥，获取用户的登录密码。再用这个密码登录远程主机，那么SSH的安全机制就荡然无存了。这种风险就是著名的<a href="">“中间人攻击”</a>（Man-in-the-middle attack）。</p>
+
+<p>SSH协议是如何应对的呢？</p>
+
+<p>####四、口令登录</p>
+
+<p>如果你是第一次登录对方主机，系统会出现下面的提示：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>$ ssh user@host
+The authenticity of host 'host (12.18.429.21)' can't be established.
+RSA key fingerprint is 98:2e:d7:e0:de:9f:ac:67:28:c2:42:2d:37:16:58:4d.
+Are you sure you want to continue connecting (yes/no)?
+</code></pre>
+</div>
+<p>　　</p>
+
+<p>这段话的意思是，无法确认host主机的真实性，只知道它的公钥指纹，问你还想继续连接吗？</p>
+
+<p>所谓”公钥指纹”，是指公钥长度较长（这里采用RSA算法，长达1024位），很难比对，所以对其进行MD5计算，将它变成一个128位的指纹。上例中是98:2e:d7:e0:de:9f:ac:67:28:c2:42:2d:37:16:58:4d，再进行比较，就容易多了。</p>
+
+<p>很自然的一个问题就是，用户怎么知道远程主机的公钥指纹应该是多少？回答是没有好办法，远程主机必须在自己的网站上贴出公钥指纹，以便用户自行核对。</p>
+
+<p>假定经过风险衡量以后，用户决定接受这个远程主机的公钥。　</p>
+
+<pre><code class="language-　">Are you sure you want to continue connecting (yes/no)? yes
+</code></pre>
+<p>　
+系统会出现一句提示，表示host主机已经得到认可。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Warning: Permanently added 'host,12.18.429.21' (RSA) to the list of known hosts.
+</code></pre>
+</div>
+
+<p>然后，会要求输入密码。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Password: (enter password)
+</code></pre>
+</div>
+<p>如果密码正确，就可以登录了。</p>
+
+<p>当远程主机的公钥被接受以后，它就会被保存在文件<strong>$HOME/.ssh/known_hosts</strong>之中。下次再连接这台主机，系统就会认出它的公钥已经保存在本地了，从而跳过警告部分，直接提示输入密码。</p>
+
+<p>每个SSH用户都有自己的known_hosts文件，此外系统也有一个这样的文件，通常是/etc/ssh/ssh_known_hosts，保存一些对所有用户都可信赖的远程主机的公钥。</p>
+
+<p>####五、公钥登录</p>
+
+<p>使用密码登录，每次都必须输入密码，非常麻烦。好在SSH还提供了公钥登录，可以省去输入密码的步骤。</p>
+
+<p>所谓”公钥登录”，原理很简单，就是用户将自己的公钥储存在远程主机上。登录的时候，远程主机会向用户发送一段随机字符串，用户用自己的私钥加密后，再发回来。远程主机用事先储存的公钥进行解密，如果成功，就证明用户是可信的，直接允许登录shell，不再要求密码。</p>
+
+<p>这种方法要求用户必须提供自己的公钥。如果没有现成的，可以直接用ssh-keygen生成一个：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>$ ssh-keygen
+</code></pre>
+</div>
+<p>　</p>
+
+<p>运行上面的命令以后，系统会出现一系列提示，可以一路回车。其中有一个问题是，要不要对私钥设置口令（passphrase），如果担心私钥的安全，这里可以设置一个。</p>
+
+<p>运行结束以后，在<code class="highlighter-rouge">$HOME/.ssh/</code>目录下，会新生成两个文件：id_rsa.pub和id_rsa。前者是你的公钥，后者是你的私钥。
+这时再输入下面的命令，将公钥传送到远程主机host上面：</p>
+
+<p><code class="highlighter-rouge">
+$ ssh-copy-id user@host
+</code></p>
+
+<p>好了，从此你再登录，就不需要输入密码了。</p>
+
+<p>如果还是不行，就打开远程主机的/etc/ssh/sshd_config这个文件，检查下面几行前面”#”注释是否取掉。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>RSAAuthentication yes
+PubkeyAuthentication yes
+AuthorizedKeysFile .ssh/authorized_keys　　
+</code></pre>
+</div>
+<p>　　
+然后，重启远程主机的ssh服务。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>// ubuntu系统
+service ssh restart
+// debian系统
+/etc/init.d/ssh restart
+</code></pre>
+</div>
+<p>####六、authorized_keys文件
+远程主机将用户的公钥，保存在登录后的用户主目录的<strong>$HOME/.ssh/authorized_keys</strong>文件中。公钥就是一段字符串，只要把它追加在authorized_keys文件的末尾就行了。</p>
+
+<p>这里不使用上面的ssh-copy-id命令，改用下面的命令，解释公钥的保存过程：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>$ ssh user@host 'mkdir -p .ssh &amp;&amp; cat &gt;&gt; .ssh/authorized_keys' &lt; ~/.ssh/id_rsa.pub
+</code></pre>
+</div>
+
+<p>这条命令由多个语句组成，依次分解开来看：（1）<strong>”$ ssh user@host”</strong>，表示登录远程主机；（2）单引号中的<strong>mkdir .ssh &amp;&amp; cat » .ssh/authorized_keys</strong>，表示登录后在远程shell上执行的命令：（3）<strong>”$ mkdir -p .ssh”</strong>的作用是，如果用户主目录中的.ssh目录不存在，就创建一个；（4）<strong>‘cat » .ssh/authorized_keys’ &lt; ~/.ssh/id_rsa.pub</strong>的作用是，将本地的公钥文件<strong>~/.ssh/id_rsa.pub</strong>，重定向追加到远程文件authorized_keys的末尾。</p>
+
+<p>写入authorized_keys文件后，公钥登录的设置就完成了。</p>
+
+<p><code class="highlighter-rouge">==============================================</code></p>
+
+<p>关于shell远程登录的部分就写到这里，下一次接着介绍<a href="http://www.ruanyifeng.com/blog/2011/12/ssh_port_forwarding.html">《远程操作和端口转发》</a>。
+（完）</p>
+
+  </section>
+</article>
+
+<section class="read-more">
+   
+   
+   <div class="read-more-item">
+       <span class="read-more-item-dim">最近的文章</span>
+       <h2 class="post-list__post-title post-title"><a href="/2017/02/appium-introduce/" title="link to appium介绍">appium介绍</a></h2>
+       <p class="excerpt">转载appium简介  appium是开源的移动端自动化测试框架；  appium可以测试原生的、混合的、以及移动端的web项目；  appium可以测试ios，android应用（当然了，还有firefox os）；  appium是跨平台的，可以用在osx，windows以及linux桌面系统上；appium的哲学appium的技术架构  OS: Apple’s UIAutomation  Android 4.2+: Google’s UiAutomator  Android 2.3+...&hellip;</p>
+       <div class="post-list__meta"><time datetime="2017-02-19 00:00:00 +0800" class="post-list__meta--date date">2017-02-19</time> &#8226; <span class="post-list__meta--tags tags"></span><a class="btn-border-small" href=/2017/02/appium-introduce/>继续阅读</a></div>
+   </div>
+   
+   
+   
+   
+   <div class="read-more-item">
+       <span class="read-more-item-dim">更早的文章</span>
+       <h2 class="post-list__post-title post-title"><a href="/2017/02/pod-spec/" title="link to Pod创建私有库">Pod创建私有库</a></h2>
+       <p class="excerpt">===1. 创建spec文件pod spec create https://github.com/GetuiLaboratory/getui-sdk-ios-cocoapods.git会在当前目录创建.podspec文件，创建的文件是个完整的配置模板，根据字面意思以及注释，大体上都能弄明白。不清楚的地方可以[参考]，github上也有很多开源代码可以参考。2. 验证spec文件有效性pod spec lint .podspec3. 创建spec repository（spec 仓库）├─S...&hellip;</p>
+       <div class="post-list__meta"><time datetime="2017-02-06 00:00:00 +0800" class="post-list__meta--date date">2017-02-06</time> &#8226; <span class="post-list__meta--tags tags"></span><a class="btn-border-small" href=/2017/02/pod-spec/>继续阅读</a></div>
+   </div>
+   
+</section>
+
+<section class="post-comments">
+  
+    <div id="disqus_thread"></div>
+    <script>
+    
+    var disqus_config = function () {
+        this.page.url = "http://localhost:4000/2017/02/ssh-login-with-publickey/";
+        this.page.identifier = "/2017/02/ssh-login-with-publickey/";
+    };
+
+    var disqus_shortname = 'vno-jekyll';
+    
+    (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
+    <noscript>要查看<a href="http://disqus.com/?ref_noscript"> Disqus </a>评论，请启用 JavaScript</noscript>
+    
+  
+  
+  
+  
+</section>
+
+
+            <section class="footer">
+    <footer>
+    	<span class="footer__copyright">本站点采用<a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享 署名-非商业性使用-相同方式共享 4.0 国际 许可协议</a></span>
+        <span class="footer__copyright">由 <a href="https://jekyllrb.com">Jekyll</a> 于 2017-03-18 生成，感谢 <a href="https://pages.github.com">Github Pages</a> 为本站提供稳定的 VPS 服务</span>
+        <span class="footer__copyright">本站由 <a href="http://gcgbz.com.cn">@iSteven</a> 创建，采用 <a href="https://github.com/onevcat/vno-jekyll">Vno - Jekyll</a> 作为主题，您可以在 GitHub 找到<a href="https://github.com/onevcat/OneV-s-Den">本站源码</a> - &copy; 2017</span>
+    </footer>
+</section>
+
+        </div>
+    </div>
+    
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+
+<script type="text/javascript" src="/js/main.js"></script>
+
+
+
+    
+  </body>
+
+</html>

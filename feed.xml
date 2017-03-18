@@ -1,0 +1,1189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Coder iSteven</title>
+    <description>记录自己的点滴</description>
+    <link>http://localhost:4000/</link>
+    <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Sat, 18 Mar 2017 22:55:13 +0800</pubDate>
+    <lastBuildDate>Sat, 18 Mar 2017 22:55:13 +0800</lastBuildDate>
+    <generator>Jekyll v3.4.0</generator>
+    
+      <item>
+        <title>Appium FAQ</title>
+        <description>&lt;p&gt;Q1: 真机运行报无法安装错误&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;环境：xcode7.3.1+appium1.5.3+iOS8.4&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;desired_capabilities设置如下：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;app = 'com.tzbank.pingAnFF'
+self.driver = webdriver.Remote(
+	command_executor='http://127.0.0.1:4723/wd/hub',
+	desired_capabilities={
+		'deviceName': 'iPhone 6',
+		'app': app,
+		'platformName': 'iOS',                                   
+		'udid':'26900f10fd440aa0acf68a60d11046fcddfac054
+		#b0bd8418fd45d05837514c16d576a5c79ebb4c89 77625565e253cb0cbb42c6b19eb3b1f72b71e52f
+   })
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;错误log如下：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Traceback (most recent call last):
+  File &quot;guiyang_register.py&quot;, line 38, in setUp
+    'udid':'26900f10fd440aa0acf68a60d11046fcddfac054'
+  File &quot;/usr/local/lib/python2.7/site-packages/appium/webdriver/webdriver.py&quot;, line 36, in __init__
+    super(WebDriver, self).__init__(command_executor, desired_capabilities, browser_profile, proxy, keep_alive)
+  File &quot;/usr/local/lib/python2.7/site-packages/selenium/webdriver/remote/webdriver.py&quot;, line 90, in __init__
+    self.start_session(desired_capabilities, browser_profile)
+  File &quot;/usr/local/lib/python2.7/site-packages/selenium/webdriver/remote/webdriver.py&quot;, line 177, in start_session
+    response = self.execute(Command.NEW_SESSION, capabilities)
+  File &quot;/usr/local/lib/python2.7/site-packages/selenium/webdriver/remote/webdriver.py&quot;, line 236, in execute
+    self.error_handler.check_response(response)
+  File &quot;/usr/local/lib/python2.7/site-packages/selenium/webdriver/remote/errorhandler.py&quot;, line 192, in check_response
+    raise exception_class(message, screen, stacktrace)
+WebDriverException: Message: An unknown server-side error occurred while processing the command. Original error: Installing com.tzbank.pingAnFF failed
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Q2:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Traceback (most recent call last):
+File &quot;guiyang_register2.py&quot;, line 40, in setUp
+    'udid':'b0bd8418fd45d05837514c16d576a5c79ebb4c89'
+  File &quot;/Users/dengwenbo/Library/Python/2.7/lib/python/site-packages/appium/webdriver/webdriver.py&quot;, line 36, in __init__
+    super(WebDriver, self).__init__(command_executor, desired_capabilities, browser_profile, proxy, keep_alive)
+  	File &quot;/Library/Python/2.7/site-packages/selenium/webdriver/remote/webdriver.py&quot;, line 92, in __init__
+    self.start_session(desired_capabilities, browser_profile)
+  	File &quot;/Library/Python/2.7/site-packages/selenium/webdriver/remote/webdriver.py&quot;, line 179, in start_session
+    response = self.execute(Command.NEW_SESSION, capabilities)
+  	File &quot;/Library/Python/2.7/site-packages/selenium/webdriver/remote/webdriver.py&quot;, line 236, in execute
+    self.error_handler.check_response(response)
+  	File &quot;/Library/Python/2.7/site-packages/selenium/webdriver/remote/errorhandler.py&quot;, line 192, in check_response
+    raise exception_class(message, screen, stacktrace)
+	WebDriverException: Message: An unknown server-side error occurred while processing the command. Original error: Unable to start WebDriverAgent: Error: Command 'idevicedate -u b0bd8418fd45d05837514c16d576a5c79ebb4c89' exited with code 255
+
+
+	----------------------------------------------------------------------
+	Ran 1 test in 6.144s
+
+	FAILED (errors=1)
+	
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;解决办法，重新安装libimobiledevice&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;brew reinstall libimobiledevice --HEAD
+再执行 sudo chmod 777 /var/db/lockdown
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Q3.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[HTTP] --&amp;gt; POST /wd/hub/session 		{&quot;requiredCapabilities&quot;:{},&quot;desiredCapabilities&quot;:{&quot;udid&quot;:&quot;b0bd8418fd45d05837514c16d576a5c79ebb4c89&quot;,&quot;deviceName&quot;:&quot;iPhone 6s&quot;,&quot;app&quot;:&quot;com.tzbank.pingAnFF&quot;,&quot;platformName&quot;:&quot;iOS&quot;,&quot;automationName&quot;:&quot;xcuitest&quot;}}
+	[debug] [MJSONWP] Calling AppiumDriver.createSession() with args: [{&quot;udid&quot;:&quot;b0bd8418fd45d05837514c16d576a5c79ebb4c89&quot;,&quot;deviceName&quot;:&quot;iPhone 6s&quot;,&quot;app&quot;:&quot;com.tzbank.pingAnFF&quot;,&quot;platformName&quot;:&quot;iOS&quot;,&quot;automationName&quot;:&quot;xcuitest&quot;},{},null,null,null]
+	[Appium] Creating new XCUITestDriver session
+	[Appium] Capabilities:
+	[Appium]   udid: 'b0bd8418fd45d05837514c16d576a5c79ebb4c89'
+	[Appium]   deviceName: 'iPhone 6s'
+	[Appium]   app: 'com.tzbank.pingAnFF'
+	[Appium]   platformName: 'iOS'
+	[Appium]   automationName: 'xcuitest'
+	[debug] [XCUITest] XCUITestDriver version: 2.4.2
+	[BaseDriver] Session created with session id: 43857d7b-cbba-4ea1-bba0-28a3f4efa610
+	[debug] [XCUITest] Xcode version set to '8.2.1'
+	[debug] [XCUITest] iOS SDK Version set to '10.2'
+	[debug] [XCUITest] Available devices: b0bd8418fd45d05837514c16d576a5c79ebb4c89, b0bd8418fd45d05837514c16d576a5c79ebb4c89
+	[debug] [XCUITest] Creating iDevice object with udid b0bd8418fd45d05837514c16d576a5c79ebb4c89
+	[XCUITest] Determining device to run tests on: udid: 'b0bd8418fd45d05837514c16d576a5c79ebb4c89', real device: true
+	[debug] [XCUITest] App is an iOS bundle, will attempt to run as pre-existing
+	[debug] [iOSLog] Attempting iOS device log capture via libimobiledevice idevicesyslog
+	[debug] [iOSLog] Found idevicesyslog: '/usr/local/bin/idevicesyslog'
+	[XCUITest] Setting up real device
+	[XCUITest] Using WDA path: '/Users/dengwenbo/.nvm/versions/node/v6.9.5/lib/node_modules/appium/node_modules/appium-xcuitest-driver/WebDriverAgent'
+	[XCUITest] Using WDA agent: '/Users/dengwenbo/.nvm/versions/node/v6.9.5/lib/node_modules/appium/node_modules/appium-xcuitest-driver/WebDriverAgent/WebDriverAgent.xcodeproj'
+	[XCUITest] Launching WebDriverAgent on the device
+	[debug] [XCUITest] Carthage found: /usr/local/bin/carthage
+	[debug] [XCUITest] Killing hanging processes
+	[debug] [XCUITest] Using real device logger 'idevicesyslog'
+	[debug] [XCUITest] Beginning test with command 'xcodebuild build test -project /Users/dengwenbo/.nvm/versions/node/v6.9.5/lib/node_modules/appium/node_modules/appium-xcuitest-driver/WebDriverAgent/WebDriverAgent.xcodeproj -scheme WebDriverAgentRunner -destination id=b0bd8418fd45d05837514c16d576a5c79ebb4c89 -configuration Debug' in directory '/Users/dengwenbo/.nvm/versions/node/v6.9.5/lib/node_modules/appium/node_modules/appium-xcuitest-driver/WebDriverAgent'
+	[XCUITest] Waiting for WebDriverAgent to start on device
+	[debug] [XCUITest] Log file for xcodebuild test: /Users/dengwenbo/Library/Developer/Xcode/DerivedData/WebDriverAgent-hbhffnpetojvtsetwfwkjrmkaccw/Logs/Test/A576E8E1-FAF9-4BCF-9343-CDA670E7C4B2/Session-WebDriverAgentRunner-2017-03-03_220428-utKHCk.log
+	[debug] [WebDriverAgent] Device: Mar  3 22:04:35 iStevende-iPhone XCTRunner[20827] &amp;lt;Notice&amp;gt;: Running tests...
+	[debug] [WebDriverAgent] Device: Mar  3 22:04:35 iStevende-iPhone XCTRunner[20827] &amp;lt;Notice&amp;gt;: Continuing to run tests in the background with task ID 1
+	[debug] [XCUITest] Waiting for WebDriverAgent server to finish loading...
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Q4： appium GUI 不支持iOS10 and later，并且iOS10以后苹果从UIAutomation改成XCUITest框架，之前通过appium1.5.3上inspector 通过UIAutomation获取的页面元素xpath在iOS10上不可用&lt;/p&gt;
+
+&lt;p&gt;解决办法：&lt;/p&gt;
+
+&lt;p&gt;通过安装app-inspector安装&lt;/p&gt;
+
+&lt;h3 id=&quot;参考资料&quot;&gt;参考资料&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;http://www.jianshu.com/p/05943804c25e&quot;&gt;http://www.jianshu.com/p/05943804c25e&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://testerhome.com&quot;&gt;testerhome论坛&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/appium/appium&quot;&gt;appium源码地址&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://appium.io/&quot;&gt;appium官网地址&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://appium.io/slate/cn/master/?ruby#about-appium&quot;&gt;appium中文说明文档&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+</description>
+        <pubDate>Sun, 26 Feb 2017 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2017/02/appium-exception/</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/02/appium-exception/</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>我的Appium踩坑之旅</title>
+        <description>&lt;h3 id=&quot;背景&quot;&gt;背景&lt;/h3&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;Appium目前最新的版本是 1.6.3 ，appium客户端(appium server的GUI图形化操作界面)最新版本是 1.5.3， 但是appium GUI目前支持的还只是&lt;strong&gt;iOS10&lt;/strong&gt;以下的&lt;strong&gt;UIAutomation&lt;/strong&gt;框架基础上测试，而&lt;strong&gt;iOS10&lt;/strong&gt;以后苹果使用的却是基于&lt;strong&gt;XCUITest&lt;/strong&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;我们项目中想要做到开发代码无侵染的方式来达到自动化测试目的（这就需要通过Xpath的方式去查找页面元素）&lt;/li&gt;
+  &lt;li&gt;项目是React Native开发的跨平台应用&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;综合这三个背景，并且iOS + React Native结合的相关资料又比较少，就注定我要在自动化测试的道路上踩坑，写这篇这个也是想给后面玩的同学们一个肯定回答：&lt;strong&gt;appium + iOS10.2 + Xcode8.2.1 +React Native&lt;/strong&gt;即使不在代码加accessibilityLabel或TestID，就用Xpath照样玩得转&lt;/p&gt;
+
+&lt;h3 id=&quot;开发环境&quot;&gt;开发环境&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;系统：macOS Sierra （10.12.3）&lt;/li&gt;
+  &lt;li&gt;开发工具：Xcode 8.2.1（iOS10.2）+ Xcode7.3.1（iOS9.3）&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;前期准备&quot;&gt;前期准备&lt;/h3&gt;
+
+&lt;p&gt;需要安装的辅助工具&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;homebrew&lt;/li&gt;
+  &lt;li&gt;npm／cnpm&lt;/li&gt;
+  &lt;li&gt;node&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;环境搭建&quot;&gt;环境搭建&lt;/h3&gt;
+
+&lt;p&gt;经过一个星期的折腾，最终搭建满足以上两套框架测试的环境：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;iOS10&lt;/strong&gt; 以下支持UIAutomation&lt;/p&gt;
+
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;appium GUI1.5.3 + Xcode7.3.1(iOS9.3) + appium-python-client
+&lt;/code&gt;&lt;/pre&gt;
+    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;iOS10&lt;/strong&gt; 以上支持XCUITest&lt;/p&gt;
+
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;appium1.6.3 + app-inspector + Xcode8.2.1(iOS10.2) + appium-python-client
+&lt;/code&gt;&lt;/pre&gt;
+    &lt;/div&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;1-使用npm或cnpm安装appiumappium-doctor&quot;&gt;1. 使用npm或cnpm安装appium，appium-doctor&lt;/h4&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ install -g appium
+$ install -g appium-doctor
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;appium的安装有2个主要的过程&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;安装依赖包&lt;/li&gt;
+  &lt;li&gt;下载chromedriver&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;执行安装命令时出现：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;npm WARN engine appium@1.6.3: 
+wanted: {&quot;node&quot;:&quot;&amp;gt;=4&quot;,&quot;npm&quot;:&quot;&amp;gt;=3&quot;} 
+(current: {&quot;node&quot;:&quot;4.4.7&quot;,&quot;npm&quot;:&quot;2.15.8&quot;})
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;警告，并且安装失败，此时只需执行 npm install -g npm 命令更新最新的npm，再次执行安装命令，就成功安装。&lt;/p&gt;
+
+&lt;h4 id=&quot;2-下载appium-gui&quot;&gt;2. 下载appium GUI&lt;/h4&gt;
+
+&lt;p&gt;appium和appium GUI只要安装其中一项就可以启动服务，但是如果要用到其中的inpector去检查元素的xpath，所以还是安装了&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://bitbucket.org/appium/appium.app/downloads/&quot;&gt;下载地址&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;安装最新的版本1.5.3就行，但是即使最新的，也只能支持iOS10以下系统的元素检查。&lt;/p&gt;
+
+&lt;h4 id=&quot;3-使用appium-doctor检查appium环境&quot;&gt;3. 使用appium-doctor检查appium环境&lt;/h4&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ appium-doctor  //appium-doctor --ios  只检测iOS环境
+info AppiumDoctor Appium Doctor v.1.4.1
+info AppiumDoctor ### Diagnostic starting ###
+info AppiumDoctor  ✔ The Node.js binary was found at: /usr/local/bin/node
+info AppiumDoctor  ✔ Node version is 6.3.1
+info AppiumDoctor  ✔ Xcode is installed at: /Applications/Xcode_7.3.1.app/Contents/Developer
+info AppiumDoctor  ✔ Xcode Command Line Tools are installed.
+info AppiumDoctor  ✔ DevToolsSecurity is enabled.
+info AppiumDoctor  ✔ The Authorization DB is set up properly.
+info AppiumDoctor  ✔ Carthage was found at: /usr/local/bin/carthage
+info AppiumDoctor  ✔ HOME is set to: /Users/iSteven
+info AppiumDoctor  ✔ ANDROID_HOME is set to: /Users/iSteven/Library/Android/sdk
+info AppiumDoctor  ✔ JAVA_HOME is set to: /Library/Java/JavaVirtualMachines/jdk1.8.0_101.jdk/Contents/Home
+info AppiumDoctor  ✔ adb exists at: /Users/iSteven/Library/Android/sdk/platform-tools/adb
+info AppiumDoctor  ✔ android exists at: /Users/iSteven/Library/Android/sdk/tools/android
+info AppiumDoctor  ✔ emulator exists at: /Users/iSteven/Library/Android/sdk/tools/emulator
+info AppiumDoctor  ✔ Bin directory of $JAVA_HOME is set
+info AppiumDoctor ### Diagnostic completed, no fix needed. ###
+info AppiumDoctor 
+info AppiumDoctor Everything looks good, bye!
+info AppiumDoctor 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;环境常见问题解决：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;✖ Xcode Command Line Tools are NOT installed!&lt;/p&gt;
+
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ xcode-select --install   #按照提示安装即可
+&lt;/code&gt;&lt;/pre&gt;
+    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;✖ Carthage was NOT found!&lt;/p&gt;
+
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ brew install carthage    #carthage：类似cocoapods管理第三方代 码，自动将工程编译为动态库，所以仅支持iOS8以上
+&lt;/code&gt;&lt;/pre&gt;
+    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;WARN AppiumDoctor  ✖ ANDROID_HOME is NOT set!&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;建议安装AS，可以解决其他Android环境的其他问题 &lt;a href=&quot;https://developer.android.com/studio/index.html?hl=zh-cn&quot;&gt;Android Studio&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://stackoverflow.com/questions/19986214/setting-android-home-enviromental-variable-on-mac-os-x&quot;&gt;设置 ANDROID_HOME 路径&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://stackoverflow.com/questions/6588390/where-is-java-home-on-osx-sierra-10-12-el-captain-10-11-yosemite-10-10&quot;&gt;设置 JAVA_HOME 路径&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;http://blog.csdn.net/done58/article/details/51138057&quot;&gt;Mac OS X 下查看和设置JAVA_HOME&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;在.bash_profile/.zshrc文件中设置JAVA和Android环境变量&lt;/p&gt;
+
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;#android sdk
+export ANDROID_HOME=~/Library/Android/sdk
+export PATH=&quot;$HOME/.yarn/bin:$PATH&quot;
+
+#java_home
+export JAVA_HOME=$(/usr/libexec/java_home)
+export PATH=$JAVA_HOME/bin:$PATH
+export CLASS_PATH=$JAVA_HOME/lib
+&lt;/code&gt;&lt;/pre&gt;
+    &lt;/div&gt;
+    &lt;h4 id=&quot;4-安装appium-client端&quot;&gt;4. 安装appium client端&lt;/h4&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h5 id=&quot;python版&quot;&gt;python版&lt;/h5&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;pip安装&lt;/p&gt;
+
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; pip install Appium-Python-Client
+&lt;/code&gt;&lt;/pre&gt;
+    &lt;/div&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;如果安装过程出现 &lt;strong&gt;could not create ‘/Library/Python/2.7/site-packages/appium’: Permission denied&lt;/strong&gt; 错误，&lt;/p&gt;
+
+&lt;p&gt;使用 &lt;strong&gt;pip install Appium-Python-Client –user&lt;/strong&gt; 命令可以安装成功&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;源码安装&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;在Pipy上下载源码安装&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  tar -xvf Appium-Python-Client-X.X.tar.gz
+  cd Appium-Python-Client-X.X
+  python setup.py install
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;github安装&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  git clone git@github.com:appium/python-client.git
+  cd python-client
+  python setup.py install
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;h5 id=&quot;ruby版一定要在线安装&quot;&gt;ruby版（一定要在线安装）&lt;/h5&gt;
+
+&lt;p&gt;ruby的appium client叫做appium lib，为什么是这样就不解释了，总之是历史原因。&lt;/p&gt;
+
+&lt;p&gt;首先update rubygem和bundler(说老实话，真的不需要，但官方文档上这么写)&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  gem update --system 
+  gem update bundler
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;然后使用gem安装&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  gem uninstall -aIx appium_lib \\(这个也不是必须的)
+  gem install --no-rdoc --no-ri appium_lib
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;h5 id=&quot;java版在线安装&quot;&gt;java版（在线安装）&lt;/h5&gt;
+
+&lt;p&gt;java的话用maven安装就可以了&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &amp;lt;dependency&amp;gt;
+     &amp;lt;groupId&amp;gt;io.appium&amp;lt;/groupId&amp;gt;
+     &amp;lt;artifactId&amp;gt;java-client&amp;lt;/artifactId&amp;gt;
+     &amp;lt;version&amp;gt;1.3.0&amp;lt;/version&amp;gt;
+  &amp;lt;/dependency&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;也可以自己下载jar包，请自行选择最新版本。&lt;/p&gt;
+
+&lt;h4 id=&quot;5-其他相关安装真机调试需要&quot;&gt;5. 其他相关安装(真机调试需要)&lt;/h4&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;brew install libimobiledevice --HEAD
+brew install ideviceinstaller 
+npm install -g ios-deploy 
+sudo gem install xcpretty
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;h4 id=&quot;6-安装app-inspectorios10以上系统获取页面元素xpath&quot;&gt;6. 安装app-inspector（iOS10以上系统获取页面元素Xpath）&lt;/h4&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;npm install app-inspector -g
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;到这里所有相关的环境就已经安装好了，下面就可以开始撸起袖子干了，也是大家的踩坑时间了&lt;/p&gt;
+
+&lt;p&gt;如果以上安装还有问题，可以参考：&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://testerhome.com/topics/6962&quot;&gt;在 MAC 上搭建 appium1.6.3 过程&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://www.jianshu.com/p/05943804c25e&quot;&gt;appium1-macOS10.12下如何丝滑的使用appium?&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;运行demo&quot;&gt;运行Demo&lt;/h3&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/appium/sample-code&quot;&gt;下载demo&lt;/a&gt;。&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;启动appium 服务&lt;/p&gt;
+
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;
+  	 appium
+  	&lt;/code&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;cd到&lt;strong&gt;sample-code-master/sample-code/examples/python&lt;/strong&gt;目录下，运行下面命令就可以成功运行示例了&lt;/p&gt;
+
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;
+ 	 python ios_simple.py
+ 	&lt;/code&gt;
+ 	成功运行截图：&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+ 	Server端成功运行：
+
+ 	&lt;img src=&quot;/assets/image/appium/appium_server.png&quot; alt=&quot;&quot; /&gt;
+ 	Client端成功运行:
+
+ 	&lt;img src=&quot;/assets/image/appium/appium_client.png&quot; alt=&quot;&quot; /&gt;
+
+ 	 要成功运行，得满足以下条件：
+
+ 	 * 有安装python
+ 	 * 保证/apps/TestApp/build/release-iphonesimulator/TestApp.app路径下存在TestApp.app这个文件
+ 	 * 保证	ios_simple.py示例中的platVersion填的是你Xcode版本有的iOS系统版本
+
+&lt;p&gt;到这里不出问题的话，恭喜你已经可以成功使用Appium自动化测试框架了&lt;/p&gt;
+
+&lt;h3 id=&quot;踩过的坑&quot;&gt;踩过的坑&lt;/h3&gt;
+
+&lt;h4 id=&quot;1-通过appium-inspector-xpath获取到的react-native页面封装的textinput不能使用sendkeys或set_value输入&quot;&gt;1. 通过appium inspector Xpath获取到的React Native页面封装的TextInput不能使用sendkeys或set_Value输入。&lt;/h4&gt;
+
+&lt;p&gt;下图便是appium inspector+Xcode7.3.1+iOS9.3上react native页面元素，后面和android端同事比对下xpath路径，发现iOS这边路径明显比安卓短很多，后面通过app-inspector获取到也是要长很多，应该appium inspector对rn的适配还没那么好导致的。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/image/appium/inspector.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;解决方法：app-inspector检查元素得到xpath即可正常输入。（尝试过WebDriveAgent获取xpath，rn页面整个是个label文字显示；也尝试过查找键盘上对应健再click，速度太慢不能接受）&lt;/p&gt;
+
+&lt;p&gt;app-inspector使用方法:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; app-inspector -u &amp;lt;设备/模拟器UDID&amp;gt;  //加 --verbose可查看详情
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/image/appium/app-inspector.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;2-app-inspector模拟器运行报错&quot;&gt;2. app-inspector模拟器运行报错&lt;/h4&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; server.js:16:12 [master] pid:32216 server start with config:
+	{ port: 5678,
+	verbose: true,
+	udid: 'DC8E88DF-EDA7-487A-9D34-77AA58B3ADB5',
+	ip: '10.180.185.87',
+	host: 'iStevendeMacBook-Pro.local',
+	loaded_time: '2017-02-27 16:42:19' }
+	app-inspector.js:42:10 [master] pid:32216 server start at: http://10.180.185.87:5678
+	xctest-client.js:56:14 [master] pid:32216 project path: /Users/iSteven/.nvm/versions/node/v6.3.1/lib/node_modules/app-inspector/node_modules/xctest-client/node_modules/webdriveragent/WebDriverAgent/WebDriverAgent.xcodeproj
+	xctest-client start with port: 8900
+	xctest-client.js:233:14 [master] pid:32216 xcode version: 7.3.1
+	WebDriverAgent version: 1.0.41
+	xctest-client.js:99:16 [master] pid:32216 tail: /Users/iSteven/Library/Logs/CoreSimulator/DC8E88DF-EDA7-487A-9D34-77AA58B3ADB5/system.log: No such file or directory
+	xctest-client.js:107:16 [master] pid:32216 simulator log process exit with code: 1, signal: null
+	xctest-client.js:255:14 [master] pid:32216 Fail to start xctest: undefined
+	xctest-client.js:267:14 [master] pid:32216 killing deviceLogProc pid: 32220
+	xctest-client.js:272:14 [master] pid:32216 killing runnerProc pid: 32221
+	app-inspector:66:44 [master] pid:32216 undefined
+	xctest-client.js:181:14 [master] pid:32216 xctest client exit with code: null, signal: SIGKILL
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;这个问题还去提了issue，但是后面自己卸载再重装就好了,也不知道是什么东西没装好还是咋的，希望有清楚的可以回答下&lt;/p&gt;
+
+&lt;p&gt;遇到这样问题可按这里配置下环境试试&lt;a href=&quot;https://macacajs.github.io/zh/environment-setup&quot;&gt;macaca环境配置&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;成功运行之后就是可以看到下图，并且会自动打开浏览器，load模拟器或者真机。
+ &lt;img src=&quot;/assets/image/appium/app-inspector-client.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;3-app-inspector真机运行报错&quot;&gt;3. app-inspector真机运行报错&lt;/h4&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; 	&amp;gt;&amp;gt; xctest-client.js:171:14 [master] pid:11850 please check project: /Users/iSteven/.nvm/versions/node/v6.3.1/lib/node_modules/app-inspector/node_modules/webdriveragent/WebDriverAgent/WebDriverAgent.xcodeproj
+	&amp;gt;&amp;gt; xctest-client.js:170:14 [master] pid:11850 2017-03-03 16:09:44.301 xcodebuild[11856:248062] Error Domain=com.apple.dtdevicekit Code=-402652994 &quot;App installation failed&quot; UserInfo={NSLocalizedFailureReason=This application's application-identifier entitlement does not match that of the installed application. These values must match for an upgrade to be allowed., com.apple.dtdevicekit.stacktrace=(
+	0   DTDeviceKitBase                     0x000000011145537b DTDKCreateNSError + 113
+	1   DTDeviceKitBase                     0x0000000111455ab9 DTDK_AMDErrorToNSError + 791
+	2   DTDeviceKitBase                     0x00000001114959df __90-[DTDKRemoteDeviceToken installApplicationBundleAtPath:withOptions:andError:withCallback:]_block_invoke + 158
+	3   DVTFoundation                       0x0000000108686989 DVTInvokeWithStrongOwnership + 75
+	4   DTDeviceKitBase                     0x0000000111495725 -[DTDKRemoteDeviceToken installApplicationBundleAtPath:withOptions:andError:withCallback:] + 1181
+	5   IDEiOSSupportCore                   0x000000011138be1f __118-[DVTiOSDevice(DVTiPhoneApplicationInstallation) processAppInstallSet:appUninstallSet:installOptions:completionBlock:]_block_invoke.336 + 4597
+	6   DVTFoundation                       0x00000001087aacb7 __DVTDispatchAsync_block_invoke + 827
+	7   libdispatch.dylib                   0x00007fffacd96ef7 _dispatch_call_block_and_release + 12
+	8   libdispatch.dylib                   0x00007fffacd8e0b8 _dispatch_client_callout + 8
+	9   libdispatch.dylib                   0x00007fffacda4ae5 _dispatch_queue_serial_drain + 896
+	10  libdispatch.dylib                   0x00007fffacd96cd9 _dispatch_queue_invoke + 1046
+	11  libdispatch.dylib                   0x00007fffacd8fe70 _dispatch_root_queue_drain + 476
+	12  libdispatch.dylib                   0x00007fffacd8fc47 _dispatch_worker_thread3 + 99
+	13  libsystem_pthread.dylib             0x00007fffacfdb712 _pthread_wqthread + 1299
+	14  libsystem_pthread.dylib             0x00007fffacfdb1ed start_wqthread + 13
+	), NSLocalizedRecoverySuggestion=This application's 	application-identifier entitlement does not match that of the installed application. These values must match for an upgrade to be allowed., NSLocalizedDescription=App installation failed}
+
+	&amp;gt;&amp;gt; xctest-client.js:171:14 [master] pid:11850 please check project: /Users/iSteven/.nvm/versions/node/v6.3.1/lib/node_modules/app-inspector/node_modules/webdriveragent/WebDriverAgent/WebDriverAgent.xcodeproj
+	&amp;gt;&amp;gt; xctest-client.js:170:14 [master] pid:11850 2017-03-03 16:09:44.301 xcodebuild[11856:248062] Error Domain=IDETestOperationsObserverErrorDomain Code=5 &quot;Early unexpected exit, operation never finished bootstrapping - no restart will be attempted&quot; UserInfo={NSLocalizedDescription=Early unexpected exit, operation never finished bootstrapping - no restart will be attempted}
+
+	&amp;gt;&amp;gt; xctest-client.js:171:14 [master] pid:11850 please check project: /Users/iSteven/.nvm/versions/node/v6.3.1/lib/node_modules/app-inspector/node_modules/webdriveragent/WebDriverAgent/WebDriverAgent.xcodeproj
+	&amp;gt;&amp;gt; xctest-client.js:170:14 [master] pid:11850 
+	Testing failed:
+	Test target WebDriverAgentRunner encountered an error (Early unexpected exit, operation never finished bootstrapping - no restart will be attempted)
+
+	&amp;gt;&amp;gt; xctest-client.js:171:14 [master] pid:11850 please check project: /Users/iSteven/.nvm/versions/node/v6.3.1/lib/node_modules/app-inspector/node_modules/webdriveragent/WebDriverAgent/WebDriverAgent.xcodeproj
+	&amp;gt;&amp;gt; xctest-client.js:170:14 [master] pid:11850 ** TEST FAILED **
+
+
+	&amp;gt;&amp;gt; xctest-client.js:171:14 [master] pid:11850 please check project: /Users/iSteven/.nvm/versions/node/v6.3.1/lib/node_modules/app-inspector/node_modules/webdriveragent/WebDriverAgent/WebDriverAgent.xcodeproj
+	&amp;gt;&amp;gt; xctest-client.js:267:14 [master] pid:11850 killing deviceLogProc pid: 11853
+	&amp;gt;&amp;gt; xctest-client.js:272:14 [master] pid:11850 killing runnerProc pid: 11856
+	&amp;gt;&amp;gt; xctest-client.js:278:14 [master] pid:11850 killing iproxyProc pid: 11855
+	&amp;gt;&amp;gt; xctest-client.js:181:14 [master] pid:11850 xctest client exit with code: 65, signal: null
+	&amp;gt;&amp;gt; xctest-client.js:209:14 [master] pid:11850 iproxy exit with code: null, signal: SIGKILL
+	&amp;gt;&amp;gt; xctest-client.js:145:16 [master] pid:11850 deviceconsole exit with code: null, signal: SIGKILL
+	&amp;gt;&amp;gt; xctest-client.js:255:14 [master] pid:11850 Fail to start xctest: undefined
+	&amp;gt;&amp;gt; app-inspector:66:44 [master] pid:11850 undefined
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;捕捉关键信息&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &amp;gt;&amp;gt; xctest-client.js:171:14 [master] pid:11850 please check project: /Users/iSteven/.nvm/versions/node/v6.3.1/lib/node_modules/app-inspector/node_modules/webdriveragent/WebDriverAgent/WebDriverAgent.xcodeproj
+	&amp;gt;&amp;gt; xctest-client.js:170:14 [master] pid:11850 
+ 2017-03-03 16:09:44.301 xcodebuild[11856:248062] Error Domain=com.apple.dtdevicekit Code=-402652994 &quot;App installation failed&quot; UserInfo={NSLocalizedFailureReason=This application's application-identifier entitlement does not match that of the installed application. These values must match for an upgrade to be allowed., 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;从上面看就是bundle-id错误,进到WebDriverAgent工程目录下修改工程bundle-id重新运行即可&lt;/p&gt;
+
+&lt;h3 id=&quot;参考资料&quot;&gt;参考资料&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://testerhome.com&quot;&gt;testerhome论坛&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/appium/appium&quot;&gt;appium源码地址&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://appium.io/&quot;&gt;appium官网地址&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://macacajs.github.io/app-inspector/cn/&quot;&gt;app-inspector&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://macacajs.github.io/zh/environment-setup&quot;&gt;macaca&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://appium.io/slate/cn/master/?ruby#about-appium&quot;&gt;appium中文说明文档&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://www.jianshu.com/p/05943804c25e&quot;&gt;http://www.jianshu.com/p/05943804c25e&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+</description>
+        <pubDate>Sat, 25 Feb 2017 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2017/02/appium-install/</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/02/appium-install/</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>WebDriverAgent</title>
+        <description>&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;下载WebDriverAgent&lt;/p&gt;
+
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; git clone https://github.com/facebook/WebDriverAgent.git
+&lt;/code&gt;&lt;/pre&gt;
+    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;安装&lt;/p&gt;
+
+    &lt;p&gt;下载工程后还需通过Carthage安装工程相关的依赖，进到工程目录下，执行以下命令:&lt;/p&gt;
+
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; ./Scripts/bootstrap.sh -d
+&lt;/code&gt;&lt;/pre&gt;
+    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;运行&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;模拟器&lt;/p&gt;
+
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  xcodebuild -project WebDriverAgent.xcodeproj \
+    -scheme WebDriverAgentRunner \
+    -destination 'platform=iOS Simulator,name=iPhone 6s' \
+    test
+&lt;/code&gt;&lt;/pre&gt;
+    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;真机&lt;/p&gt;
+
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  xcodebuild -project WebDriverAgent.xcodeproj \
+    -scheme WebDriverAgentRunner \
+    -destination 'id=b0bd8418fd45d05837514c16d576a5c79ebb4c89' \
+    test
+&lt;/code&gt;&lt;/pre&gt;
+    &lt;/div&gt;
+
+    &lt;p&gt;执行完该条命令会发现在模拟器上安装了WebAgentRunner，控制台出现&lt;/p&gt;
+
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; ServerURLHere-&amp;gt;http://192.168.1.104:8100&amp;lt;-ServerURLHere 
+   
+   
+ &amp;gt;&amp;gt; app-inspector:66:44 [master] pid:37931 undefined
+(node:37931) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 1): Error: &amp;gt;&amp;gt; app-inspector:66:44 [master] pid:37931 undefined
+&lt;/code&gt;&lt;/pre&gt;
+    &lt;/div&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Thu, 23 Feb 2017 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2017/02/WebdriverAgent/</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/02/WebdriverAgent/</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>appium的基本概念</title>
+        <description>&lt;p&gt;&lt;a href=&quot;http://www.cnblogs.com/nbkhic/p/3803830.html&quot;&gt;转载&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;1-clientserver-architecture&quot;&gt;1. Client/Server Architecture&lt;/h2&gt;
+
+&lt;p&gt;appium的核心其实是一个暴露了一系列REST API的server。&lt;/p&gt;
+
+&lt;p&gt;这个server的功能其实很简单：监听一个端口，然后接收由client发送来的command。翻译这些command，把这些command转成移动设备可以理解的形式发送给移动设备，然后移动设备执行完这些command后把执行结果返回给appium server，appium server再把执行结果返回给client。&lt;/p&gt;
+
+&lt;p&gt;在这里client其实就是发起command的设备，一般来说就是我们代码执行的机器，执行appium测试代码的机器。狭义点理解，可以把client理解成是代码，这些代码可以是java/ruby/python/js的，只要它实现了webdriver标准协议就可以。&lt;/p&gt;
+
+&lt;p&gt;这样的设计思想带来了一些好处：&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;可以带来多语言的支持；&lt;/li&gt;
+  &lt;li&gt;可以把server放在任意机器上，哪怕是云服务器都可以；（是的，appium和webdriver天生适合云测试）&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;2-session&quot;&gt;2. Session&lt;/h2&gt;
+
+&lt;p&gt;session就是一个会话，在webdriver/appium，你的所有工作永远都是在session start后才可以进行的。一般来说，通过POST /session这个URL，然后传入Desired Capabilities就可以开启session了。&lt;/p&gt;
+
+&lt;p&gt;开启session后，会返回一个全局唯一的session id，以后几乎所有的请求都必须带上这个session id，因为这个seesion id代表了你所打开的浏览器或者是移动设备的模拟器。&lt;/p&gt;
+
+&lt;p&gt;进一步思考一下，由于session id是全局唯一，那么在同一台机器上启动多个session就变成了可能，这也就是selenium gird所依赖的具体理论根据。&lt;/p&gt;
+
+&lt;h2 id=&quot;3-desired-capabilities&quot;&gt;3. Desired Capabilities&lt;/h2&gt;
+
+&lt;p&gt;Desired Capabilities携带了一些配置信息。从本质上讲，这个东东是key-value形式的对象。你可以理解成是java里的map，python里的字典，ruby里的hash以及js里的json对象。实际上Desired Capabilities在传输时就是json对象。&lt;/p&gt;
+
+&lt;p&gt;Desired Capabilities最重要的作用是告诉server本次测试的上下文。这次是要进行浏览器测试还是移动端测试？如果是移动端测试的话是测试android还是ios，如果测试android的话那么我们要测试哪个app？ server的这些疑问Desired Capabilities都必须给予解答，否则server不买账，自然就无法完成移动app或者是浏览器的启动。&lt;a href=&quot;http://appium.io/slate/en/v1.1.0/?ruby#caps.md&quot;&gt; capabilities doc &lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;4-appium-server&quot;&gt;4. Appium Server&lt;/h2&gt;
+
+&lt;p&gt;这就是每次我们在命令行用appium命令打开的东西。&lt;/p&gt;
+
+&lt;h2 id=&quot;5-appium-clients&quot;&gt;5. Appium Clients&lt;/h2&gt;
+
+&lt;p&gt;由于原生的webdriver api是为web端设计的，因此在移动端用起来会有点不伦不类。appium官方提供了一套appium client，涵盖多种语言ruby/java/python，在我看来ruby client是实现最好的。在测试的时候，一般要使用这些client库去替换原生的webdriver库。这实际上不是替换，算是client对原生webdriver进行了一些移动端的扩展，加入了一些方便的方法，比如swipe之类，appium client让我们可以更方便的写出可读性更好的测试用例。&lt;/p&gt;
+
+&lt;p&gt;#6. Appium.app, Appium.exe&lt;/p&gt;
+
+&lt;p&gt;appium server的GUI版本，前者用在osx上，后者是windows上。可视化、不需要装node，可以看app的UI结构是这个东东的卖点。&lt;/p&gt;
+</description>
+        <pubDate>Mon, 20 Feb 2017 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2017/02/appium-architecture/</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/02/appium-architecture/</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>appium介绍</title>
+        <description>&lt;p&gt;&lt;a href=&quot;http://www.cnblogs.com/nbkhic/p/3803804.html&quot;&gt;转载&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&quot;appium简介&quot;&gt;appium简介&lt;/h2&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;appium是开源的移动端自动化测试框架；&lt;/li&gt;
+  &lt;li&gt;appium可以测试原生的、混合的、以及移动端的web项目；&lt;/li&gt;
+  &lt;li&gt;appium可以测试ios，android应用（当然了，还有firefox os）；&lt;/li&gt;
+  &lt;li&gt;appium是跨平台的，可以用在osx，windows以及linux桌面系统上；
+appium的哲学&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;appium的技术架构&quot;&gt;appium的技术架构&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;OS: Apple’s &lt;a href=&quot;https://developer.apple.com/library/ios/documentation/DeveloperTools/Reference/UIAutomationRef/_index.html&quot;&gt;UIAutomation&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Android 4.2+: Google’s &lt;a href=&quot;http://developer.android.com/tools/help/uiautomator/index.html&quot;&gt;UiAutomator&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Android 2.3+: Google’s &lt;a href=&quot;https://developer.android.com/reference/android/app/Instrumentation.html&quot;&gt;Instrumentation&lt;/a&gt;. (Instrumentation support is provided by bundling a separate project, &lt;a href=&quot;http://selendroid.io&quot;&gt;Selendroid&lt;/a&gt;)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;appium的设计思想&quot;&gt;appium的设计思想&lt;/h2&gt;
+
+&lt;p&gt;首先，为了能够实现哲学里描述的第2条，也就是不应该让移动端自动化测试限定在某种语言和某个具体的框架；也就是说任何人都可以使用自己最熟悉最顺手的语言以及框架来做移动端自动化测试；appium选择了client-server的设计模式。只要client能够发送http请求给server，那么的话client用什么语言来实现都是可以的，这就是appium及webdriver如何做到支持多语言的；&lt;/p&gt;
+
+&lt;p&gt;其次，为了能够实现不要为了移动端的自动化测试而重新发明轮子，重新写一套惊天动地的api；也就是说webdriver协议里的api已经够好了，拿来改进一下就可以了；这个思想，appium扩展了webdriver的协议，没有自己重新去实现一套。这样的好处是以前的webdriver api能够直接被继承过来，以前的webdriver各种语言的binding都可以拿来就用，省去了为每种语言开发一个client的工作量；&lt;/p&gt;
+
+&lt;p&gt;最后appium当然是开源的，这也实现了哲学思想里的最后一点。&lt;/p&gt;
+
+</description>
+        <pubDate>Sun, 19 Feb 2017 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2017/02/appium-introduce/</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/02/appium-introduce/</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>SSH原理与运用（一）：远程登录</title>
+        <description>&lt;p&gt;&lt;a href=&quot;http://www.ruanyifeng.com/blog/2011/12/ssh_remote_login.html&quot;&gt;转载自阮一峰&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;SSH是每一台Linux电脑的标准配置。&lt;/p&gt;
+
+&lt;p&gt;随着Linux设备从电脑逐渐扩展到手机、外设和家用电器，SSH的使用范围也越来越广。不仅程序员离不开它，很多普通用户也每天使用。&lt;/p&gt;
+
+&lt;p&gt;SSH具备多种功能，可以用于很多场合。有些事情，没有它就是办不成。本文是我的学习笔记，总结和解释了SSH的常见用法，希望对大家有用。&lt;/p&gt;
+
+&lt;p&gt;虽然本文内容只涉及初级应用，较为简单，但是需要读者具备最基本的”Shell知识”和了解”公钥加密”的概念。如果你对它们不熟悉，我推荐先阅读&lt;a href=&quot;http://www.ee.surrey.ac.uk/Teaching/Unix/&quot;&gt;《UNIX / Linux 初学者教程》和《数字签名是什么？》&lt;/a&gt;。&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;======================================&lt;/code&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;ssh原理与运用&quot;&gt;SSH原理与运用&lt;/h3&gt;
+
+&lt;h4 id=&quot;一什么是ssh&quot;&gt;一、什么是SSH？&lt;/h4&gt;
+
+&lt;p&gt;简单说，SSH是一种网络协议，用于计算机之间的加密登录。&lt;/p&gt;
+
+&lt;p&gt;如果一个用户从本地计算机，使用SSH协议登录另一台远程计算机，我们就可以认为，这种登录是安全的，即使被中途截获，密码也不会泄露。&lt;/p&gt;
+
+&lt;p&gt;最早的时候，互联网通信都是明文通信，一旦被截获，内容就暴露无疑。1995年，芬兰学者Tatu Ylonen设计了SSH协议，将登录信息全部加密，成为互联网安全的一个基本解决方案，迅速在全世界获得推广，目前已经成为Linux系统的标准配置。&lt;/p&gt;
+
+&lt;p&gt;需要指出的是，SSH只是一种协议，存在多种实现，既有商业实现，也有开源实现。本文针对的实现是&lt;a href=&quot;http://www.openssh.com/&quot;&gt;OpenSSH&lt;/a&gt;，它是自由软件，应用非常广泛。&lt;/p&gt;
+
+&lt;p&gt;此外，本文只讨论SSH在Linux Shell中的用法。如果要在Windows系统中使用SSH，会用到另一种软件&lt;a href=&quot;http://www.chiark.greenend.org.uk/~sgtatham/putty&quot;&gt;PuTTY&lt;/a&gt;，这需要另文介绍。&lt;/p&gt;
+
+&lt;p&gt;####二、最基本的用法&lt;/p&gt;
+
+&lt;p&gt;SSH主要用于远程登录。假定你要以用户名user，登录远程主机host，只要一条简单命令就可以了。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ ssh user@host
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;如果本地用户名与远程用户名一致，登录时可以省略用户名。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ ssh host
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;SSH的默认端口是22，也就是说，你的登录请求会送进远程主机的22端口。使用p参数，可以修改这个端口。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ ssh -p 2222 user@host
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;上面这条命令表示，ssh直接连接远程主机的2222端口。&lt;/p&gt;
+
+&lt;h4 id=&quot;三中间人攻击&quot;&gt;三、中间人攻击&lt;/h4&gt;
+
+&lt;p&gt;SSH之所以能够保证安全，原因在于它采用了公钥加密。&lt;/p&gt;
+
+&lt;p&gt;整个过程是这样的：（1）远程主机收到用户的登录请求，把自己的公钥发给用户。（2）用户使用这个公钥，将登录密码加密后，发送回来。（3）远程主机用自己的私钥，解密登录密码，如果密码正确，就同意用户登录。&lt;/p&gt;
+
+&lt;p&gt;这个过程本身是安全的，但是实施的时候存在一个风险：如果有人截获了登录请求，然后冒充远程主机，将伪造的公钥发给用户，那么用户很难辨别真伪。因为不像https协议，SSH协议的公钥是没有证书中心（CA）公证的，也就是说，都是自己签发的。&lt;/p&gt;
+
+&lt;p&gt;可以设想，如果攻击者插在用户与远程主机之间（比如在公共的wifi区域），用伪造的公钥，获取用户的登录密码。再用这个密码登录远程主机，那么SSH的安全机制就荡然无存了。这种风险就是著名的&lt;a href=&quot;&quot;&gt;“中间人攻击”&lt;/a&gt;（Man-in-the-middle attack）。&lt;/p&gt;
+
+&lt;p&gt;SSH协议是如何应对的呢？&lt;/p&gt;
+
+&lt;p&gt;####四、口令登录&lt;/p&gt;
+
+&lt;p&gt;如果你是第一次登录对方主机，系统会出现下面的提示：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ ssh user@host
+The authenticity of host 'host (12.18.429.21)' can't be established.
+RSA key fingerprint is 98:2e:d7:e0:de:9f:ac:67:28:c2:42:2d:37:16:58:4d.
+Are you sure you want to continue connecting (yes/no)?
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;　　&lt;/p&gt;
+
+&lt;p&gt;这段话的意思是，无法确认host主机的真实性，只知道它的公钥指纹，问你还想继续连接吗？&lt;/p&gt;
+
+&lt;p&gt;所谓”公钥指纹”，是指公钥长度较长（这里采用RSA算法，长达1024位），很难比对，所以对其进行MD5计算，将它变成一个128位的指纹。上例中是98:2e:d7:e0:de:9f:ac:67:28:c2:42:2d:37:16:58:4d，再进行比较，就容易多了。&lt;/p&gt;
+
+&lt;p&gt;很自然的一个问题就是，用户怎么知道远程主机的公钥指纹应该是多少？回答是没有好办法，远程主机必须在自己的网站上贴出公钥指纹，以便用户自行核对。&lt;/p&gt;
+
+&lt;p&gt;假定经过风险衡量以后，用户决定接受这个远程主机的公钥。　&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-　&quot;&gt;Are you sure you want to continue connecting (yes/no)? yes
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;　
+系统会出现一句提示，表示host主机已经得到认可。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Warning: Permanently added 'host,12.18.429.21' (RSA) to the list of known hosts.
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;然后，会要求输入密码。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Password: (enter password)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;如果密码正确，就可以登录了。&lt;/p&gt;
+
+&lt;p&gt;当远程主机的公钥被接受以后，它就会被保存在文件&lt;strong&gt;$HOME/.ssh/known_hosts&lt;/strong&gt;之中。下次再连接这台主机，系统就会认出它的公钥已经保存在本地了，从而跳过警告部分，直接提示输入密码。&lt;/p&gt;
+
+&lt;p&gt;每个SSH用户都有自己的known_hosts文件，此外系统也有一个这样的文件，通常是/etc/ssh/ssh_known_hosts，保存一些对所有用户都可信赖的远程主机的公钥。&lt;/p&gt;
+
+&lt;p&gt;####五、公钥登录&lt;/p&gt;
+
+&lt;p&gt;使用密码登录，每次都必须输入密码，非常麻烦。好在SSH还提供了公钥登录，可以省去输入密码的步骤。&lt;/p&gt;
+
+&lt;p&gt;所谓”公钥登录”，原理很简单，就是用户将自己的公钥储存在远程主机上。登录的时候，远程主机会向用户发送一段随机字符串，用户用自己的私钥加密后，再发回来。远程主机用事先储存的公钥进行解密，如果成功，就证明用户是可信的，直接允许登录shell，不再要求密码。&lt;/p&gt;
+
+&lt;p&gt;这种方法要求用户必须提供自己的公钥。如果没有现成的，可以直接用ssh-keygen生成一个：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ ssh-keygen
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;　&lt;/p&gt;
+
+&lt;p&gt;运行上面的命令以后，系统会出现一系列提示，可以一路回车。其中有一个问题是，要不要对私钥设置口令（passphrase），如果担心私钥的安全，这里可以设置一个。&lt;/p&gt;
+
+&lt;p&gt;运行结束以后，在&lt;code class=&quot;highlighter-rouge&quot;&gt;$HOME/.ssh/&lt;/code&gt;目录下，会新生成两个文件：id_rsa.pub和id_rsa。前者是你的公钥，后者是你的私钥。
+这时再输入下面的命令，将公钥传送到远程主机host上面：&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;
+$ ssh-copy-id user@host
+&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;好了，从此你再登录，就不需要输入密码了。&lt;/p&gt;
+
+&lt;p&gt;如果还是不行，就打开远程主机的/etc/ssh/sshd_config这个文件，检查下面几行前面”#”注释是否取掉。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;RSAAuthentication yes
+PubkeyAuthentication yes
+AuthorizedKeysFile .ssh/authorized_keys　　
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;　　
+然后，重启远程主机的ssh服务。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;// ubuntu系统
+service ssh restart
+// debian系统
+/etc/init.d/ssh restart
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;####六、authorized_keys文件
+远程主机将用户的公钥，保存在登录后的用户主目录的&lt;strong&gt;$HOME/.ssh/authorized_keys&lt;/strong&gt;文件中。公钥就是一段字符串，只要把它追加在authorized_keys文件的末尾就行了。&lt;/p&gt;
+
+&lt;p&gt;这里不使用上面的ssh-copy-id命令，改用下面的命令，解释公钥的保存过程：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ ssh user@host 'mkdir -p .ssh &amp;amp;&amp;amp; cat &amp;gt;&amp;gt; .ssh/authorized_keys' &amp;lt; ~/.ssh/id_rsa.pub
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;这条命令由多个语句组成，依次分解开来看：（1）&lt;strong&gt;”$ ssh user@host”&lt;/strong&gt;，表示登录远程主机；（2）单引号中的&lt;strong&gt;mkdir .ssh &amp;amp;&amp;amp; cat » .ssh/authorized_keys&lt;/strong&gt;，表示登录后在远程shell上执行的命令：（3）&lt;strong&gt;”$ mkdir -p .ssh”&lt;/strong&gt;的作用是，如果用户主目录中的.ssh目录不存在，就创建一个；（4）&lt;strong&gt;‘cat » .ssh/authorized_keys’ &amp;lt; ~/.ssh/id_rsa.pub&lt;/strong&gt;的作用是，将本地的公钥文件&lt;strong&gt;~/.ssh/id_rsa.pub&lt;/strong&gt;，重定向追加到远程文件authorized_keys的末尾。&lt;/p&gt;
+
+&lt;p&gt;写入authorized_keys文件后，公钥登录的设置就完成了。&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;==============================================&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;关于shell远程登录的部分就写到这里，下一次接着介绍&lt;a href=&quot;http://www.ruanyifeng.com/blog/2011/12/ssh_port_forwarding.html&quot;&gt;《远程操作和端口转发》&lt;/a&gt;。
+（完）&lt;/p&gt;
+</description>
+        <pubDate>Fri, 17 Feb 2017 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2017/02/ssh-login-with-publickey/</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/02/ssh-login-with-publickey/</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>Pod创建私有库</title>
+        <description>&lt;p&gt;===&lt;/p&gt;
+
+&lt;h3 id=&quot;1-创建spec文件&quot;&gt;1. 创建spec文件&lt;/h3&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;pod spec create https://github.com/GetuiLaboratory/getui-sdk-ios-cocoapods.git
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;会在当前目录创建.podspec文件，创建的文件是个完整的配置模板，根据字面意思以及注释，大体上都能弄明白。不清楚的地方可以[参考]，github上也有很多开源代码可以参考。&lt;/p&gt;
+
+&lt;h3 id=&quot;2-验证spec文件有效性&quot;&gt;2. 验证spec文件有效性&lt;/h3&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;pod spec lint .podspec
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;3-创建spec-repositoryspec-仓库&quot;&gt;3. 创建spec repository（spec 仓库）&lt;/h3&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;├─Specs  
+├──getui-sdk-ios-cocoapods/  
+├── 1.4.1
+        └── getui-sdk-ios-cocoapods.podspec
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;4-添加私有repo到cocoapods中&quot;&gt;4. 添加私有repo到CocoaPods中&lt;/h3&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;pod repo add GetuiLaboratory https://github.com/GetuiLaboratory/Specs.git
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;后面如果还要往REPO_NAME里添加新包，只需运行下面命令:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;pod repo push REPO_NAME SPEC_NAME.podspec
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;如要删除私有repo：&lt;/p&gt;
+
+ 	pod repo remove [name]
+
+&lt;h3 id=&quot;5-添加包到工程的podfile中如下&quot;&gt;5. 添加包到工程的Podfile中如下：&lt;/h3&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;source 'https://github.com/GetuiLaboratory/Specs.git'
+source 'https://github.com/CocoaPods/Specs.git'
+ 
+platform :ios, &quot;7.0&quot;
+pod 'Reachability'
+pod 'GTSDK'
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;6-运行&quot;&gt;6. 运行&lt;/h3&gt;
+
+&lt;p&gt;到工程目录下运行&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;pod update
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+</description>
+        <pubDate>Mon, 06 Feb 2017 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2017/02/pod-spec/</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/02/pod-spec/</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>拆轮子系列(一)--PAFFSwizz</title>
+        <description>&lt;h3 id=&quot;代码片段一&quot;&gt;代码片段一&lt;/h3&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;/**
+ *	@brief	所有进入我们webview的界面，默认返回
+ */
++ (void)swizzWebView
+ {
+    Class class = [PAFFBaseWebViewController class];
+    SEL selector = @selector(viewWillAppear:);
+    SEL swizzledSelector = [PAFFSwizz swizzledSelectorForSelector:selector];
+    Method originalMethod = class_getInstanceMethod(class, selector);
+    
+    void (^swizzleBlock)(Class,BOOL) = ^(Class slf,BOOL animation) {
+        SEL newSEL = @selector(closeViewControllerWithAnimation:);
+        if ([class instancesRespondToSelector:newSEL]) {
+            ((void(*)(id, SEL,BOOL))objc_msgSend)(slf,newSEL,animation);
+        }else {
+           	((void(*)(id, SEL,BOOL))objc_msgSend)(slf,swizzledSelector,animation);
+        }
+    };
+    
+    [self replaceImplementationOfKnownSelector:selector onClass:class withBlock:swizzleBlock swizzledSelector:swizzledSelector];
+
+}
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;h3 id=&quot;代码片段二&quot;&gt;代码片段二&lt;/h3&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;#pragma mark - Swizz
++ (SEL)swizzledSelectorForSelector:(SEL)selector
+{
+    return NSSelectorFromString([NSString stringWithFormat:@&quot;_ff_swizzle_%x_%@&quot;, arc4random(), NSStringFromSelector(selector)]);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;代码片段三&quot;&gt;代码片段三&lt;/h3&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;+ (void)replaceImplementationOfKnownSelector:(SEL)originalSelector onClass:(Class)class withBlock:(id)block swizzledSelector:(SEL)swizzledSelector
+{
+    // This method is only intended for swizzling methods that are know to exist on the class.
+    // Bail if that isn't the case.
+    Method originalMethod = class_getInstanceMethod(class, originalSelector);
+    if (!originalMethod) {
+       	return;
+    }
+    
+    IMP implementation = imp_implementationWithBlock(block);
+    class_addMethod(class, swizzledSelector, implementation, method_getTypeEncoding(originalMethod));
+    Method newMethod = class_getInstanceMethod(class, swizzledSelector);
+   	method_exchangeImplementations(originalMethod, newMethod);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;以上三个代码片段实现的效果就是：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;通过runtime库中的&lt;strong&gt;class_addMethod&lt;/strong&gt;方法动态的为&lt;strong&gt;PAFFBaseWebViewController&lt;/strong&gt;类添加_ff_swizzle_xxxxx_viewWillAppear:实例方法&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;class_addMethod&lt;/strong&gt;方法原型：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;   	/** 
+ 	 * Adds a new method to a class with a given name 		and implementation.
+ 	 * 
+ 	 * @param cls The class to which to add a method.
+ 	 * @param name A selector that specifies the name of the method being added.
+ 	 * @param imp A function which is the implementation of the new method. The function must take at least two arguments—self and _cmd.
+ 	 * @param types An array of characters that describe the types of the arguments to the method. 
+ 	 * 
+ 	 * @return YES if the method was added successfully, otherwise NO 
+ 	 *  (for example, the class already contains a method implementation with that name).
+ 	 *
+ 	 * @note class_addMethod will add an override of a superclass's implementation, 
+ 	 *  but will not replace an existing implementation in this class. 
+ 	 *  To change an existing implementation, use method_setImplementation.
+ 	 */
+	 OBJC_EXPORT BOOL class_addMethod(Class cls, SEL name, IMP imp, 
+                                 const char *types) 
+    OBJC_AVAILABLE(10.5, 2.0, 9.0, 1.0);）
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;通过imp_implementationWithBlock(swizzleBlock)方法，将代码片段一中的swizzleBlock作为参数传入，具体实现&lt;strong&gt;_ff_swizzle_xxxxx_viewWillAppear:&lt;/strong&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;通过调用&lt;strong&gt;method_exchangeImplementations&lt;/strong&gt;方法将&lt;strong&gt;PAFFBaseWebViewController&lt;/strong&gt;的&lt;strong&gt;viewWillAppear:&lt;/strong&gt;的实现替换为&lt;strong&gt;_ff_swizzle_xxxxx_viewWillAppear:&lt;/strong&gt;&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+</description>
+        <pubDate>Thu, 26 Jan 2017 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2017/01/oc-paff-swizz/</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/01/oc-paff-swizz/</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>React Native学习系列(二) Component生命周期</title>
+        <description>&lt;blockquote&gt;
+  &lt;p&gt;关于ReactNative的生命周期这块，我想之前写客户端的都，不管是安卓的Activity还是iOS的ViewController都有自己的生命周期方法，React Native的组件与之类似也有自己的生命周期回调函数，参考以下链接，有详细的介绍&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://www.race604.com/react-native-component-lifecycle/?utm_source=tuicool&amp;amp;utm_medium=referral&quot;&gt;React Native 中组件的生命周期&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://segmentfault.com/a/1190000004161358&quot;&gt;ReactNative的组件架构设计&lt;/a&gt;&lt;/p&gt;
+</description>
+        <pubDate>Thu, 11 Aug 2016 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2016/08/rn-component-lifecycle/</link>
+        <guid isPermaLink="true">http://localhost:4000/2016/08/rn-component-lifecycle/</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>ES6学习笔记(一)</title>
+        <description>&lt;h3 id=&quot;let和const的使用&quot;&gt;let和const的使用&lt;/h3&gt;
+
+&lt;h4 id=&quot;一-let&quot;&gt;一. let&lt;/h4&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;ES6新增的let命令，用来声明变量。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h6 id=&quot;特点&quot;&gt;特点：&lt;/h6&gt;
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;块级作用域（只在let命令所在代码块有效）&lt;/p&gt;
+
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;for(var i = 0; i &amp;lt; 10; i++){}
+console.log(i); //10
+for(let j = 0; j &amp;lt; 10; j++){}
+console.log(j); //&quot;ReferenceError: j is not defined
+&lt;/code&gt;&lt;/pre&gt;
+    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;不存在变量提升&lt;/p&gt;
+
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;console.log(a); // 输出undefined
+console.log(b); // 报错ReferenceError
+console.log(c); // 报错ReferenceError
+var a = 2;
+let b = 2;
+&lt;/code&gt;&lt;/pre&gt;
+    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;暂时性死区（只能在声明的位置后面使用）&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;只要进入当前块级作用域，所使用的变量已经存在了，但在声明之前都属于死区，不可进行操作，也就是说只要块级作用域内存在let命令，它所声明的变量就“绑定”（binding）这个区域，不再受外部的影响。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  var tmp = 123;
+  if (true) {
+      tmp = 'abc'; // ReferenceError
+      let tmp;
+  }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;注意： &lt;strong&gt;typeof&lt;/strong&gt;不再是100%安全的操作，let&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  typeof x; // ReferenceError
+  typeof y  // undefined
+  let x;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;变量x使用let命令声明，所以在声明之前，都属于x的“死区”，只要用到该变量就会报错。因此，typeof运行时就会抛出一个ReferenceError。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;不允许重复声明&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;声明的全局变量不再是window的属性&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;二-const&quot;&gt;二. const&lt;/h4&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;const命令，用来声明一个只读的常量，一旦声明，常量的值就不能改变。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h6 id=&quot;特性&quot;&gt;特性：&lt;/h6&gt;
+&lt;ul&gt;
+  &lt;li&gt;声明时就要赋值&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  const PI = 3.1415;
+  // 声明后，值不能改变
+  PI = 3;  // TypeError: Assignment to constant variable.
+  // 声明时就要赋值
+  const foo;  // SyntaxError: Missing initializer in const declaration
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;块级作用域（只在const命令所在代码块有效）&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  if (true) {
+  	const MAX = 5;
+  }
+  MAX // Uncaught ReferenceError: MAX is not defined
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;ul&gt;
+  &lt;li&gt;声明的常量也不存在提升 ，也存在暂时性死区（只能在声明的位置后面使用）&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  if (true) {
+      console.log(MAX); // ReferenceError
+      const MAX = 5;
+  }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;不允许重复声明&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  var message = &quot;Hello!&quot;;
+  let age = 25;
+
+  // 以下两行都会报错
+  const message = &quot;Goodbye!&quot;;
+  const age = 30;	
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+</description>
+        <pubDate>Fri, 05 Aug 2016 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2016/08/es6-var/</link>
+        <guid isPermaLink="true">http://localhost:4000/2016/08/es6-var/</guid>
+        
+        
+      </item>
+    
+  </channel>
+</rss>
