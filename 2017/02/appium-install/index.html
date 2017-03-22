@@ -7,16 +7,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   <title>我的Appium踩坑之旅</title>
-  <meta name="description" content="背景      Appium目前最新的版本是 1.6.3 ，appium客户端(appium server的GUI图形化操作界面)最新版本是 1.5.3， 但是appium GUI目前支持的还只是iOS10以下的UIAutomation框架基础上测试，而iOS10以后苹果使用的却是基于XCUITest    我们...">
+  <meta name="description" content="背景      Appium目前最新的版本是 1.6.3 ，appium客户端(appium server的GUI图形化操作界面)最新版本是 1.5.3， 但是appium GUI目前还只支持到iOS10以下基于UIAutomation框架的测试，而iOS10以后苹果已经更改为XCUITest了    我们项目中...">
   <meta name="author" content="Wei Wang">
 
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="我的Appium踩坑之旅">
-  <meta name="twitter:description" content="背景      Appium目前最新的版本是 1.6.3 ，appium客户端(appium server的GUI图形化操作界面)最新版本是 1.5.3， 但是appium GUI目前支持的还只是iOS10以下的UIAutomation框架基础上测试，而iOS10以后苹果使用的却是基于XCUITest    我们...">
+  <meta name="twitter:description" content="背景      Appium目前最新的版本是 1.6.3 ，appium客户端(appium server的GUI图形化操作界面)最新版本是 1.5.3， 但是appium GUI目前还只支持到iOS10以下基于UIAutomation框架的测试，而iOS10以后苹果已经更改为XCUITest了    我们项目中...">
   
   <meta property="og:type" content="article">
   <meta property="og:title" content="我的Appium踩坑之旅">
-  <meta property="og:description" content="背景      Appium目前最新的版本是 1.6.3 ，appium客户端(appium server的GUI图形化操作界面)最新版本是 1.5.3， 但是appium GUI目前支持的还只是iOS10以下的UIAutomation框架基础上测试，而iOS10以后苹果使用的却是基于XCUITest    我们...">
+  <meta property="og:description" content="背景      Appium目前最新的版本是 1.6.3 ，appium客户端(appium server的GUI图形化操作界面)最新版本是 1.5.3， 但是appium GUI目前还只支持到iOS10以下基于UIAutomation框架的测试，而iOS10以后苹果已经更改为XCUITest了    我们项目中...">
   
   <link rel="icon" type="image/png" href="/assets/images/favicon.png" />
   <link href="/assets/images/favicon.png" rel="shortcut icon" type="image/png">
@@ -140,13 +140,13 @@
 
 <ol>
   <li>
-    <p>Appium目前最新的版本是 1.6.3 ，appium客户端(appium server的GUI图形化操作界面)最新版本是 1.5.3， 但是appium GUI目前支持的还只是<strong>iOS10</strong>以下的<strong>UIAutomation</strong>框架基础上测试，而<strong>iOS10</strong>以后苹果使用的却是基于<strong>XCUITest</strong></p>
+    <p>Appium目前最新的版本是 1.6.3 ，appium客户端(appium server的GUI图形化操作界面)最新版本是 1.5.3， 但是appium GUI目前还只支持到<strong>iOS10</strong>以下基于<strong>UIAutomation</strong>框架的测试，而<strong>iOS10</strong>以后苹果已经更改为<strong>XCUITest</strong>了</p>
   </li>
-  <li>我们项目中想要做到开发代码无侵染的方式来达到自动化测试目的（这就需要通过Xpath的方式去查找页面元素）</li>
-  <li>项目是React Native开发的跨平台应用</li>
+  <li>我们项目中想要做到对开发代码无侵染的方式来达到自动化测试目的（这就需要通过xpath的方式去查找页面元素）</li>
+  <li>项目是使用React Native跨平台开发的应用</li>
 </ol>
 
-<p>综合这三个背景，并且iOS + React Native结合的相关资料又比较少，就注定我要在自动化测试的道路上踩坑，写这篇这个也是想给后面玩的同学们一个肯定回答：<strong>appium + iOS10.2 + Xcode8.2.1 +React Native</strong>即使不在代码加accessibilityLabel或TestID，就用Xpath照样玩得转</p>
+<p>综合这三个背景，并且iOS + React Native结合的相关资料又比较少，就注定我要在自动化测试的道路上踩坑，写这篇这个也是想给后面玩的同学们一个肯定回答：<strong>appium + iOS10.2 + Xcode8.2.1 +React Native</strong>即使不在代码加accessibilityLabel或TestID，就用xpath照样玩得转</p>
 
 <h3 id="开发环境">开发环境</h3>
 
@@ -398,10 +398,10 @@ sudo gem install xcpretty
 
  	Server端成功运行：
 
- 	<img src="/assets/image/appium/appium_server.png" alt="" />
+ 	<img src="/assets/image/appium-install/appium_server.png" alt="" />
  	Client端成功运行:
 
- 	<img src="/assets/image/appium/appium_client.png" alt="" />
+ 	<img src="/assets/image/appium-install/appium_client.png" alt="" />
 
  	 要成功运行，得满足以下条件：
 
@@ -417,7 +417,7 @@ sudo gem install xcpretty
 
 <p>下图便是appium inspector+Xcode7.3.1+iOS9.3上react native页面元素，后面和android端同事比对下xpath路径，发现iOS这边路径明显比安卓短很多，后面通过app-inspector获取到也是要长很多，应该appium inspector对rn的适配还没那么好导致的。</p>
 
-<p><img src="/assets/image/appium/inspector.png" alt="" /></p>
+<p><img src="/assets/image/appium-install/inspector.png" alt="" /></p>
 
 <p>解决方法：app-inspector检查元素得到xpath即可正常输入。（尝试过WebDriveAgent获取xpath，rn页面整个是个label文字显示；也尝试过查找键盘上对应健再click，速度太慢不能接受）</p>
 
@@ -426,7 +426,7 @@ sudo gem install xcpretty
 <div class="highlighter-rouge"><pre class="highlight"><code> app-inspector -u &lt;设备/模拟器UDID&gt;  //加 --verbose可查看详情
 </code></pre>
 </div>
-<p><img src="/assets/image/appium/app-inspector.png" alt="" /></p>
+<p><img src="/assets/image/appium-install/app-inspector.png" alt="" /></p>
 
 <h4 id="2-app-inspector模拟器运行报错">2. app-inspector模拟器运行报错</h4>
 
@@ -456,7 +456,7 @@ sudo gem install xcpretty
 <p>遇到这样问题可按这里配置下环境试试<a href="https://macacajs.github.io/zh/environment-setup">macaca环境配置</a></p>
 
 <p>成功运行之后就是可以看到下图，并且会自动打开浏览器，load模拟器或者真机。
- <img src="/assets/image/appium/app-inspector-client.png" alt="" /></p>
+ <img src="/assets/image/appium-install/app-inspector-client.png" alt="" /></p>
 
 <h4 id="3-app-inspector真机运行报错">3. app-inspector真机运行报错</h4>
 
@@ -582,7 +582,7 @@ sudo gem install xcpretty
             <section class="footer">
     <footer>
     	<span class="footer__copyright">本站点采用<a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享 署名-非商业性使用-相同方式共享 4.0 国际 许可协议</a></span>
-        <span class="footer__copyright">由 <a href="https://jekyllrb.com">Jekyll</a> 于 2017-03-18 生成，感谢 <a href="https://pages.github.com">Github Pages</a> 为本站提供稳定的 VPS 服务</span>
+        <span class="footer__copyright">由 <a href="https://jekyllrb.com">Jekyll</a> 于 2017-03-23 生成，感谢 <a href="https://pages.github.com">Github Pages</a> 为本站提供稳定的 VPS 服务</span>
         <span class="footer__copyright">本站由 <a href="http://gcgbz.com.cn">@iSteven</a> 创建，采用 <a href="https://github.com/onevcat/vno-jekyll">Vno - Jekyll</a> 作为主题，您可以在 GitHub 找到<a href="https://github.com/onevcat/OneV-s-Den">本站源码</a> - &copy; 2017</span>
     </footer>
 </section>

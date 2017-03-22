@@ -5,8 +5,8 @@
     <description>记录自己的点滴</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sat, 18 Mar 2017 22:55:13 +0800</pubDate>
-    <lastBuildDate>Sat, 18 Mar 2017 22:55:13 +0800</lastBuildDate>
+    <pubDate>Thu, 23 Mar 2017 00:29:59 +0800</pubDate>
+    <lastBuildDate>Thu, 23 Mar 2017 00:29:59 +0800</lastBuildDate>
     <generator>Jekyll v3.4.0</generator>
     
       <item>
@@ -150,13 +150,13 @@ File &quot;guiyang_register2.py&quot;, line 40, in setUp
 
 &lt;ol&gt;
   &lt;li&gt;
-    &lt;p&gt;Appium目前最新的版本是 1.6.3 ，appium客户端(appium server的GUI图形化操作界面)最新版本是 1.5.3， 但是appium GUI目前支持的还只是&lt;strong&gt;iOS10&lt;/strong&gt;以下的&lt;strong&gt;UIAutomation&lt;/strong&gt;框架基础上测试，而&lt;strong&gt;iOS10&lt;/strong&gt;以后苹果使用的却是基于&lt;strong&gt;XCUITest&lt;/strong&gt;&lt;/p&gt;
+    &lt;p&gt;Appium目前最新的版本是 1.6.3 ，appium客户端(appium server的GUI图形化操作界面)最新版本是 1.5.3， 但是appium GUI目前还只支持到&lt;strong&gt;iOS10&lt;/strong&gt;以下基于&lt;strong&gt;UIAutomation&lt;/strong&gt;框架的测试，而&lt;strong&gt;iOS10&lt;/strong&gt;以后苹果已经更改为&lt;strong&gt;XCUITest&lt;/strong&gt;了&lt;/p&gt;
   &lt;/li&gt;
-  &lt;li&gt;我们项目中想要做到开发代码无侵染的方式来达到自动化测试目的（这就需要通过Xpath的方式去查找页面元素）&lt;/li&gt;
-  &lt;li&gt;项目是React Native开发的跨平台应用&lt;/li&gt;
+  &lt;li&gt;我们项目中想要做到对开发代码无侵染的方式来达到自动化测试目的（这就需要通过xpath的方式去查找页面元素）&lt;/li&gt;
+  &lt;li&gt;项目是使用React Native跨平台开发的应用&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;p&gt;综合这三个背景，并且iOS + React Native结合的相关资料又比较少，就注定我要在自动化测试的道路上踩坑，写这篇这个也是想给后面玩的同学们一个肯定回答：&lt;strong&gt;appium + iOS10.2 + Xcode8.2.1 +React Native&lt;/strong&gt;即使不在代码加accessibilityLabel或TestID，就用Xpath照样玩得转&lt;/p&gt;
+&lt;p&gt;综合这三个背景，并且iOS + React Native结合的相关资料又比较少，就注定我要在自动化测试的道路上踩坑，写这篇这个也是想给后面玩的同学们一个肯定回答：&lt;strong&gt;appium + iOS10.2 + Xcode8.2.1 +React Native&lt;/strong&gt;即使不在代码加accessibilityLabel或TestID，就用xpath照样玩得转&lt;/p&gt;
 
 &lt;h3 id=&quot;开发环境&quot;&gt;开发环境&lt;/h3&gt;
 
@@ -408,10 +408,10 @@ sudo gem install xcpretty
 
  	Server端成功运行：
 
- 	&lt;img src=&quot;/assets/image/appium/appium_server.png&quot; alt=&quot;&quot; /&gt;
+ 	&lt;img src=&quot;/assets/image/appium-install/appium_server.png&quot; alt=&quot;&quot; /&gt;
  	Client端成功运行:
 
- 	&lt;img src=&quot;/assets/image/appium/appium_client.png&quot; alt=&quot;&quot; /&gt;
+ 	&lt;img src=&quot;/assets/image/appium-install/appium_client.png&quot; alt=&quot;&quot; /&gt;
 
  	 要成功运行，得满足以下条件：
 
@@ -427,7 +427,7 @@ sudo gem install xcpretty
 
 &lt;p&gt;下图便是appium inspector+Xcode7.3.1+iOS9.3上react native页面元素，后面和android端同事比对下xpath路径，发现iOS这边路径明显比安卓短很多，后面通过app-inspector获取到也是要长很多，应该appium inspector对rn的适配还没那么好导致的。&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/assets/image/appium/inspector.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/image/appium-install/inspector.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;解决方法：app-inspector检查元素得到xpath即可正常输入。（尝试过WebDriveAgent获取xpath，rn页面整个是个label文字显示；也尝试过查找键盘上对应健再click，速度太慢不能接受）&lt;/p&gt;
 
@@ -436,7 +436,7 @@ sudo gem install xcpretty
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; app-inspector -u &amp;lt;设备/模拟器UDID&amp;gt;  //加 --verbose可查看详情
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
-&lt;p&gt;&lt;img src=&quot;/assets/image/appium/app-inspector.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/image/appium-install/app-inspector.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;h4 id=&quot;2-app-inspector模拟器运行报错&quot;&gt;2. app-inspector模拟器运行报错&lt;/h4&gt;
 
@@ -466,7 +466,7 @@ sudo gem install xcpretty
 &lt;p&gt;遇到这样问题可按这里配置下环境试试&lt;a href=&quot;https://macacajs.github.io/zh/environment-setup&quot;&gt;macaca环境配置&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;成功运行之后就是可以看到下图，并且会自动打开浏览器，load模拟器或者真机。
- &lt;img src=&quot;/assets/image/appium/app-inspector-client.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+ &lt;img src=&quot;/assets/image/appium-install/app-inspector-client.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;h4 id=&quot;3-app-inspector真机运行报错&quot;&gt;3. app-inspector真机运行报错&lt;/h4&gt;
 
