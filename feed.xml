@@ -5,144 +5,9 @@
     <description>记录自己的点滴</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Thu, 23 Mar 2017 00:29:59 +0800</pubDate>
-    <lastBuildDate>Thu, 23 Mar 2017 00:29:59 +0800</lastBuildDate>
-    <generator>Jekyll v3.4.0</generator>
-    
-      <item>
-        <title>Appium FAQ</title>
-        <description>&lt;p&gt;Q1: 真机运行报无法安装错误&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;环境：xcode7.3.1+appium1.5.3+iOS8.4&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;desired_capabilities设置如下：&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;app = 'com.tzbank.pingAnFF'
-self.driver = webdriver.Remote(
-	command_executor='http://127.0.0.1:4723/wd/hub',
-	desired_capabilities={
-		'deviceName': 'iPhone 6',
-		'app': app,
-		'platformName': 'iOS',                                   
-		'udid':'26900f10fd440aa0acf68a60d11046fcddfac054
-		#b0bd8418fd45d05837514c16d576a5c79ebb4c89 77625565e253cb0cbb42c6b19eb3b1f72b71e52f
-   })
-
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;错误log如下：&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Traceback (most recent call last):
-  File &quot;guiyang_register.py&quot;, line 38, in setUp
-    'udid':'26900f10fd440aa0acf68a60d11046fcddfac054'
-  File &quot;/usr/local/lib/python2.7/site-packages/appium/webdriver/webdriver.py&quot;, line 36, in __init__
-    super(WebDriver, self).__init__(command_executor, desired_capabilities, browser_profile, proxy, keep_alive)
-  File &quot;/usr/local/lib/python2.7/site-packages/selenium/webdriver/remote/webdriver.py&quot;, line 90, in __init__
-    self.start_session(desired_capabilities, browser_profile)
-  File &quot;/usr/local/lib/python2.7/site-packages/selenium/webdriver/remote/webdriver.py&quot;, line 177, in start_session
-    response = self.execute(Command.NEW_SESSION, capabilities)
-  File &quot;/usr/local/lib/python2.7/site-packages/selenium/webdriver/remote/webdriver.py&quot;, line 236, in execute
-    self.error_handler.check_response(response)
-  File &quot;/usr/local/lib/python2.7/site-packages/selenium/webdriver/remote/errorhandler.py&quot;, line 192, in check_response
-    raise exception_class(message, screen, stacktrace)
-WebDriverException: Message: An unknown server-side error occurred while processing the command. Original error: Installing com.tzbank.pingAnFF failed
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;Q2:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Traceback (most recent call last):
-File &quot;guiyang_register2.py&quot;, line 40, in setUp
-    'udid':'b0bd8418fd45d05837514c16d576a5c79ebb4c89'
-  File &quot;/Users/dengwenbo/Library/Python/2.7/lib/python/site-packages/appium/webdriver/webdriver.py&quot;, line 36, in __init__
-    super(WebDriver, self).__init__(command_executor, desired_capabilities, browser_profile, proxy, keep_alive)
-  	File &quot;/Library/Python/2.7/site-packages/selenium/webdriver/remote/webdriver.py&quot;, line 92, in __init__
-    self.start_session(desired_capabilities, browser_profile)
-  	File &quot;/Library/Python/2.7/site-packages/selenium/webdriver/remote/webdriver.py&quot;, line 179, in start_session
-    response = self.execute(Command.NEW_SESSION, capabilities)
-  	File &quot;/Library/Python/2.7/site-packages/selenium/webdriver/remote/webdriver.py&quot;, line 236, in execute
-    self.error_handler.check_response(response)
-  	File &quot;/Library/Python/2.7/site-packages/selenium/webdriver/remote/errorhandler.py&quot;, line 192, in check_response
-    raise exception_class(message, screen, stacktrace)
-	WebDriverException: Message: An unknown server-side error occurred while processing the command. Original error: Unable to start WebDriverAgent: Error: Command 'idevicedate -u b0bd8418fd45d05837514c16d576a5c79ebb4c89' exited with code 255
-
-
-	----------------------------------------------------------------------
-	Ran 1 test in 6.144s
-
-	FAILED (errors=1)
-	
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;解决办法，重新安装libimobiledevice&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;brew reinstall libimobiledevice --HEAD
-再执行 sudo chmod 777 /var/db/lockdown
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;Q3.&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[HTTP] --&amp;gt; POST /wd/hub/session 		{&quot;requiredCapabilities&quot;:{},&quot;desiredCapabilities&quot;:{&quot;udid&quot;:&quot;b0bd8418fd45d05837514c16d576a5c79ebb4c89&quot;,&quot;deviceName&quot;:&quot;iPhone 6s&quot;,&quot;app&quot;:&quot;com.tzbank.pingAnFF&quot;,&quot;platformName&quot;:&quot;iOS&quot;,&quot;automationName&quot;:&quot;xcuitest&quot;}}
-	[debug] [MJSONWP] Calling AppiumDriver.createSession() with args: [{&quot;udid&quot;:&quot;b0bd8418fd45d05837514c16d576a5c79ebb4c89&quot;,&quot;deviceName&quot;:&quot;iPhone 6s&quot;,&quot;app&quot;:&quot;com.tzbank.pingAnFF&quot;,&quot;platformName&quot;:&quot;iOS&quot;,&quot;automationName&quot;:&quot;xcuitest&quot;},{},null,null,null]
-	[Appium] Creating new XCUITestDriver session
-	[Appium] Capabilities:
-	[Appium]   udid: 'b0bd8418fd45d05837514c16d576a5c79ebb4c89'
-	[Appium]   deviceName: 'iPhone 6s'
-	[Appium]   app: 'com.tzbank.pingAnFF'
-	[Appium]   platformName: 'iOS'
-	[Appium]   automationName: 'xcuitest'
-	[debug] [XCUITest] XCUITestDriver version: 2.4.2
-	[BaseDriver] Session created with session id: 43857d7b-cbba-4ea1-bba0-28a3f4efa610
-	[debug] [XCUITest] Xcode version set to '8.2.1'
-	[debug] [XCUITest] iOS SDK Version set to '10.2'
-	[debug] [XCUITest] Available devices: b0bd8418fd45d05837514c16d576a5c79ebb4c89, b0bd8418fd45d05837514c16d576a5c79ebb4c89
-	[debug] [XCUITest] Creating iDevice object with udid b0bd8418fd45d05837514c16d576a5c79ebb4c89
-	[XCUITest] Determining device to run tests on: udid: 'b0bd8418fd45d05837514c16d576a5c79ebb4c89', real device: true
-	[debug] [XCUITest] App is an iOS bundle, will attempt to run as pre-existing
-	[debug] [iOSLog] Attempting iOS device log capture via libimobiledevice idevicesyslog
-	[debug] [iOSLog] Found idevicesyslog: '/usr/local/bin/idevicesyslog'
-	[XCUITest] Setting up real device
-	[XCUITest] Using WDA path: '/Users/dengwenbo/.nvm/versions/node/v6.9.5/lib/node_modules/appium/node_modules/appium-xcuitest-driver/WebDriverAgent'
-	[XCUITest] Using WDA agent: '/Users/dengwenbo/.nvm/versions/node/v6.9.5/lib/node_modules/appium/node_modules/appium-xcuitest-driver/WebDriverAgent/WebDriverAgent.xcodeproj'
-	[XCUITest] Launching WebDriverAgent on the device
-	[debug] [XCUITest] Carthage found: /usr/local/bin/carthage
-	[debug] [XCUITest] Killing hanging processes
-	[debug] [XCUITest] Using real device logger 'idevicesyslog'
-	[debug] [XCUITest] Beginning test with command 'xcodebuild build test -project /Users/dengwenbo/.nvm/versions/node/v6.9.5/lib/node_modules/appium/node_modules/appium-xcuitest-driver/WebDriverAgent/WebDriverAgent.xcodeproj -scheme WebDriverAgentRunner -destination id=b0bd8418fd45d05837514c16d576a5c79ebb4c89 -configuration Debug' in directory '/Users/dengwenbo/.nvm/versions/node/v6.9.5/lib/node_modules/appium/node_modules/appium-xcuitest-driver/WebDriverAgent'
-	[XCUITest] Waiting for WebDriverAgent to start on device
-	[debug] [XCUITest] Log file for xcodebuild test: /Users/dengwenbo/Library/Developer/Xcode/DerivedData/WebDriverAgent-hbhffnpetojvtsetwfwkjrmkaccw/Logs/Test/A576E8E1-FAF9-4BCF-9343-CDA670E7C4B2/Session-WebDriverAgentRunner-2017-03-03_220428-utKHCk.log
-	[debug] [WebDriverAgent] Device: Mar  3 22:04:35 iStevende-iPhone XCTRunner[20827] &amp;lt;Notice&amp;gt;: Running tests...
-	[debug] [WebDriverAgent] Device: Mar  3 22:04:35 iStevende-iPhone XCTRunner[20827] &amp;lt;Notice&amp;gt;: Continuing to run tests in the background with task ID 1
-	[debug] [XCUITest] Waiting for WebDriverAgent server to finish loading...
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;Q4： appium GUI 不支持iOS10 and later，并且iOS10以后苹果从UIAutomation改成XCUITest框架，之前通过appium1.5.3上inspector 通过UIAutomation获取的页面元素xpath在iOS10上不可用&lt;/p&gt;
-
-&lt;p&gt;解决办法：&lt;/p&gt;
-
-&lt;p&gt;通过安装app-inspector安装&lt;/p&gt;
-
-&lt;h3 id=&quot;参考资料&quot;&gt;参考资料&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;http://www.jianshu.com/p/05943804c25e&quot;&gt;http://www.jianshu.com/p/05943804c25e&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://testerhome.com&quot;&gt;testerhome论坛&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://github.com/appium/appium&quot;&gt;appium源码地址&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;http://appium.io/&quot;&gt;appium官网地址&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;http://appium.io/slate/cn/master/?ruby#about-appium&quot;&gt;appium中文说明文档&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-</description>
-        <pubDate>Sun, 26 Feb 2017 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2017/02/appium-exception/</link>
-        <guid isPermaLink="true">http://localhost:4000/2017/02/appium-exception/</guid>
-        
-        
-      </item>
+    <pubDate>Wed, 14 Jun 2017 22:40:43 +0800</pubDate>
+    <lastBuildDate>Wed, 14 Jun 2017 22:40:43 +0800</lastBuildDate>
+    <generator>Jekyll v3.4.3</generator>
     
       <item>
         <title>我的Appium踩坑之旅</title>
@@ -150,13 +15,13 @@ File &quot;guiyang_register2.py&quot;, line 40, in setUp
 
 &lt;ol&gt;
   &lt;li&gt;
-    &lt;p&gt;Appium目前最新的版本是 1.6.3 ，appium客户端(appium server的GUI图形化操作界面)最新版本是 1.5.3， 但是appium GUI目前还只支持到&lt;strong&gt;iOS10&lt;/strong&gt;以下基于&lt;strong&gt;UIAutomation&lt;/strong&gt;框架的测试，而&lt;strong&gt;iOS10&lt;/strong&gt;以后苹果已经更改为&lt;strong&gt;XCUITest&lt;/strong&gt;了&lt;/p&gt;
+    &lt;p&gt;Appium目前最新的版本是 1.6.3 ，appium客户端(appium server的GUI图形化操作界面)最新版本是 1.5.3， 但是appium GUI目前还只支持到&lt;code class=&quot;highlighter-rouge&quot;&gt;iOS10&lt;/code&gt;以下基于&lt;code class=&quot;highlighter-rouge&quot;&gt;UIAutomation&lt;/code&gt;框架的测试，而&lt;code class=&quot;highlighter-rouge&quot;&gt;iOS10&lt;/code&gt;以后苹果已经更改为&lt;code class=&quot;highlighter-rouge&quot;&gt;XCUITest&lt;/code&gt;了&lt;/p&gt;
   &lt;/li&gt;
-  &lt;li&gt;我们项目中想要做到对开发代码无侵染的方式来达到自动化测试目的（这就需要通过xpath的方式去查找页面元素）&lt;/li&gt;
+  &lt;li&gt;我们项目中想要做到对开发代码无侵染的方式来达到自动化测试的目的（这就需要通过xpath的方式去查找页面元素）&lt;/li&gt;
   &lt;li&gt;项目是使用React Native跨平台开发的应用&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;p&gt;综合这三个背景，并且iOS + React Native结合的相关资料又比较少，就注定我要在自动化测试的道路上踩坑，写这篇这个也是想给后面玩的同学们一个肯定回答：&lt;strong&gt;appium + iOS10.2 + Xcode8.2.1 +React Native&lt;/strong&gt;即使不在代码加accessibilityLabel或TestID，就用xpath照样玩得转&lt;/p&gt;
+&lt;p&gt;综合这三个背景，并且iOS + React Native结合的相关资料又比较少，就注定我要在自动化测试的道路上踩坑，写这篇这个也是想给后面玩的同学们一个肯定回答：&lt;code class=&quot;highlighter-rouge&quot;&gt;appium + iOS10.2 + Xcode8.2.1 + React Native&lt;/code&gt;即使不在代码加accessibilityLabel或TestID，就用xpath照样玩得转&lt;/p&gt;
 
 &lt;h3 id=&quot;开发环境&quot;&gt;开发环境&lt;/h3&gt;
 
@@ -177,24 +42,19 @@ File &quot;guiyang_register2.py&quot;, line 40, in setUp
 
 &lt;h3 id=&quot;环境搭建&quot;&gt;环境搭建&lt;/h3&gt;
 
-&lt;p&gt;经过一个星期的折腾，最终搭建满足以上两套框架测试的环境：&lt;/p&gt;
+&lt;p&gt;经过一个星期的折腾，最终搭建满足UIAutomation和XCUITest的测试环境：&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;iOS10&lt;/strong&gt; 以下支持UIAutomation&lt;/p&gt;
-
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;appium GUI1.5.3 + Xcode7.3.1(iOS9.3) + appium-python-client
-&lt;/code&gt;&lt;/pre&gt;
-    &lt;/div&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;iOS10&lt;/strong&gt; 以上支持XCUITest&lt;/p&gt;
-
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;appium1.6.3 + app-inspector + Xcode8.2.1(iOS10.2) + appium-python-client
-&lt;/code&gt;&lt;/pre&gt;
-    &lt;/div&gt;
-  &lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;iOS10&lt;/code&gt; 以下支持UIAutomation&lt;/li&gt;
 &lt;/ul&gt;
+
+  		appium GUI1.5.3 + Xcode7.3.1(iOS9.3) + appium-python-client
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;iOS10&lt;/code&gt; 以上支持XCUITest&lt;/li&gt;
+&lt;/ul&gt;
+
+ 		appium1.6.3 + app-inspector + Xcode8.2.1(iOS10.2) + appium-python-client
 
 &lt;h4 id=&quot;1-使用npm或cnpm安装appiumappium-doctor&quot;&gt;1. 使用npm或cnpm安装appium，appium-doctor&lt;/h4&gt;
 
@@ -203,26 +63,9 @@ $ install -g appium-doctor
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;p&gt;appium的安装有2个主要的过程&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;安装依赖包&lt;/li&gt;
-  &lt;li&gt;下载chromedriver&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;执行安装命令时出现：&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;npm WARN engine appium@1.6.3: 
-wanted: {&quot;node&quot;:&quot;&amp;gt;=4&quot;,&quot;npm&quot;:&quot;&amp;gt;=3&quot;} 
-(current: {&quot;node&quot;:&quot;4.4.7&quot;,&quot;npm&quot;:&quot;2.15.8&quot;})
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;警告，并且安装失败，此时只需执行 npm install -g npm 命令更新最新的npm，再次执行安装命令，就成功安装。&lt;/p&gt;
-
 &lt;h4 id=&quot;2-下载appium-gui&quot;&gt;2. 下载appium GUI&lt;/h4&gt;
 
-&lt;p&gt;appium和appium GUI只要安装其中一项就可以启动服务，但是如果要用到其中的inpector去检查元素的xpath，所以还是安装了&lt;/p&gt;
+&lt;p&gt;appium和appium GUI只要安装其中一项就可以启动服务，但是如果要用到其中的inspector去检查元素的xpath，所以还是安装了&lt;/p&gt;
 
 &lt;p&gt;&lt;a href=&quot;https://bitbucket.org/appium/appium.app/downloads/&quot;&gt;下载地址&lt;/a&gt;&lt;/p&gt;
 
@@ -250,23 +93,24 @@ info AppiumDoctor  ✔ Bin directory of $JAVA_HOME is set
 info AppiumDoctor ### Diagnostic completed, no fix needed. ###
 info AppiumDoctor 
 info AppiumDoctor Everything looks good, bye!
-info AppiumDoctor 
+info AppiumDoctor
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
+
 &lt;p&gt;环境常见问题解决：&lt;/p&gt;
 
 &lt;ul&gt;
   &lt;li&gt;
     &lt;p&gt;✖ Xcode Command Line Tools are NOT installed!&lt;/p&gt;
 
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ xcode-select --install   #按照提示安装即可
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; $ xcode-select --install   #按照提示安装即可
 &lt;/code&gt;&lt;/pre&gt;
     &lt;/div&gt;
   &lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;✖ Carthage was NOT found!&lt;/p&gt;
 
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ brew install carthage    #carthage：类似cocoapods管理第三方代 码，自动将工程编译为动态库，所以仅支持iOS8以上
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; $ brew install carthage    #carthage：类似cocoapods管理第三方代码，自动将工程编译为动态库，所以仅支持iOS8以上
 &lt;/code&gt;&lt;/pre&gt;
     &lt;/div&gt;
   &lt;/li&gt;
@@ -284,71 +128,77 @@ info AppiumDoctor
   &lt;li&gt;
     &lt;p&gt;在.bash_profile/.zshrc文件中设置JAVA和Android环境变量&lt;/p&gt;
 
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;#android sdk
-export ANDROID_HOME=~/Library/Android/sdk
-export PATH=&quot;$HOME/.yarn/bin:$PATH&quot;
-
-#java_home
-export JAVA_HOME=$(/usr/libexec/java_home)
-export PATH=$JAVA_HOME/bin:$PATH
-export CLASS_PATH=$JAVA_HOME/lib
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  #android sdk
+  export ANDROID_HOME=~/Library/Android/sdk
+  export PATH=&quot;$HOME/.yarn/bin:$PATH&quot;
+  #java_home
+  export JAVA_HOME=$(/usr/libexec/java_home)
+  export PATH=$JAVA_HOME/bin:$PATH
+  export CLASS_PATH=$JAVA_HOME/lib
 &lt;/code&gt;&lt;/pre&gt;
     &lt;/div&gt;
-    &lt;h4 id=&quot;4-安装appium-client端&quot;&gt;4. 安装appium client端&lt;/h4&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
 
+&lt;h4 id=&quot;4-安装appium-client端&quot;&gt;4. 安装appium client端&lt;/h4&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;appium client有ruby，python，java三个版本，可自行选择自己喜欢的安装即可&lt;/p&gt;
+&lt;/blockquote&gt;
+
 &lt;h5 id=&quot;python版&quot;&gt;python版&lt;/h5&gt;
 
-&lt;ol&gt;
+&lt;ul&gt;
   &lt;li&gt;
     &lt;p&gt;pip安装&lt;/p&gt;
 
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; pip install Appium-Python-Client
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;pip install Appium-Python-Client
 &lt;/code&gt;&lt;/pre&gt;
     &lt;/div&gt;
   &lt;/li&gt;
-&lt;/ol&gt;
+&lt;/ul&gt;
 
-&lt;p&gt;如果安装过程出现 &lt;strong&gt;could not create ‘/Library/Python/2.7/site-packages/appium’: Permission denied&lt;/strong&gt; 错误，&lt;/p&gt;
+&lt;p&gt;如果安装过程出现 could not create ‘/Library/Python/2.7/site-packages/appium’: Permission denied 错误，&lt;/p&gt;
 
-&lt;p&gt;使用 &lt;strong&gt;pip install Appium-Python-Client –user&lt;/strong&gt; 命令可以安装成功&lt;/p&gt;
+&lt;p&gt;使用 pip install Appium-Python-Client –user 命令可以安装成功&lt;/p&gt;
 
-&lt;ol&gt;
-  &lt;li&gt;源码安装&lt;/li&gt;
-&lt;/ol&gt;
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;源码安装&lt;/p&gt;
 
-&lt;p&gt;在Pipy上下载源码安装&lt;/p&gt;
+    &lt;p&gt;在Pipy上下载源码安装&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  tar -xvf Appium-Python-Client-X.X.tar.gz
-  cd Appium-Python-Client-X.X
-  python setup.py install
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;tar -xvf Appium-Python-Client-X.X.tar.gz
+cd Appium-Python-Client-X.X
+python setup.py install
 &lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;github安装&lt;/p&gt;
 
-&lt;ol&gt;
-  &lt;li&gt;github安装&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  git clone git@github.com:appium/python-client.git
-  cd python-client
-  python setup.py install
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git clone git@github.com:appium/python-client.git
+cd python-client
+python setup.py install
 &lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
 &lt;h5 id=&quot;ruby版一定要在线安装&quot;&gt;ruby版（一定要在线安装）&lt;/h5&gt;
 
 &lt;p&gt;ruby的appium client叫做appium lib，为什么是这样就不解释了，总之是历史原因。&lt;/p&gt;
 
 &lt;p&gt;首先update rubygem和bundler(说老实话，真的不需要，但官方文档上这么写)&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  gem update --system 
-  gem update bundler
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;gem update --system 
+gem update bundler
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;然后使用gem安装&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  gem uninstall -aIx appium_lib \\(这个也不是必须的)
-  gem install --no-rdoc --no-ri appium_lib
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;gem uninstall -aIx appium_lib \\(这个也不是必须的)
+gem install --no-rdoc --no-ri appium_lib
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;h5 id=&quot;java版在线安装&quot;&gt;java版（在线安装）&lt;/h5&gt;
@@ -356,15 +206,15 @@ export CLASS_PATH=$JAVA_HOME/lib
 &lt;p&gt;java的话用maven安装就可以了&lt;/p&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &amp;lt;dependency&amp;gt;
-     &amp;lt;groupId&amp;gt;io.appium&amp;lt;/groupId&amp;gt;
-     &amp;lt;artifactId&amp;gt;java-client&amp;lt;/artifactId&amp;gt;
-     &amp;lt;version&amp;gt;1.3.0&amp;lt;/version&amp;gt;
-  &amp;lt;/dependency&amp;gt;
+       &amp;lt;groupId&amp;gt;io.appium&amp;lt;/groupId&amp;gt;
+       &amp;lt;artifactId&amp;gt;java-client&amp;lt;/artifactId&amp;gt;
+       &amp;lt;version&amp;gt;1.3.0&amp;lt;/version&amp;gt;
+    &amp;lt;/dependency&amp;gt;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;也可以自己下载jar包，请自行选择最新版本。&lt;/p&gt;
 
-&lt;h4 id=&quot;5-其他相关安装真机调试需要&quot;&gt;5. 其他相关安装(真机调试需要)&lt;/h4&gt;
+&lt;h4 id=&quot;5-其他相关安装&quot;&gt;5. 其他相关安装&lt;/h4&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;brew install libimobiledevice --HEAD
 brew install ideviceinstaller 
@@ -372,46 +222,47 @@ npm install -g ios-deploy
 sudo gem install xcpretty
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
-&lt;h4 id=&quot;6-安装app-inspectorios10以上系统获取页面元素xpath&quot;&gt;6. 安装app-inspector（iOS10以上系统获取页面元素Xpath）&lt;/h4&gt;
+
+&lt;h4 id=&quot;6-安装app-inspector&quot;&gt;6. 安装app-inspector&lt;/h4&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;npm install app-inspector -g
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
+
 &lt;p&gt;到这里所有相关的环境就已经安装好了，下面就可以开始撸起袖子干了，也是大家的踩坑时间了&lt;/p&gt;
 
 &lt;p&gt;如果以上安装还有问题，可以参考：&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&quot;https://testerhome.com/topics/6962&quot;&gt;在 MAC 上搭建 appium1.6.3 过程&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;http://www.jianshu.com/p/05943804c25e&quot;&gt;appium1-macOS10.12下如何丝滑的使用appium?&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://testerhome.com/topics/6962&quot;&gt;在 MAC 上搭建 appium1.6.3 过程&lt;/a&gt;
+&lt;a href=&quot;http://www.jianshu.com/p/05943804c25e&quot;&gt;appium1-macOS10.12下如何丝滑的使用appium?&lt;/a&gt;&lt;/p&gt;
 
 &lt;h3 id=&quot;运行demo&quot;&gt;运行Demo&lt;/h3&gt;
 
 &lt;ol&gt;
   &lt;li&gt;&lt;a href=&quot;https://github.com/appium/sample-code&quot;&gt;下载demo&lt;/a&gt;。&lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;启动appium 服务&lt;/p&gt;
-
-    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;
-  	 appium
-  	&lt;/code&gt;&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;cd到&lt;strong&gt;sample-code-master/sample-code/examples/python&lt;/strong&gt;目录下，运行下面命令就可以成功运行示例了&lt;/p&gt;
-
-    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;
- 	 python ios_simple.py
- 	&lt;/code&gt;
- 	成功运行截图：&lt;/p&gt;
-  &lt;/li&gt;
+  &lt;li&gt;启动appium 服务&lt;/li&gt;
 &lt;/ol&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; appium
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;ol&gt;
+  &lt;li&gt;cd到&lt;code class=&quot;highlighter-rouge&quot;&gt;sample-code-master/sample-code/examples/python&lt;/code&gt;目录下，运行下面命令就可以成功运行示例了&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; python ios_simple.py
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+ 	成功运行截图：
 
  	Server端成功运行：
 
  	&lt;img src=&quot;/assets/image/appium-install/appium_server.png&quot; alt=&quot;&quot; /&gt;
+
  	Client端成功运行:
 
- 	&lt;img src=&quot;/assets/image/appium-install/appium_client.png&quot; alt=&quot;&quot; /&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/image/appium-install/appium_client.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
  	 要成功运行，得满足以下条件：
 
@@ -421,52 +272,57 @@ sudo gem install xcpretty
 
 &lt;p&gt;到这里不出问题的话，恭喜你已经可以成功使用Appium自动化测试框架了&lt;/p&gt;
 
-&lt;h3 id=&quot;踩过的坑&quot;&gt;踩过的坑&lt;/h3&gt;
+&lt;h3 id=&quot;遇到的问题&quot;&gt;遇到的问题&lt;/h3&gt;
+
+&lt;p&gt;这个过程中磕磕绊绊碰到了不少问题，现在只能列出稍微还记得的一些问题吧。&lt;/p&gt;
 
 &lt;h4 id=&quot;1-通过appium-inspector-xpath获取到的react-native页面封装的textinput不能使用sendkeys或set_value输入&quot;&gt;1. 通过appium inspector Xpath获取到的React Native页面封装的TextInput不能使用sendkeys或set_Value输入。&lt;/h4&gt;
 
-&lt;p&gt;下图便是appium inspector+Xcode7.3.1+iOS9.3上react native页面元素，后面和android端同事比对下xpath路径，发现iOS这边路径明显比安卓短很多，后面通过app-inspector获取到也是要长很多，应该appium inspector对rn的适配还没那么好导致的。&lt;/p&gt;
+&lt;p&gt;下图便是appium inspector+Xcode7.3.1+iOS9.3上react native页面元素，后面和android端同事比对下xpath路径，发现iOS这边路径明显比安卓短很多，后面通过app-inspector获取到也是要长很多(获取到的是基于XCUITest的,元素都是以XCUIElementType标识)，也就是说只有appium基于UIAutomation的版本RN的‘textfield’不支持直接使用send_keys或set_value来输入，应该appium 1.5.3中inspector对rn的适配还没那么好导致的。&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/assets/image/appium-install/inspector.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;解决方法：app-inspector检查元素得到xpath即可正常输入。（尝试过WebDriveAgent获取xpath，rn页面整个是个label文字显示；也尝试过查找键盘上对应健再click，速度太慢不能接受）&lt;/p&gt;
+&lt;p&gt;解决方法：app-inspector检查元素得到xpath即可正常输入。（尝试过WebDriveAgent获取xpath，rn页面整个是个label文字显示；也尝试过查找键盘上对应键再click，速度太慢不能接受）&lt;/p&gt;
 
 &lt;p&gt;app-inspector使用方法:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; app-inspector -u &amp;lt;设备/模拟器UDID&amp;gt;  //加 --verbose可查看详情
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;app-inspector -u &amp;lt;设备/模拟器UDID&amp;gt;  //加 --verbose可查看详情
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
-&lt;p&gt;&lt;img src=&quot;/assets/image/appium-install/app-inspector.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/image/appium-install/app-inspector-client.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;h4 id=&quot;2-app-inspector模拟器运行报错&quot;&gt;2. app-inspector模拟器运行报错&lt;/h4&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; server.js:16:12 [master] pid:32216 server start with config:
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;server.js:16:12 [master] pid:32216 server start with config:
 	{ port: 5678,
 	verbose: true,
 	udid: 'DC8E88DF-EDA7-487A-9D34-77AA58B3ADB5',
 	ip: '10.180.185.87',
 	host: 'iStevendeMacBook-Pro.local',
 	loaded_time: '2017-02-27 16:42:19' }
-	app-inspector.js:42:10 [master] pid:32216 server start at: http://10.180.185.87:5678
-	xctest-client.js:56:14 [master] pid:32216 project path: /Users/iSteven/.nvm/versions/node/v6.3.1/lib/node_modules/app-inspector/node_modules/xctest-client/node_modules/webdriveragent/WebDriverAgent/WebDriverAgent.xcodeproj
+app-inspector.js:42:10 [master] pid:32216 server start at: http://10.180.185.87:5678
+xctest-client.js:56:14 [master] pid:32216 project path: /Users/iSteven/.nvm/versions/node/v6.3.1/lib/node_modules/app-inspector/node_modules/xctest-client/node_modules/webdriveragent/WebDriverAgent/WebDriverAgent.xcodeproj
 	xctest-client start with port: 8900
-	xctest-client.js:233:14 [master] pid:32216 xcode version: 7.3.1
+xctest-client.js:233:14 [master] pid:32216 xcode version: 7.3.1
 	WebDriverAgent version: 1.0.41
-	xctest-client.js:99:16 [master] pid:32216 tail: /Users/iSteven/Library/Logs/CoreSimulator/DC8E88DF-EDA7-487A-9D34-77AA58B3ADB5/system.log: No such file or directory
-	xctest-client.js:107:16 [master] pid:32216 simulator log process exit with code: 1, signal: null
-	xctest-client.js:255:14 [master] pid:32216 Fail to start xctest: undefined
-	xctest-client.js:267:14 [master] pid:32216 killing deviceLogProc pid: 32220
-	xctest-client.js:272:14 [master] pid:32216 killing runnerProc pid: 32221
-	app-inspector:66:44 [master] pid:32216 undefined
-	xctest-client.js:181:14 [master] pid:32216 xctest client exit with code: null, signal: SIGKILL
+xctest-client.js:99:16 [master] pid:32216 tail: /Users/iSteven/Library/Logs/CoreSimulator/DC8E88DF-EDA7-487A-9D34-77AA58B3ADB5/system.log: No such file or directory
+xctest-client.js:107:16 [master] pid:32216 simulator log process exit with code: 1, signal: null
+xctest-client.js:255:14 [master] pid:32216 Fail to start xctest: undefined
+xctest-client.js:267:14 [master] pid:32216 killing deviceLogProc pid: 32220
+xctest-client.js:272:14 [master] pid:32216 killing runnerProc pid: 32221
+app-inspector:66:44 [master] pid:32216 undefined
+xctest-client.js:181:14 [master] pid:32216 xctest client exit with code: null, signal: SIGKILL
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
+
 &lt;p&gt;这个问题还去提了issue，但是后面自己卸载再重装就好了,也不知道是什么东西没装好还是咋的，希望有清楚的可以回答下&lt;/p&gt;
 
 &lt;p&gt;遇到这样问题可按这里配置下环境试试&lt;a href=&quot;https://macacajs.github.io/zh/environment-setup&quot;&gt;macaca环境配置&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;成功运行之后就是可以看到下图，并且会自动打开浏览器，load模拟器或者真机。
- &lt;img src=&quot;/assets/image/appium-install/app-inspector-client.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;成功运行之后就是可以看到下图，并且会自动打开浏览器，load模拟器或者真机。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/image/appium-install/app-inspector.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;h4 id=&quot;3-app-inspector真机运行报错&quot;&gt;3. app-inspector真机运行报错&lt;/h4&gt;
 
@@ -488,19 +344,14 @@ sudo gem install xcpretty
 	13  libsystem_pthread.dylib             0x00007fffacfdb712 _pthread_wqthread + 1299
 	14  libsystem_pthread.dylib             0x00007fffacfdb1ed start_wqthread + 13
 	), NSLocalizedRecoverySuggestion=This application's 	application-identifier entitlement does not match that of the installed application. These values must match for an upgrade to be allowed., NSLocalizedDescription=App installation failed}
-
 	&amp;gt;&amp;gt; xctest-client.js:171:14 [master] pid:11850 please check project: /Users/iSteven/.nvm/versions/node/v6.3.1/lib/node_modules/app-inspector/node_modules/webdriveragent/WebDriverAgent/WebDriverAgent.xcodeproj
 	&amp;gt;&amp;gt; xctest-client.js:170:14 [master] pid:11850 2017-03-03 16:09:44.301 xcodebuild[11856:248062] Error Domain=IDETestOperationsObserverErrorDomain Code=5 &quot;Early unexpected exit, operation never finished bootstrapping - no restart will be attempted&quot; UserInfo={NSLocalizedDescription=Early unexpected exit, operation never finished bootstrapping - no restart will be attempted}
-
 	&amp;gt;&amp;gt; xctest-client.js:171:14 [master] pid:11850 please check project: /Users/iSteven/.nvm/versions/node/v6.3.1/lib/node_modules/app-inspector/node_modules/webdriveragent/WebDriverAgent/WebDriverAgent.xcodeproj
 	&amp;gt;&amp;gt; xctest-client.js:170:14 [master] pid:11850 
 	Testing failed:
 	Test target WebDriverAgentRunner encountered an error (Early unexpected exit, operation never finished bootstrapping - no restart will be attempted)
-
 	&amp;gt;&amp;gt; xctest-client.js:171:14 [master] pid:11850 please check project: /Users/iSteven/.nvm/versions/node/v6.3.1/lib/node_modules/app-inspector/node_modules/webdriveragent/WebDriverAgent/WebDriverAgent.xcodeproj
 	&amp;gt;&amp;gt; xctest-client.js:170:14 [master] pid:11850 ** TEST FAILED **
-
-
 	&amp;gt;&amp;gt; xctest-client.js:171:14 [master] pid:11850 please check project: /Users/iSteven/.nvm/versions/node/v6.3.1/lib/node_modules/app-inspector/node_modules/webdriveragent/WebDriverAgent/WebDriverAgent.xcodeproj
 	&amp;gt;&amp;gt; xctest-client.js:267:14 [master] pid:11850 killing deviceLogProc pid: 11853
 	&amp;gt;&amp;gt; xctest-client.js:272:14 [master] pid:11850 killing runnerProc pid: 11856
@@ -515,13 +366,49 @@ sudo gem install xcpretty
 
 &lt;p&gt;捕捉关键信息&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &amp;gt;&amp;gt; xctest-client.js:171:14 [master] pid:11850 please check project: /Users/iSteven/.nvm/versions/node/v6.3.1/lib/node_modules/app-inspector/node_modules/webdriveragent/WebDriverAgent/WebDriverAgent.xcodeproj
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  	&amp;gt;&amp;gt; xctest-client.js:171:14 [master] pid:11850 please check project: /Users/iSteven/.nvm/versions/node/v6.3.1/lib/node_modules/app-inspector/node_modules/webdriveragent/WebDriverAgent/WebDriverAgent.xcodeproj
 	&amp;gt;&amp;gt; xctest-client.js:170:14 [master] pid:11850 
  2017-03-03 16:09:44.301 xcodebuild[11856:248062] Error Domain=com.apple.dtdevicekit Code=-402652994 &quot;App installation failed&quot; UserInfo={NSLocalizedFailureReason=This application's application-identifier entitlement does not match that of the installed application. These values must match for an upgrade to be allowed., 
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
 &lt;p&gt;从上面看就是bundle-id错误,进到WebDriverAgent工程目录下修改工程bundle-id重新运行即可&lt;/p&gt;
+
+&lt;h4 id=&quot;4-团队里有人因为先安装appium后再安装xcode获取不到xcode版本问题具体错误信息如下&quot;&gt;4. 团队里有人因为先安装Appium后再安装Xcode获取不到Xcode版本问题,具体错误信息如下：&lt;/h4&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;WebDriverException: Message: An unknown server-side error occurred while processing the command. Original error: Could not determine Xcode version: Could not get Xcode version. /Library/Developer/Info.plist does not exist on disk.
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;解决办法： 卸载Appium，重新安装&lt;/p&gt;
+
+&lt;h4 id=&quot;5-webdriveragent相关依赖安装出错&quot;&gt;5. WebDriverAgent相关依赖安装出错&lt;/h4&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[Xcode] 2017-04-05 16:09:12.331 xcodebuild[91135:3418654] Error Domain=IDEFoundationErrorDomain Code=1 &quot;Cannot launch simulated executable: no file found at /Users/Chetwyn/Library/Developer/Xcode/DerivedData/WebDriverAgent-cvqckynzuuktkogfpkkkgyompmoj/Build/Products/Debug-iphonesimulator/WebDriverAgentRunner-Runner.app&quot; UserInfo={NSLocalizedDescription=Cannot launch simulated executable: no file found at /Users/Chetwyn/Library/Developer/Xcode/DerivedData/WebDriverAgent-cvqckynzuuktkogfpkkkgyompmoj/Build/Products/Debug-iphonesimulator/WebDriverAgentRunner-Runner.app}
+[Xcode] 
+[Xcode] 2017-04-05 16:09:12.331 xcodebuild[91135:3418654] Error Domain=IDETestOperationsObserverErrorDomain Code=6 &quot;Early unexpected exit, operation never finished bootstrapping - no restart will be attempted&quot; UserInfo={NSLocalizedDescription=Early unexpected exit, operation never finished bootstrapping - no restart will be attempted}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/image/appium-install/wda.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;解决办法： 卸载appium-xcuitest-driver，重新安装,再执行./Scripts/bootstrap.sh -d&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;npm uninstall appium-xcuitest-driver
+nom install appium-xcuitest-driver
+./Scripts/bootstrap.sh -d
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h4 id=&quot;6-最近xcode升级到83-webdriveragent工程跑不起来报错误xcuisiriservice-is-partial-introduced-in-ios-103-xcuideviceh&quot;&gt;6. 最近Xcode升级到8.3， WebDriverAgent工程跑不起来，报错误：”XCUISiriService is partial: introduced in iOS 10.3 XCUIDevice.h”&lt;/h4&gt;
+
+&lt;p&gt;解决办法： 找到WebDriverAgent/Configurations/ProjectSettings.xcconfig文件，在原来
+&lt;code class=&quot;highlighter-rouge&quot;&gt;WARNING_CFLAGS = $(inherited) -Weverything -Wno-objc-missing-property-synthesis -Wno-unused-macros -Wno-disabled-macro-expansion -Wno-gnu-statement-expression -Wno-language-extension-token -Wno-overriding-method-mismatch -Wno-missing-variable-declarations -Rno-module-build -Wno-auto-import -Wno-objc-interface-ivars -Wno-documentation-unknown-command -Wno-reserved-id-macro -Wno-unused-parameter -Wno-gnu-conditional-omitted-operand -Wno-explicit-ownership-type -Wno-date-time -Wno-cast-align -Wno-cstring-format-directive -Wno-double-promotion -Wno-partial-availability&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;后面加上&lt;code class=&quot;highlighter-rouge&quot;&gt;-Wno-partial-availability&lt;/code&gt;即可&lt;/p&gt;
+
+&lt;p&gt;WebdirverAgent上相关issue： &lt;a href=&quot;https://github.com/facebook/WebDriverAgent/pull/525&quot;&gt;Silence unguarded availability warning from Xcode 8.3 #525&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;最后找到其解决的&lt;a href=&quot;https://github.com/facebook/WebDriverAgent/commit/16e9c8d90cc743d77355567a1a041dd608377d9e&quot;&gt;commit&lt;/a&gt;&lt;/p&gt;
 
 &lt;h3 id=&quot;参考资料&quot;&gt;参考资料&lt;/h3&gt;
 
@@ -534,164 +421,10 @@ sudo gem install xcpretty
   &lt;li&gt;&lt;a href=&quot;http://appium.io/slate/cn/master/?ruby#about-appium&quot;&gt;appium中文说明文档&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;http://www.jianshu.com/p/05943804c25e&quot;&gt;http://www.jianshu.com/p/05943804c25e&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
-
 </description>
         <pubDate>Sat, 25 Feb 2017 00:00:00 +0800</pubDate>
         <link>http://localhost:4000/2017/02/appium-install/</link>
         <guid isPermaLink="true">http://localhost:4000/2017/02/appium-install/</guid>
-        
-        
-      </item>
-    
-      <item>
-        <title>WebDriverAgent</title>
-        <description>&lt;ol&gt;
-  &lt;li&gt;
-    &lt;p&gt;下载WebDriverAgent&lt;/p&gt;
-
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; git clone https://github.com/facebook/WebDriverAgent.git
-&lt;/code&gt;&lt;/pre&gt;
-    &lt;/div&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;安装&lt;/p&gt;
-
-    &lt;p&gt;下载工程后还需通过Carthage安装工程相关的依赖，进到工程目录下，执行以下命令:&lt;/p&gt;
-
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; ./Scripts/bootstrap.sh -d
-&lt;/code&gt;&lt;/pre&gt;
-    &lt;/div&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;运行&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;模拟器&lt;/p&gt;
-
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  xcodebuild -project WebDriverAgent.xcodeproj \
-    -scheme WebDriverAgentRunner \
-    -destination 'platform=iOS Simulator,name=iPhone 6s' \
-    test
-&lt;/code&gt;&lt;/pre&gt;
-    &lt;/div&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;真机&lt;/p&gt;
-
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  xcodebuild -project WebDriverAgent.xcodeproj \
-    -scheme WebDriverAgentRunner \
-    -destination 'id=b0bd8418fd45d05837514c16d576a5c79ebb4c89' \
-    test
-&lt;/code&gt;&lt;/pre&gt;
-    &lt;/div&gt;
-
-    &lt;p&gt;执行完该条命令会发现在模拟器上安装了WebAgentRunner，控制台出现&lt;/p&gt;
-
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; ServerURLHere-&amp;gt;http://192.168.1.104:8100&amp;lt;-ServerURLHere 
-   
-   
- &amp;gt;&amp;gt; app-inspector:66:44 [master] pid:37931 undefined
-(node:37931) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 1): Error: &amp;gt;&amp;gt; app-inspector:66:44 [master] pid:37931 undefined
-&lt;/code&gt;&lt;/pre&gt;
-    &lt;/div&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-</description>
-        <pubDate>Thu, 23 Feb 2017 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2017/02/WebdriverAgent/</link>
-        <guid isPermaLink="true">http://localhost:4000/2017/02/WebdriverAgent/</guid>
-        
-        
-      </item>
-    
-      <item>
-        <title>appium的基本概念</title>
-        <description>&lt;p&gt;&lt;a href=&quot;http://www.cnblogs.com/nbkhic/p/3803830.html&quot;&gt;转载&lt;/a&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;1-clientserver-architecture&quot;&gt;1. Client/Server Architecture&lt;/h2&gt;
-
-&lt;p&gt;appium的核心其实是一个暴露了一系列REST API的server。&lt;/p&gt;
-
-&lt;p&gt;这个server的功能其实很简单：监听一个端口，然后接收由client发送来的command。翻译这些command，把这些command转成移动设备可以理解的形式发送给移动设备，然后移动设备执行完这些command后把执行结果返回给appium server，appium server再把执行结果返回给client。&lt;/p&gt;
-
-&lt;p&gt;在这里client其实就是发起command的设备，一般来说就是我们代码执行的机器，执行appium测试代码的机器。狭义点理解，可以把client理解成是代码，这些代码可以是java/ruby/python/js的，只要它实现了webdriver标准协议就可以。&lt;/p&gt;
-
-&lt;p&gt;这样的设计思想带来了一些好处：&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;可以带来多语言的支持；&lt;/li&gt;
-  &lt;li&gt;可以把server放在任意机器上，哪怕是云服务器都可以；（是的，appium和webdriver天生适合云测试）&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h2 id=&quot;2-session&quot;&gt;2. Session&lt;/h2&gt;
-
-&lt;p&gt;session就是一个会话，在webdriver/appium，你的所有工作永远都是在session start后才可以进行的。一般来说，通过POST /session这个URL，然后传入Desired Capabilities就可以开启session了。&lt;/p&gt;
-
-&lt;p&gt;开启session后，会返回一个全局唯一的session id，以后几乎所有的请求都必须带上这个session id，因为这个seesion id代表了你所打开的浏览器或者是移动设备的模拟器。&lt;/p&gt;
-
-&lt;p&gt;进一步思考一下，由于session id是全局唯一，那么在同一台机器上启动多个session就变成了可能，这也就是selenium gird所依赖的具体理论根据。&lt;/p&gt;
-
-&lt;h2 id=&quot;3-desired-capabilities&quot;&gt;3. Desired Capabilities&lt;/h2&gt;
-
-&lt;p&gt;Desired Capabilities携带了一些配置信息。从本质上讲，这个东东是key-value形式的对象。你可以理解成是java里的map，python里的字典，ruby里的hash以及js里的json对象。实际上Desired Capabilities在传输时就是json对象。&lt;/p&gt;
-
-&lt;p&gt;Desired Capabilities最重要的作用是告诉server本次测试的上下文。这次是要进行浏览器测试还是移动端测试？如果是移动端测试的话是测试android还是ios，如果测试android的话那么我们要测试哪个app？ server的这些疑问Desired Capabilities都必须给予解答，否则server不买账，自然就无法完成移动app或者是浏览器的启动。&lt;a href=&quot;http://appium.io/slate/en/v1.1.0/?ruby#caps.md&quot;&gt; capabilities doc &lt;/a&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;4-appium-server&quot;&gt;4. Appium Server&lt;/h2&gt;
-
-&lt;p&gt;这就是每次我们在命令行用appium命令打开的东西。&lt;/p&gt;
-
-&lt;h2 id=&quot;5-appium-clients&quot;&gt;5. Appium Clients&lt;/h2&gt;
-
-&lt;p&gt;由于原生的webdriver api是为web端设计的，因此在移动端用起来会有点不伦不类。appium官方提供了一套appium client，涵盖多种语言ruby/java/python，在我看来ruby client是实现最好的。在测试的时候，一般要使用这些client库去替换原生的webdriver库。这实际上不是替换，算是client对原生webdriver进行了一些移动端的扩展，加入了一些方便的方法，比如swipe之类，appium client让我们可以更方便的写出可读性更好的测试用例。&lt;/p&gt;
-
-&lt;p&gt;#6. Appium.app, Appium.exe&lt;/p&gt;
-
-&lt;p&gt;appium server的GUI版本，前者用在osx上，后者是windows上。可视化、不需要装node，可以看app的UI结构是这个东东的卖点。&lt;/p&gt;
-</description>
-        <pubDate>Mon, 20 Feb 2017 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2017/02/appium-architecture/</link>
-        <guid isPermaLink="true">http://localhost:4000/2017/02/appium-architecture/</guid>
-        
-        
-      </item>
-    
-      <item>
-        <title>appium介绍</title>
-        <description>&lt;p&gt;&lt;a href=&quot;http://www.cnblogs.com/nbkhic/p/3803804.html&quot;&gt;转载&lt;/a&gt;&lt;/p&gt;
-&lt;h2 id=&quot;appium简介&quot;&gt;appium简介&lt;/h2&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;appium是开源的移动端自动化测试框架；&lt;/li&gt;
-  &lt;li&gt;appium可以测试原生的、混合的、以及移动端的web项目；&lt;/li&gt;
-  &lt;li&gt;appium可以测试ios，android应用（当然了，还有firefox os）；&lt;/li&gt;
-  &lt;li&gt;appium是跨平台的，可以用在osx，windows以及linux桌面系统上；
-appium的哲学&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h2 id=&quot;appium的技术架构&quot;&gt;appium的技术架构&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;OS: Apple’s &lt;a href=&quot;https://developer.apple.com/library/ios/documentation/DeveloperTools/Reference/UIAutomationRef/_index.html&quot;&gt;UIAutomation&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;Android 4.2+: Google’s &lt;a href=&quot;http://developer.android.com/tools/help/uiautomator/index.html&quot;&gt;UiAutomator&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;Android 2.3+: Google’s &lt;a href=&quot;https://developer.android.com/reference/android/app/Instrumentation.html&quot;&gt;Instrumentation&lt;/a&gt;. (Instrumentation support is provided by bundling a separate project, &lt;a href=&quot;http://selendroid.io&quot;&gt;Selendroid&lt;/a&gt;)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;appium的设计思想&quot;&gt;appium的设计思想&lt;/h2&gt;
-
-&lt;p&gt;首先，为了能够实现哲学里描述的第2条，也就是不应该让移动端自动化测试限定在某种语言和某个具体的框架；也就是说任何人都可以使用自己最熟悉最顺手的语言以及框架来做移动端自动化测试；appium选择了client-server的设计模式。只要client能够发送http请求给server，那么的话client用什么语言来实现都是可以的，这就是appium及webdriver如何做到支持多语言的；&lt;/p&gt;
-
-&lt;p&gt;其次，为了能够实现不要为了移动端的自动化测试而重新发明轮子，重新写一套惊天动地的api；也就是说webdriver协议里的api已经够好了，拿来改进一下就可以了；这个思想，appium扩展了webdriver的协议，没有自己重新去实现一套。这样的好处是以前的webdriver api能够直接被继承过来，以前的webdriver各种语言的binding都可以拿来就用，省去了为每种语言开发一个client的工作量；&lt;/p&gt;
-
-&lt;p&gt;最后appium当然是开源的，这也实现了哲学思想里的最后一点。&lt;/p&gt;
-
-</description>
-        <pubDate>Sun, 19 Feb 2017 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2017/02/appium-introduce/</link>
-        <guid isPermaLink="true">http://localhost:4000/2017/02/appium-introduce/</guid>
         
         
       </item>
@@ -933,110 +666,6 @@ pod 'GTSDK'
       </item>
     
       <item>
-        <title>拆轮子系列(一)--PAFFSwizz</title>
-        <description>&lt;h3 id=&quot;代码片段一&quot;&gt;代码片段一&lt;/h3&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;/**
- *	@brief	所有进入我们webview的界面，默认返回
- */
-+ (void)swizzWebView
- {
-    Class class = [PAFFBaseWebViewController class];
-    SEL selector = @selector(viewWillAppear:);
-    SEL swizzledSelector = [PAFFSwizz swizzledSelectorForSelector:selector];
-    Method originalMethod = class_getInstanceMethod(class, selector);
-    
-    void (^swizzleBlock)(Class,BOOL) = ^(Class slf,BOOL animation) {
-        SEL newSEL = @selector(closeViewControllerWithAnimation:);
-        if ([class instancesRespondToSelector:newSEL]) {
-            ((void(*)(id, SEL,BOOL))objc_msgSend)(slf,newSEL,animation);
-        }else {
-           	((void(*)(id, SEL,BOOL))objc_msgSend)(slf,swizzledSelector,animation);
-        }
-    };
-    
-    [self replaceImplementationOfKnownSelector:selector onClass:class withBlock:swizzleBlock swizzledSelector:swizzledSelector];
-
-}
-
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;h3 id=&quot;代码片段二&quot;&gt;代码片段二&lt;/h3&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;#pragma mark - Swizz
-+ (SEL)swizzledSelectorForSelector:(SEL)selector
-{
-    return NSSelectorFromString([NSString stringWithFormat:@&quot;_ff_swizzle_%x_%@&quot;, arc4random(), NSStringFromSelector(selector)]);
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h3 id=&quot;代码片段三&quot;&gt;代码片段三&lt;/h3&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;+ (void)replaceImplementationOfKnownSelector:(SEL)originalSelector onClass:(Class)class withBlock:(id)block swizzledSelector:(SEL)swizzledSelector
-{
-    // This method is only intended for swizzling methods that are know to exist on the class.
-    // Bail if that isn't the case.
-    Method originalMethod = class_getInstanceMethod(class, originalSelector);
-    if (!originalMethod) {
-       	return;
-    }
-    
-    IMP implementation = imp_implementationWithBlock(block);
-    class_addMethod(class, swizzledSelector, implementation, method_getTypeEncoding(originalMethod));
-    Method newMethod = class_getInstanceMethod(class, swizzledSelector);
-   	method_exchangeImplementations(originalMethod, newMethod);
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;以上三个代码片段实现的效果就是：&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;通过runtime库中的&lt;strong&gt;class_addMethod&lt;/strong&gt;方法动态的为&lt;strong&gt;PAFFBaseWebViewController&lt;/strong&gt;类添加_ff_swizzle_xxxxx_viewWillAppear:实例方法&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;strong&gt;class_addMethod&lt;/strong&gt;方法原型：&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;   	/** 
- 	 * Adds a new method to a class with a given name 		and implementation.
- 	 * 
- 	 * @param cls The class to which to add a method.
- 	 * @param name A selector that specifies the name of the method being added.
- 	 * @param imp A function which is the implementation of the new method. The function must take at least two arguments—self and _cmd.
- 	 * @param types An array of characters that describe the types of the arguments to the method. 
- 	 * 
- 	 * @return YES if the method was added successfully, otherwise NO 
- 	 *  (for example, the class already contains a method implementation with that name).
- 	 *
- 	 * @note class_addMethod will add an override of a superclass's implementation, 
- 	 *  but will not replace an existing implementation in this class. 
- 	 *  To change an existing implementation, use method_setImplementation.
- 	 */
-	 OBJC_EXPORT BOOL class_addMethod(Class cls, SEL name, IMP imp, 
-                                 const char *types) 
-    OBJC_AVAILABLE(10.5, 2.0, 9.0, 1.0);）
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;通过imp_implementationWithBlock(swizzleBlock)方法，将代码片段一中的swizzleBlock作为参数传入，具体实现&lt;strong&gt;_ff_swizzle_xxxxx_viewWillAppear:&lt;/strong&gt;&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;通过调用&lt;strong&gt;method_exchangeImplementations&lt;/strong&gt;方法将&lt;strong&gt;PAFFBaseWebViewController&lt;/strong&gt;的&lt;strong&gt;viewWillAppear:&lt;/strong&gt;的实现替换为&lt;strong&gt;_ff_swizzle_xxxxx_viewWillAppear:&lt;/strong&gt;&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-</description>
-        <pubDate>Thu, 26 Jan 2017 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2017/01/oc-paff-swizz/</link>
-        <guid isPermaLink="true">http://localhost:4000/2017/01/oc-paff-swizz/</guid>
-        
-        
-      </item>
-    
-      <item>
         <title>React Native学习系列(二) Component生命周期</title>
         <description>&lt;blockquote&gt;
   &lt;p&gt;关于ReactNative的生命周期这块，我想之前写客户端的都，不管是安卓的Activity还是iOS的ViewController都有自己的生命周期方法，React Native的组件与之类似也有自己的生命周期回调函数，参考以下链接，有详细的介绍&lt;/p&gt;
@@ -1181,6 +810,906 @@ let b = 2;
         <pubDate>Fri, 05 Aug 2016 00:00:00 +0800</pubDate>
         <link>http://localhost:4000/2016/08/es6-var/</link>
         <guid isPermaLink="true">http://localhost:4000/2016/08/es6-var/</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>React Native学习系列(一) 环境搭建</title>
+        <description>&lt;h3 id=&quot;需安装工具&quot;&gt;需安装工具&lt;/h3&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;RN环境：&lt;/p&gt;
+
+    &lt;ul&gt;
+      &lt;li&gt;[必须] Node&lt;/li&gt;
+      &lt;li&gt;[必须] react-native-cli&lt;/li&gt;
+      &lt;li&gt;[可选] Node Package Manager(npm):node包管理工具,一般安装Node会带上npm
+ 	 * [可选] Node Version Manager(nvm):node版本管理工具
+ 	 * [可选] watchman
+ 	 * [可选] flow&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;iOS端：&lt;/p&gt;
+
+    &lt;ul&gt;
+      &lt;li&gt;[必须] Xcode&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;安卓端：&lt;/p&gt;
+
+    &lt;ul&gt;
+      &lt;li&gt;[必须] Java环境&lt;/li&gt;
+      &lt;li&gt;[必须] Android Studio&lt;/li&gt;
+      &lt;li&gt;[必须] Android SDK&lt;/li&gt;
+      &lt;li&gt;[必须] ANDROID_HOME环境变量&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;安装&quot;&gt;安装&lt;/h3&gt;
+
+&lt;h4 id=&quot;node环境&quot;&gt;Node环境&lt;/h4&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;Node安装&lt;/p&gt;
+
+    &lt;blockquote&gt;
+      &lt;p&gt;React Native需要NodeJS 4.0或更高版本。&lt;/p&gt;
+    &lt;/blockquote&gt;
+
+    &lt;p&gt;homebrew安装：&lt;/p&gt;
+
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;brew install node
+&lt;/code&gt;&lt;/pre&gt;
+    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;react-native-cli安装&lt;/p&gt;
+
+    &lt;blockquote&gt;
+      &lt;p&gt;React Native的命令行工具用于执行创建、初始化、更新项目、运行打包服务（packager）等任务&lt;/p&gt;
+    &lt;/blockquote&gt;
+
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; npm install -g react-native-cli
+&lt;/code&gt;&lt;/pre&gt;
+    &lt;/div&gt;
+
+    &lt;p&gt;如果你看到&lt;strong&gt;EACCES: permission denied&lt;/strong&gt;这样的权限报错，那么请参照上文的homebrew译注，修复/usr/local目录的所有权：&lt;/p&gt;
+
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; sudo chown -R `whoami` /usr/local
+&lt;/code&gt;&lt;/pre&gt;
+    &lt;/div&gt;
+
+    &lt;p&gt;或者直接使用sudo命令安装&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;nvm安装&lt;/p&gt;
+
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;brew install nvm
+&lt;/code&gt;&lt;/pre&gt;
+    &lt;/div&gt;
+
+    &lt;p&gt;安装完后，会出现以下提示，按照提醒操作就可&lt;/p&gt;
+
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;	You should create NVM's working director y if it doesn't exist:
+  	mkdir ~/.nvm
+ Add the following to ~/.zshrc or your desired shell
+ configuration file:
+ 	export NVM_DIR=&quot;$HOME/.nvm&quot;
+  	. &quot;$(brew --prefix nvm)/nvm.sh&quot;
+ You can set $NVM_DIR to any location, but leaving it unchanged from
+ /usr/local/Cellar/nvm/0.31.2 will destroy any nvm-installed Node installations
+ upon upgrade/reinstall.
+ Type `nvm help` for further information.以了
+&lt;/code&gt;&lt;/pre&gt;
+    &lt;/div&gt;
+
+    &lt;p&gt;可以使用nvm help查看nvm工具命令，常用nvm管理node版本的命令有：&lt;/p&gt;
+
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;nvm install [版本号]    // 安装指定版本node
+nvm use [版本号]       // 切换到指定版本node
+&lt;/code&gt;&lt;/pre&gt;
+    &lt;/div&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h4 id=&quot;ios环境&quot;&gt;iOS环境&lt;/h4&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://developer.apple.com/xcode/downloads/&quot;&gt;React Native&lt;/a&gt;目前需要Xcode 7.0 或更高版本。你可以通过App Store或是到&lt;a href=&quot;https://developer.apple.com/download/&quot;&gt;Apple开发者官网&lt;/a&gt;上下载。这一步骤会同时安装Xcode IDE和Xcode的命令行工具。&lt;/p&gt;
+
+&lt;h4 id=&quot;android环境&quot;&gt;Android环境&lt;/h4&gt;
+
+&lt;p&gt;React Native目前需要Android Studio2.0或更高版本。&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Android Studio需要Java Development Kit [JDK] 1.8或更高版本。你可以在命令行中输入 &lt;strong&gt;javac -version&lt;/strong&gt;来查看你当前安装的JDK版本。如果版本不合要求，则可以到&lt;a href=&quot;http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html&quot;&gt;官网&lt;/a&gt;上下载。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Android Studio包含了运行和测试React Native应用所需的Android SDK和模拟器。&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;除非特别注明，请不要改动安装过程中的选项。比如Android Studio默认安装了 Android Support Repository，而这也是React Native必须的（否则在react-native run-android时会报appcompat-v7包找不到的错误）。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;安装过程中有一些需要改动的选项：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;选择&lt;strong&gt;Custom&lt;/strong&gt;选项：&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/image/rn/Configuration/RN_AndroidStudio.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;勾选&lt;strong&gt;Performance&lt;/strong&gt;和&lt;strong&gt;Android Virtual Device&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/image/rn/Configuration/RN_AndroidStudio2.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;安装完成后，在Android Studio的启动欢迎界面中选择&lt;strong&gt;Configure | SDK Manager&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/image/rn/Configuration/RN_AndroidStudio3.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;在&lt;strong&gt;SDK Platforms&lt;/strong&gt;窗口中，选择&lt;strong&gt;Show Package Details&lt;/strong&gt;，然后在&lt;strong&gt;Android 6.0 (Marshmallow)&lt;/strong&gt;中勾选&lt;strong&gt;Google APIs&lt;/strong&gt;、&lt;strong&gt;Intel x86 Atom System Image&lt;/strong&gt;、&lt;strong&gt;Intel x86 Atom_64 System Image&lt;/strong&gt;以及&lt;strong&gt;Google APIs Intel x86 Atom_64 System Image&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/image/rn/Configuration/RN_AndroidStudio4.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;在&lt;strong&gt;SDK Tools&lt;/strong&gt;窗口中，选择&lt;strong&gt;Show Package Details&lt;/strong&gt;，然后在&lt;strong&gt;Android SDK Build Tools&lt;/strong&gt;中勾选&lt;strong&gt;Android SDK Build-Tools 23.0.1&lt;/strong&gt;。（必须是这个版本）&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/image/rn/Configuration/RN_AndroidStudio5.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;android_home环境变量&quot;&gt;ANDROID_HOME环境变量&lt;/h4&gt;
+
+&lt;p&gt;确保&lt;strong&gt;ANDROID_HOME&lt;/strong&gt;环境变量正确地指向了你安装的Android SDK的路径。具体的做法是把下面的命令加入到&lt;strong&gt;~/.bash_profile&lt;/strong&gt;文件中：(译注：~表示用户目录，即&lt;strong&gt;/Users/你的用户名/&lt;/strong&gt;，而小数点开头的文件在Finder中是隐藏的，并且这个文件有可能并不存在。请在终端下使用&lt;strong&gt;sudo vi ~/.bash_profile&lt;/strong&gt;命令创建或编辑。如不熟悉vi操作，请点击&lt;a href=&quot;http://www.eepw.com.cn/article/48018.htm&quot;&gt;这里&lt;/a&gt;学习）&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;//如果你不是通过Android Studio安装的sdk，则其路径可能不同，请自行确定清楚。
+export ANDROID_HOME=~/Library/Android/sdk
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;然后使用下列命令使其立即生效（否则重启后才生效）：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;source ~/.bash_profile
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;可以使用&lt;strong&gt;echo $ANDROID_HOME&lt;/strong&gt;检查此变量是否已正确设置。&lt;/p&gt;
+
+&lt;h4 id=&quot;推荐安装的工具&quot;&gt;推荐安装的工具&lt;/h4&gt;
+
+&lt;h5 id=&quot;watchman&quot;&gt;Watchman&lt;/h5&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://facebook.github.io/watchman/docs/install.html&quot;&gt;Watchman&lt;/a&gt;是由Facebook提供的监视文件系统变更的工具。安装此工具可以提高开发时的性能（packager可以快速捕捉文件的变化从而实现实时刷新）。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;brew install watchman
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h5 id=&quot;flow&quot;&gt;Flow&lt;/h5&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://www.flowtype.org&quot;&gt;Flow&lt;/a&gt;是一个静态的JS类型检查工具。译注：你在很多示例中看到的奇奇怪怪的冒号问号，以及方法参数中像类型一样的写法，都是属于这个flow工具的语法。这一语法并不属于ES标准，只是Facebook自家的代码规范。所以新手可以直接跳过（即不需要安装这一工具，也不建议去费力学习flow相关语法）。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;brew install flow
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h5 id=&quot;sublime-text&quot;&gt;Sublime Text&lt;/h5&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;下载安装Sublime Text3&lt;/li&gt;
+&lt;/ol&gt;
+
+  	&lt;a href=&quot;https://www.sublimetext.com/3&quot;&gt;下载地址&lt;/a&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;安装Package Control&lt;/p&gt;
+
+    &lt;p&gt;默认的Sublime 3中没有Package Control，要进行安装之后才能用这个去安装其他的插件。&lt;/p&gt;
+
+    &lt;ul&gt;
+      &lt;li&gt;简单的安装方法&lt;/li&gt;
+    &lt;/ul&gt;
+
+    &lt;p&gt;使用Ctrl+`快捷键或者通过View-&amp;gt;Show Console菜单打开命令行，粘贴如下代码：&lt;/p&gt;
+
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; import urllib.request,os; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); open(os.path.join(ipp, pf), 'wb').write(urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ','%20')).read())
+&lt;/code&gt;&lt;/pre&gt;
+    &lt;/div&gt;
+
+    &lt;p&gt;如果顺利的话，此时就可以在Preferences菜单下看到Package Settings和Package Control两个菜单了。&lt;/p&gt;
+
+    &lt;ul&gt;
+      &lt;li&gt;手动安装&lt;/li&gt;
+    &lt;/ul&gt;
+
+    &lt;p&gt;可能由于各种原因，无法使用代码安装，那可以通过以下步骤手动安装Package Control：&lt;/p&gt;
+
+    &lt;p&gt;1.点击Preferences &amp;gt; Browse Packages菜单&lt;/p&gt;
+
+    &lt;p&gt;2.进入打开的目录的上层目录，然后再进入Installed Packages/目录&lt;/p&gt;
+
+    &lt;p&gt;3.下载Package Control.sublime-package并复制到Installed Packages/目录&lt;/p&gt;
+
+    &lt;p&gt;4.重启Sublime Text&lt;/p&gt;
+
+    &lt;p&gt;除此之外Sublime Text还有很多插件可供安装，这也是Sublime Text为什么可以打造成神级IDE的一部份原因了，可以参考以下链接&lt;/p&gt;
+
+    &lt;ol&gt;
+      &lt;li&gt;&lt;a href=&quot;http://www.jianshu.com/p/2ddfff095e90&quot;&gt;用Sublime 3作为React Native的开发IDE&lt;/a&gt;&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+</description>
+        <pubDate>Mon, 01 Aug 2016 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2016/08/rn-install/</link>
+        <guid isPermaLink="true">http://localhost:4000/2016/08/rn-install/</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>hugo+github pages搭建静态博客</title>
+        <description>&lt;h2 id=&quot;hugo--github-pages搭建静态博客&quot;&gt;hugo + github pages搭建静态博客&lt;/h2&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;由于最近换工作，到新公司领到了新电脑，然后就得给新Mac搭建各种环境，再次安装hugo的时候就想纪录一下这个过程，有什么不对的地方请指出来。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;一-安装hugo&quot;&gt;一. 安装hugo&lt;/h3&gt;
+
+&lt;p&gt;&lt;em&gt;hugo有两种安装方式，homebrew包管理工具安装以及github源码下载安装&lt;/em&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;homebrew安装&lt;/p&gt;
+
+    &lt;blockquote&gt;
+      &lt;p&gt;homebrew简称brew, 是Mac OSX上的软件包管理工具，能在Mac中方便的安装软件或者卸载软件&lt;/p&gt;
+    &lt;/blockquote&gt;
+
+    &lt;p&gt;通过下面命令就可以安装brew&lt;/p&gt;
+
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;   ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&quot; 
+&lt;/code&gt;&lt;/pre&gt;
+    &lt;/div&gt;
+
+    &lt;p&gt;然后安装hugo&lt;/p&gt;
+
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;   brew install hugo
+&lt;/code&gt;&lt;/pre&gt;
+    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;github源码编译安装，首先安装好依赖的工具：&lt;/p&gt;
+
+    &lt;ul&gt;
+      &lt;li&gt;Git&lt;/li&gt;
+      &lt;li&gt;Mercurial&lt;/li&gt;
+      &lt;li&gt;Go 1.3+ (Go 1.4+ on Windows)&lt;/li&gt;
+    &lt;/ul&gt;
+
+    &lt;p&gt;设置好 GOPATH 环境变量，获取源码并编译：&lt;/p&gt;
+
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;   $ export GOPATH=$HOME/go
+   $ go get -v github.com/spf13/hugo
+&lt;/code&gt;&lt;/pre&gt;
+    &lt;/div&gt;
+ 	  源码会下载到 &lt;strong&gt;GOPATH/src&lt;/strong&gt; 目录，二进制在 &lt;strong&gt;$GOPATH/bin/&lt;/strong&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;二-创建site生成静态页面&quot;&gt;二. 创建Site，生成静态页面&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;创建站点&lt;/p&gt;
+
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  hugo new site MyBlog
+&lt;/code&gt;&lt;/pre&gt;
+    &lt;/div&gt;
+
+    &lt;p&gt;然后hugo会自动在MyBlog目录下生成这样一个目录结构：&lt;/p&gt;
+
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  |-archetypes   //包括内容类型，在创建新内容时自动生成内容的配置
+  |-config.toml  // 网站的配置文件，这是一个TOML文件
+  |-content	   // content目录里放你写的markdown文章
+  |-data		   //
+  |-layouts	   // 网站的模板文件
+  |-static	   // 放一些图片、css、js等资源
+  |-themes	   // 网站的主题，这里spf13上面有很多theme
+&lt;/code&gt;&lt;/pre&gt;
+    &lt;/div&gt;
+
+    &lt;p&gt;关于config.toml配置文件，下面会详细说明&lt;sup id=&quot;fnref:1&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;创建md文档 ( &lt;em&gt;需先进到MyBlog目录下&lt;/em&gt; )&lt;/p&gt;
+
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; hugo new about.md
+&lt;/code&gt;&lt;/pre&gt;
+    &lt;/div&gt;
+
+    &lt;p&gt;执行完后，会在content目录自动生成一个MarkDown格式的about.md文件，内容如下：&lt;/p&gt;
+
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; +++
+ date = &quot;2016-04-27T20:37:17+08:00&quot;
+ draft = true
+ title = &quot;about&quot;
+ +++
+&lt;/code&gt;&lt;/pre&gt;
+    &lt;/div&gt;
+
+    &lt;p&gt;如果是博客日志，最好将md文件放在content的post目录里。&lt;/p&gt;
+
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; hugo new post/first.md
+&lt;/code&gt;&lt;/pre&gt;
+    &lt;/div&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;执行完后，会在content/post目录创建一个MarkDown格式的first.md文件&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;添加主题模版&lt;/p&gt;
+
+    &lt;blockquote&gt;
+      &lt;p&gt;默认生成的网站是没有任何皮肤模板的，还得去Github上下载一个网页模板下来。如果你网络够好，网速够快，你可以在刚才的目录将Hugo官方的所有模板都下载下来：&lt;/p&gt;
+    &lt;/blockquote&gt;
+
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; git clone --recursive https://github.com/spf13/hugoThemes themes
+&lt;/code&gt;&lt;/pre&gt;
+    &lt;/div&gt;
+
+    &lt;p&gt;下载的主题存放在 themes/ 文件夹中,也可以只选择下载自己喜欢的模版：
+进到themes目录&lt;/p&gt;
+
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; cd themes
+&lt;/code&gt;&lt;/pre&gt;
+    &lt;/div&gt;
+
+    &lt;p&gt;下载hyde主题模版&lt;/p&gt;
+
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; git clone https://github.com/spf13/hyde.git
+&lt;/code&gt;&lt;/pre&gt;
+    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;本地调试&lt;/p&gt;
+
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; hugo server --theme=hyde --buildDrafts --watch
+&lt;/code&gt;&lt;/pre&gt;
+    &lt;/div&gt;
+
+    &lt;p&gt;参数说明：&lt;/p&gt;
+
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  --theme 选择主题，如果安装了多个主题，这里指定就好，随意切换
+  --watch 监控到文章的改动从而自动去刷新浏览器，不需要自己手工去刷新浏览器，非常方便, 现在默认是这样的，可以不用带 (hugo server --theme=hyde --buildDrafts也是同样效果)
+  --buildDrafts  与content目录下的md文件结合来，如果md文档中 draft = true,就必须要加上--buildDrafts参数
+&lt;/code&gt;&lt;/pre&gt;
+    &lt;/div&gt;
+
+    &lt;p&gt;效果图如下：
+    &lt;img src=&quot;/assets/image/hugo_sample1.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;三-托管到github-pages&quot;&gt;三. 托管到github pages&lt;/h3&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;其实这一步更像是git操作，即将生成的静态页面push到git服务端。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;要部署在 GitHub Pages 上，首先你需要在GitHub上创建一个Repository，命名为：tracydeng.github.io （tracydeng替换为你的github用户名）&lt;/p&gt;
+
+&lt;p&gt;接着回到站点根目录，也就是MyBlog目录下，执行命令：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  hugo --theme=hyde --baseUrl=&quot;http://tracydeng.github.io/&quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;命令执行完在站点根目录下会生成一个public目录，该目录下包含了所有通过hugo生成的静态页面，接下来要做的就是将这些静态页面push到刚刚创建仓库的master分支。&lt;/p&gt;
+
+&lt;p&gt;首先进到public目录&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ cd public
+$ git init
+$ git remote add origin https://github.com/tracydeng/traydeng.github.io.git
+$ git add -A
+$ git commit -m &quot;first commit&quot;
+$ git push -u origin master
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;如果没出错的话，到这里也就已经执行完了，到浏览器输入tracydeng.github.io就可以访问你刚才写的内容了。&lt;/p&gt;
+
+&lt;h3 id=&quot;四-添加评论模块&quot;&gt;四. 添加评论模块&lt;/h3&gt;
+
+&lt;p&gt;下载的模版里基本上都带了评论模块，找到自己使用的theme，到layouts/partials目录下，可以看到comments.html(有些不是这个名字，像hyde模版是disqus.html)，没有的话，就是模版没带这个模块，需要自己添加，打开我使用的hugo－uno模版下面的comments.html,可以看到以下代码：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+&amp;lt;section class=&quot;post-comments&quot;&amp;gt;
+ &amp;lt;a class=&quot;muut&quot; href=&quot;https://muut.com/i//comments:&quot;&amp;gt;Comments&amp;lt;/a&amp;gt;
+ &amp;lt;script src=&quot;//cdn.muut.com/1/moot.min.js&quot;&amp;gt;&amp;lt;/script&amp;gt;
+&amp;lt;/section&amp;gt;
+
+
+&amp;lt;div id=&quot;discourse-comments&quot;&amp;gt;&amp;lt;/div&amp;gt;
+&amp;lt;script type=&quot;text/javascript&quot;&amp;gt;
+  	var discourseUrl = ,
+    discourseEmbedUrl = ;
+  	(function() {
+  	 	var d = document.createElement('script'); d.type = 'text/javascript'; d.async = true;
+  	    d.src = discourseUrl + 'javascripts/embed.js';
+    	(document.getElementsByTagName('head')[0] || 		document.getElementsByTagName('body')[0]).appendChild(d);
+	})();
+&amp;lt;/script&amp;gt;
+
+
+&amp;lt;div id=&quot;disqus_thread&quot;&amp;gt;&amp;lt;/div&amp;gt;
+&amp;lt;script type=&quot;text/javascript&quot;&amp;gt;
+ 	 var disqusUsername = ;
+ 	(function() { // DON'T EDIT BELOW THIS LINE
+  		var d = document, s = d.createElement('script');
+  		s.src = '//' + disqusUsername + '.disqus.com/embed.js';
+  		s.setAttribute('data-timestamp', +new Date());
+  		(d.head || d.body).appendChild(s);
+ 	 })();
+&amp;lt;/script&amp;gt;
+&amp;lt;noscript&amp;gt;Please enable JavaScript to view the &amp;lt;a 	href=&quot;https://disqus.com/?ref_noscript&quot; rel=&quot;nofollow&quot;&amp;gt;comments powered by Disqus.&amp;lt;/a&amp;gt;&amp;lt;/noscript&amp;gt;
+
+	
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;上面代码可以看到是支持到了muut，discourse，disqus的评论，除了这些比较出名的第三方评论服务还有多说，这里以disqus为例来说下添加评论模块：&lt;/p&gt;
+
+&lt;h5 id=&quot;获取disqusshortname&quot;&gt;获取disqusShortname&lt;/h5&gt;
+
+&lt;p&gt;到disqus注册一个账号，登录，选择&lt;strong&gt;add a newsite to disqus&lt;/strong&gt;,Site就填写自己的博客地址：&lt;em&gt;tracydeng.github.io&lt;/em&gt;,并且设置好你的disqusShortname，默认时你站点拼接&lt;strong&gt;tracydenggithubio&lt;/strong&gt;，当然自己可以修改，我改短一点改成&lt;strong&gt;tracydeng&lt;/strong&gt;，这个name就是之后配置时要用到的,其它操作就是下一步，下一步了&lt;/p&gt;
+
+&lt;h5 id=&quot;配置disqusshortname&quot;&gt;配置disqusShortname&lt;/h5&gt;
+
+&lt;p&gt;这里要结合/theme/layouts/partials下.html文件来配置
+ ，在MyBlog/config.toml中配置disqusShortname/disqus, 如上comments.html文件中:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  var disqusUsername = ;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;disqusUsername便是取的站点下配置文件中的参数disqus，于是在config.toml文件中params下面添加disqus就好。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; [params]
+   	disqus = &quot;tracydeng&quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;五-我做的一些改动&quot;&gt;五. 我做的一些改动&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;修改config.toml  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;   title : 修改为Coder Steven
+     
+   description : &quot;上善若水&quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;修改.md  文档&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;添加menu菜单&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;   +++
+   date = &quot;2016-04-27T20:37:17+08:00&quot;
+   draft = true
+   title = &quot;about&quot;
+   menu ＝ &quot;main&quot;
+   +++
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;当然这里还可以添加category等，看自己需求了&lt;/p&gt;
+
+&lt;p&gt;再次启动，可以看到刚刚修改后的效果图：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; ![](/assets/image/hugo_sample2.png)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;参考链接&quot;&gt;参考链接&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;http://www.tuicool.com/articles/yeaYFjF&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&quot;footnotes&quot;&gt;
+  &lt;ol&gt;
+    &lt;li id=&quot;fn:1&quot;&gt;
+      &lt;p&gt;包括 baseurl :主站地址, title：标题 , theme：主题，copyright 等等网站参数。&amp;nbsp;&lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/div&gt;
+</description>
+        <pubDate>Wed, 27 Jul 2016 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2016/07/hugo/</link>
+        <guid isPermaLink="true">http://localhost:4000/2016/07/hugo/</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>iOS 集合的深复制与浅复制</title>
+        <description>&lt;h1 id=&quot;ios-集合的深复制与浅复制&quot;&gt;iOS 集合的深复制与浅复制&lt;/h1&gt;
+
+&lt;h3 id=&quot;1-概念&quot;&gt;1. 概念&lt;/h3&gt;
+
+&lt;p&gt;对象拷贝有两种方式：浅复制和深复制。顾名思义，浅复制，并不拷贝对象本身，仅仅是拷贝指向对象的指针；深复制是直接拷贝整个对象内存到另一块内存中。&lt;/p&gt;
+
+&lt;p&gt;再简单些说：浅复制就是指针拷贝；深复制就是内容拷贝。&lt;/p&gt;
+
+&lt;h3 id=&quot;2-系统对象的copy与mutablecopy方法&quot;&gt;2. 系统对象的copy与mutableCopy方法&lt;/h3&gt;
+
+&lt;p&gt;不管是集合类对象，还是非集合类对象，接收到copy和mutableCopy消息时，都遵循以下准则：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;copy返回imutable对象；所以，如果对copy返回值使用mutable对象接口就会crash；&lt;/li&gt;
+  &lt;li&gt;mutableCopy返回mutable对象；&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;非集合类对象的copy与mutableCopy&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;系统非集合类对象指的是 NSString, NSNumber … 之类的对象。下面先看个非集合类immutable对象拷贝的例子&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;NSString *string = @&quot;origin&quot;;
+NSString *stringCopy = [string copy];
+NSMutableString *stringMCopy = [string mutableCopy];
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;通过查看内存，可以看到 stringCopy 和 string 的地址是一样，进行了指针拷贝；而 stringMCopy 的地址和 string 不一样，进行了内容拷贝；&lt;/p&gt;
+
+&lt;p&gt;再看mutable对象拷贝例子&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;NSMutableString *string = [NSMutableString stringWithString: @&quot;origin&quot;];
+//copy
+NSString *stringCopy = [string copy];
+NSMutableString *mStringCopy = [string copy];
+NSMutableString *stringMCopy = [string mutableCopy];
+//change value
+[mStringCopy appendString:@&quot;mm&quot;]; //crash
+[string appendString:@&quot; origion!&quot;];
+[stringMCopy appendString:@&quot;!!&quot;];
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;运行以上代码，会在第7行crash，原因就是 copy 返回的对象是 immutable 对象。注释第7行后再运行，查看内存，发现 string、stringCopy、mStringCopy、stringMCopy 四个对象的内存地址都不一样，说明此时都是做内容拷贝。&lt;/p&gt;
+
+&lt;p&gt;综上两个例子，我们可以得出结论：&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;在非集合类对象中：对immutable对象进行copy操作，是指针复制，mutableCopy操作时内容复制；对mutable对象进行copy和mutableCopy都是内容复制。用代码简单表示如下：&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[immutableObject copy] // 浅复制
+[immutableObject mutableCopy] //深复制
+[mutableObject copy] //深复制
+[mutableObject mutableCopy] //深复制
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;集合类对象的copy与mutableCopy&lt;/p&gt;
+
+    &lt;p&gt;与非集合对象一样，可以试一下&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+</description>
+        <pubDate>Fri, 20 May 2016 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2016/05/oc-copy-mutablecopy/</link>
+        <guid isPermaLink="true">http://localhost:4000/2016/05/oc-copy-mutablecopy/</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>+load和+initialize</title>
+        <description>&lt;h3 id=&quot;load&quot;&gt;+load&lt;/h3&gt;
+
+&lt;p&gt;+load 方法是当类或分类被添加到 Objective-C runtime 时被调用的，实现这个方法可以让我们在类加载的时候执行一些类相关的行为。子类的 +load 方法会在它的所有父类的 +load 方法之后执行，而分类的 +load 方法会在它的主类的 +load 方法之后执行。但是不同的类之间的 +load 方法的调用顺序是不确定的。&lt;/p&gt;
+
+&lt;h3 id=&quot;initialize&quot;&gt;+initialize&lt;/h3&gt;
+
+&lt;p&gt;+initialize 方法是在类或它的子类收到第一条消息之前被调用的，这里所指的消息包括实例方法和类方法的调用。也就是说 +initialize 方法是以懒加载的方式被调用的，如果程序一直没有给某个类或它的子类发送消息，那么这个类的 +initialize 方法是永远不会被调用的。那这样设计有什么好处呢？好处是显而易见的，那就是节省系统资源，避免浪费。&lt;/p&gt;
+
+&lt;h3 id=&quot;load-和-initialize方法比较&quot;&gt;+load 和 +initialize方法比较&lt;/h3&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;－&lt;/th&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;+load&lt;/th&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;+initialize&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;调用时机&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;被添加到 runtime 时&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;收到第一条消息前，可能永远不调用&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;调用顺序&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;父类-&amp;gt;子类-&amp;gt;分类&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;父类-&amp;gt;子类&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;调用次数&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;1次&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;多次&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;是否需要显式调用父类实现&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;否&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;否&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;是否沿用父类的实现&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;否&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;是&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;分类中的实现&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;类和分类都执行&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;覆盖类中的方法，只执行分类的实现&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h3 id=&quot;参考链接&quot;&gt;参考链接&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;http://blog.leichunfeng.com/blog/2015/05/02/objective-c-plus-load-vs-plus-initialize/&quot;&gt;http://blog.leichunfeng.com/blog/2015/05/02/objective-c-plus-load-vs-plus-initialize/&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;https://www.mikeash.com/pyblog/friday-qa-2009-05-22-objective-c-class-loading-and-initialization.html&quot;&gt;https://www.mikeash.com/pyblog/friday-qa-2009-05-22-objective-c-class-loading-and-initialization.html&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;http://blog.iderzheng.com/objective-c-load-vs-initialize/&quot;&gt;http://blog.iderzheng.com/objective-c-load-vs-initialize/&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;http://nshipster.com/method-swizzling/&quot;&gt;http://nshipster.com/method-swizzling/&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+</description>
+        <pubDate>Thu, 14 Apr 2016 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2016/04/load-initialize/</link>
+        <guid isPermaLink="true">http://localhost:4000/2016/04/load-initialize/</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>iOS-appledoc文档添加</title>
+        <description>&lt;h3 id=&quot;一安装过程&quot;&gt;一.安装过程&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;下载安装&lt;/p&gt;
+
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git clone git://github.com/tomaz/appledoc.git
+cd ./appledoc
+sudo sh install-appledoc.sh
+&lt;/code&gt;&lt;/pre&gt;
+    &lt;/div&gt;
+    &lt;p&gt;稍等一会，安装OK&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;验证安装&lt;/p&gt;
+
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;appledoc --version
+&lt;/code&gt;&lt;/pre&gt;
+    &lt;/div&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;二使用&quot;&gt;二.使用&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;进入工程代码所在文件夹：打开终端&lt;/p&gt;
+
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cd + &quot;文件夹目录&quot;  //直接拖到终端就行
+&lt;/code&gt;&lt;/pre&gt;
+    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;输出文档&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;project-name:项目名称&lt;/li&gt;
+  &lt;li&gt;project-company:公司名称&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; appledoc --project-name MaizuoMovie --project-company HYX ./
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;之后你会在项目目录下多处一个文件，稍后会说这个文件的作用：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/image/appledoc.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;再到Xcode－&amp;gt;Window-&amp;gt;Documentation and API Refrence，你就已经可以查看到项目输出的文档了，和苹果官方文档一样的格式
+ &lt;img src=&quot;/assets/image/docset.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;如果想了解更多， 可以查看帮助：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; appledoc --help
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;集成进我们的工程&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;在你的工程中创建新的Target，选择Other中的Aggregate,如图：&lt;/p&gt;
+
+    &lt;p&gt;&lt;img src=&quot;/assets/image/target.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;在新创建的Target中的Build Phases中添加Run Script，如图&lt;/p&gt;
+
+    &lt;p&gt;&lt;img src=&quot;/assets/image/run_script.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;打开Run Script, Shell下面的文档区域添加这样的模版&lt;/p&gt;
+
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;#appledoc Xcode script  
+# Start constants  
+company=&quot;ACME&quot;;  
+ companyID=&quot;com.ACME&quot;;
+ companyURL=&quot;http://ACME.com&quot;;
+target=&quot;iphoneos&quot;;
+#target=&quot;macosx&quot;;
+outputPath=&quot;~/help&quot;;
+# End constants
+/usr/local/bin/appledoc \
+--project-name &quot;${PROJECT_NAME}&quot; \
+--project-company &quot;${company}&quot; \
+--company-id &quot;${companyID}&quot; \
+--docset-atom-filename &quot;${company}.atom&quot; \
+--docset-feed-url &quot;${companyURL}/${company}/%DOCSETATOMFILENAME&quot; \
+--docset-package-url &quot;${companyURL}/${company}/%DOCSETPACKAGEFILENAME&quot; \
+--docset-fallback-url &quot;${companyURL}/${company}&quot; \
+--output &quot;${outputPath}&quot; \
+--publish-docset \
+--docset-platform-family &quot;${target}&quot; \
+--logformat xcode \
+--keep-intermediate-files \
+--no-repeat-first-par \
+--no-warn-invalid-crossref \
+--exit-threshold 2 \
+&quot;${PROJECT_DIR}&quot;   
+&lt;/code&gt;&lt;/pre&gt;
+    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Xcode左上方选择这个Target,然后Build编译&lt;/li&gt;
+  &lt;li&gt;文档就会编译好并自动安装进Xcode了（重启Xcode生效）。&lt;/li&gt;
+  &lt;li&gt;生成的文／Mitchell（简书作者）docset-installed.txt文件啦，打开它：看到以一个 Path 了吧：直接复制，然后在 Finder 中前往文件夹：
+&lt;img src=&quot;/assets/image/docset_path.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
+  &lt;li&gt;前往文件夹，就可以看到,右键－&amp;gt;显示包内容，就可以看到所有注释导出来的文档了
+&lt;img src=&quot;/assets/image/111.png&quot; alt=&quot;&quot; /&gt;
+&lt;img src=&quot;/assets/image/docset_file.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;三-关于appledoc的一些问题&quot;&gt;三. 关于appledoc的一些问题&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;appledoc 支持的注释类型&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; 
+	/// 这是单行注释。
+	/** 这也是单行注释 */
+	/*! 同样是单行注释 */
+	/** 这也是单行注释，
+	*  第二行会接上第一行。
+	*/
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;用法示例&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;```&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cm&quot;&gt;/** 第一行是类的简介
+在简介的下面,就是类的详细介绍了。
+没有间隔换行会被消除，就像Html那样。
+下面是常用的markdown语法
+- - -
+无序列表: (每行以 '*'、'-'、'+' 开头):
+* this is the first line
+* this is the second line
+* this is the third line
+有序列表: (每行以 1.2.3、a.b.c 开头):
+a. this is the first line
+b. this is the secode line
+多级列表:
+* this is the first line
+ 	 a. this is line a
+ 	 b. this is line b
+* this is the second line
+  	 1. this in line 1
+  	 2. this is line 2
+标题:
+# This is an H1
+## This is an H2
+### This is an H3
+#### This is an h4
+##### This is an h5
+###### This is an H6
+链接:
+普通URL直接写上，appledoc会自动翻译成链接: http://blog.ibireme.com
+[这个](http://example.net/) 链接会隐藏实际URL.
+表格:
+| header1 | header2 | header3 |
+|---------|:-------:|--------:|
+| normal  |  center |  right  |
+| cell    | cell    | cell    |
+引用:
+这里会引用到方法 `someMethod:`，这里会引用到类 `YYColor`
+这里会引用到一个代码块
+ 	  void CMYK2RGB(float c, float m, float y, float k, 
+              float *r, float *g, float *b) {
+  	 *r = (1 - c) * (1 - k);
+ 	  *g = (1 - m) * (1 - k);
+ 	  *b = (1 - y) * (1 - k);
+  	 }
+@since iOS5.0
+*/&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;@interface&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;AppledocExample&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;NSObject&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;///这里是属性的说明
+&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;@property&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nonatomic&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;strong&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;NSString&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;/** 
+@brief 这里是方法的简介。该Tag不能放到类注释里。
+@exception UIColorException 这里是方法抛出异常的说明
+@see YYColor
+@see someMethod:
+@warning 这里是警告，会显示成蓝色的框框
+@bug 这里是bug，会显示成黄色的框框
+@param red   这里是参数说明1
+@param green 这里是参数说明2
+@param blue   这里是参数说明3
+@return  这里是返回值说明
+*/&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;UIColor&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;initWithRed&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;red&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;green&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;green&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;blue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;blue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;someMethod&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;NSString&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;@end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://www.jianshu.com/p/f4c3bd04b887&quot;&gt;转自Mitchell的简书&lt;/a&gt;&lt;/p&gt;
+</description>
+        <pubDate>Tue, 15 Mar 2016 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2016/03/appledoc/</link>
+        <guid isPermaLink="true">http://localhost:4000/2016/03/appledoc/</guid>
         
         
       </item>

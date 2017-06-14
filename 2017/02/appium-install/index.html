@@ -140,13 +140,13 @@
 
 <ol>
   <li>
-    <p>Appium目前最新的版本是 1.6.3 ，appium客户端(appium server的GUI图形化操作界面)最新版本是 1.5.3， 但是appium GUI目前还只支持到<strong>iOS10</strong>以下基于<strong>UIAutomation</strong>框架的测试，而<strong>iOS10</strong>以后苹果已经更改为<strong>XCUITest</strong>了</p>
+    <p>Appium目前最新的版本是 1.6.3 ，appium客户端(appium server的GUI图形化操作界面)最新版本是 1.5.3， 但是appium GUI目前还只支持到<code class="highlighter-rouge">iOS10</code>以下基于<code class="highlighter-rouge">UIAutomation</code>框架的测试，而<code class="highlighter-rouge">iOS10</code>以后苹果已经更改为<code class="highlighter-rouge">XCUITest</code>了</p>
   </li>
-  <li>我们项目中想要做到对开发代码无侵染的方式来达到自动化测试目的（这就需要通过xpath的方式去查找页面元素）</li>
+  <li>我们项目中想要做到对开发代码无侵染的方式来达到自动化测试的目的（这就需要通过xpath的方式去查找页面元素）</li>
   <li>项目是使用React Native跨平台开发的应用</li>
 </ol>
 
-<p>综合这三个背景，并且iOS + React Native结合的相关资料又比较少，就注定我要在自动化测试的道路上踩坑，写这篇这个也是想给后面玩的同学们一个肯定回答：<strong>appium + iOS10.2 + Xcode8.2.1 +React Native</strong>即使不在代码加accessibilityLabel或TestID，就用xpath照样玩得转</p>
+<p>综合这三个背景，并且iOS + React Native结合的相关资料又比较少，就注定我要在自动化测试的道路上踩坑，写这篇这个也是想给后面玩的同学们一个肯定回答：<code class="highlighter-rouge">appium + iOS10.2 + Xcode8.2.1 + React Native</code>即使不在代码加accessibilityLabel或TestID，就用xpath照样玩得转</p>
 
 <h3 id="开发环境">开发环境</h3>
 
@@ -167,24 +167,19 @@
 
 <h3 id="环境搭建">环境搭建</h3>
 
-<p>经过一个星期的折腾，最终搭建满足以上两套框架测试的环境：</p>
+<p>经过一个星期的折腾，最终搭建满足UIAutomation和XCUITest的测试环境：</p>
 
 <ul>
-  <li>
-    <p><strong>iOS10</strong> 以下支持UIAutomation</p>
-
-    <div class="highlighter-rouge"><pre class="highlight"><code>appium GUI1.5.3 + Xcode7.3.1(iOS9.3) + appium-python-client
-</code></pre>
-    </div>
-  </li>
-  <li>
-    <p><strong>iOS10</strong> 以上支持XCUITest</p>
-
-    <div class="highlighter-rouge"><pre class="highlight"><code>appium1.6.3 + app-inspector + Xcode8.2.1(iOS10.2) + appium-python-client
-</code></pre>
-    </div>
-  </li>
+  <li><code class="highlighter-rouge">iOS10</code> 以下支持UIAutomation</li>
 </ul>
+
+  		appium GUI1.5.3 + Xcode7.3.1(iOS9.3) + appium-python-client
+
+<ul>
+  <li><code class="highlighter-rouge">iOS10</code> 以上支持XCUITest</li>
+</ul>
+
+ 		appium1.6.3 + app-inspector + Xcode8.2.1(iOS10.2) + appium-python-client
 
 <h4 id="1-使用npm或cnpm安装appiumappium-doctor">1. 使用npm或cnpm安装appium，appium-doctor</h4>
 
@@ -193,26 +188,9 @@ $ install -g appium-doctor
 </code></pre>
 </div>
 
-<p>appium的安装有2个主要的过程</p>
-
-<ul>
-  <li>安装依赖包</li>
-  <li>下载chromedriver</li>
-</ul>
-
-<p>执行安装命令时出现：</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>npm WARN engine appium@1.6.3: 
-wanted: {"node":"&gt;=4","npm":"&gt;=3"} 
-(current: {"node":"4.4.7","npm":"2.15.8"})
-</code></pre>
-</div>
-
-<p>警告，并且安装失败，此时只需执行 npm install -g npm 命令更新最新的npm，再次执行安装命令，就成功安装。</p>
-
 <h4 id="2-下载appium-gui">2. 下载appium GUI</h4>
 
-<p>appium和appium GUI只要安装其中一项就可以启动服务，但是如果要用到其中的inpector去检查元素的xpath，所以还是安装了</p>
+<p>appium和appium GUI只要安装其中一项就可以启动服务，但是如果要用到其中的inspector去检查元素的xpath，所以还是安装了</p>
 
 <p><a href="https://bitbucket.org/appium/appium.app/downloads/">下载地址</a></p>
 
@@ -240,23 +218,24 @@ info AppiumDoctor  ✔ Bin directory of $JAVA_HOME is set
 info AppiumDoctor ### Diagnostic completed, no fix needed. ###
 info AppiumDoctor 
 info AppiumDoctor Everything looks good, bye!
-info AppiumDoctor 
+info AppiumDoctor
 </code></pre>
 </div>
+
 <p>环境常见问题解决：</p>
 
 <ul>
   <li>
     <p>✖ Xcode Command Line Tools are NOT installed!</p>
 
-    <div class="highlighter-rouge"><pre class="highlight"><code>$ xcode-select --install   #按照提示安装即可
+    <div class="highlighter-rouge"><pre class="highlight"><code> $ xcode-select --install   #按照提示安装即可
 </code></pre>
     </div>
   </li>
   <li>
     <p>✖ Carthage was NOT found!</p>
 
-    <div class="highlighter-rouge"><pre class="highlight"><code>$ brew install carthage    #carthage：类似cocoapods管理第三方代 码，自动将工程编译为动态库，所以仅支持iOS8以上
+    <div class="highlighter-rouge"><pre class="highlight"><code> $ brew install carthage    #carthage：类似cocoapods管理第三方代码，自动将工程编译为动态库，所以仅支持iOS8以上
 </code></pre>
     </div>
   </li>
@@ -274,71 +253,77 @@ info AppiumDoctor
   <li>
     <p>在.bash_profile/.zshrc文件中设置JAVA和Android环境变量</p>
 
-    <div class="highlighter-rouge"><pre class="highlight"><code>#android sdk
-export ANDROID_HOME=~/Library/Android/sdk
-export PATH="$HOME/.yarn/bin:$PATH"
-
-#java_home
-export JAVA_HOME=$(/usr/libexec/java_home)
-export PATH=$JAVA_HOME/bin:$PATH
-export CLASS_PATH=$JAVA_HOME/lib
+    <div class="highlighter-rouge"><pre class="highlight"><code>  #android sdk
+  export ANDROID_HOME=~/Library/Android/sdk
+  export PATH="$HOME/.yarn/bin:$PATH"
+  #java_home
+  export JAVA_HOME=$(/usr/libexec/java_home)
+  export PATH=$JAVA_HOME/bin:$PATH
+  export CLASS_PATH=$JAVA_HOME/lib
 </code></pre>
     </div>
-    <h4 id="4-安装appium-client端">4. 安装appium client端</h4>
   </li>
 </ul>
 
+<h4 id="4-安装appium-client端">4. 安装appium client端</h4>
+
+<blockquote>
+  <p>appium client有ruby，python，java三个版本，可自行选择自己喜欢的安装即可</p>
+</blockquote>
+
 <h5 id="python版">python版</h5>
 
-<ol>
+<ul>
   <li>
     <p>pip安装</p>
 
-    <div class="highlighter-rouge"><pre class="highlight"><code> pip install Appium-Python-Client
+    <div class="highlighter-rouge"><pre class="highlight"><code>pip install Appium-Python-Client
 </code></pre>
     </div>
   </li>
-</ol>
+</ul>
 
-<p>如果安装过程出现 <strong>could not create ‘/Library/Python/2.7/site-packages/appium’: Permission denied</strong> 错误，</p>
+<p>如果安装过程出现 could not create ‘/Library/Python/2.7/site-packages/appium’: Permission denied 错误，</p>
 
-<p>使用 <strong>pip install Appium-Python-Client –user</strong> 命令可以安装成功</p>
+<p>使用 pip install Appium-Python-Client –user 命令可以安装成功</p>
 
-<ol>
-  <li>源码安装</li>
-</ol>
+<ul>
+  <li>
+    <p>源码安装</p>
 
-<p>在Pipy上下载源码安装</p>
+    <p>在Pipy上下载源码安装</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>  tar -xvf Appium-Python-Client-X.X.tar.gz
-  cd Appium-Python-Client-X.X
-  python setup.py install
+    <div class="highlighter-rouge"><pre class="highlight"><code>tar -xvf Appium-Python-Client-X.X.tar.gz
+cd Appium-Python-Client-X.X
+python setup.py install
 </code></pre>
-</div>
+    </div>
+  </li>
+  <li>
+    <p>github安装</p>
 
-<ol>
-  <li>github安装</li>
-</ol>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>  git clone git@github.com:appium/python-client.git
-  cd python-client
-  python setup.py install
+    <div class="highlighter-rouge"><pre class="highlight"><code>git clone git@github.com:appium/python-client.git
+cd python-client
+python setup.py install
 </code></pre>
-</div>
+    </div>
+  </li>
+</ul>
+
 <h5 id="ruby版一定要在线安装">ruby版（一定要在线安装）</h5>
 
 <p>ruby的appium client叫做appium lib，为什么是这样就不解释了，总之是历史原因。</p>
 
 <p>首先update rubygem和bundler(说老实话，真的不需要，但官方文档上这么写)</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>  gem update --system 
-  gem update bundler
+<div class="highlighter-rouge"><pre class="highlight"><code>gem update --system 
+gem update bundler
 </code></pre>
 </div>
 <p>然后使用gem安装</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>  gem uninstall -aIx appium_lib \\(这个也不是必须的)
-  gem install --no-rdoc --no-ri appium_lib
+<div class="highlighter-rouge"><pre class="highlight"><code>gem uninstall -aIx appium_lib \\(这个也不是必须的)
+gem install --no-rdoc --no-ri appium_lib
 </code></pre>
 </div>
 <h5 id="java版在线安装">java版（在线安装）</h5>
@@ -346,15 +331,15 @@ export CLASS_PATH=$JAVA_HOME/lib
 <p>java的话用maven安装就可以了</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>  &lt;dependency&gt;
-     &lt;groupId&gt;io.appium&lt;/groupId&gt;
-     &lt;artifactId&gt;java-client&lt;/artifactId&gt;
-     &lt;version&gt;1.3.0&lt;/version&gt;
-  &lt;/dependency&gt;
+       &lt;groupId&gt;io.appium&lt;/groupId&gt;
+       &lt;artifactId&gt;java-client&lt;/artifactId&gt;
+       &lt;version&gt;1.3.0&lt;/version&gt;
+    &lt;/dependency&gt;
 </code></pre>
 </div>
 <p>也可以自己下载jar包，请自行选择最新版本。</p>
 
-<h4 id="5-其他相关安装真机调试需要">5. 其他相关安装(真机调试需要)</h4>
+<h4 id="5-其他相关安装">5. 其他相关安装</h4>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>brew install libimobiledevice --HEAD
 brew install ideviceinstaller 
@@ -362,46 +347,47 @@ npm install -g ios-deploy
 sudo gem install xcpretty
 </code></pre>
 </div>
-<h4 id="6-安装app-inspectorios10以上系统获取页面元素xpath">6. 安装app-inspector（iOS10以上系统获取页面元素Xpath）</h4>
+
+<h4 id="6-安装app-inspector">6. 安装app-inspector</h4>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>npm install app-inspector -g
 </code></pre>
 </div>
+
 <p>到这里所有相关的环境就已经安装好了，下面就可以开始撸起袖子干了，也是大家的踩坑时间了</p>
 
 <p>如果以上安装还有问题，可以参考：</p>
 
-<p><a href="https://testerhome.com/topics/6962">在 MAC 上搭建 appium1.6.3 过程</a></p>
-
-<p><a href="http://www.jianshu.com/p/05943804c25e">appium1-macOS10.12下如何丝滑的使用appium?</a></p>
+<p><a href="https://testerhome.com/topics/6962">在 MAC 上搭建 appium1.6.3 过程</a>
+<a href="http://www.jianshu.com/p/05943804c25e">appium1-macOS10.12下如何丝滑的使用appium?</a></p>
 
 <h3 id="运行demo">运行Demo</h3>
 
 <ol>
   <li><a href="https://github.com/appium/sample-code">下载demo</a>。</li>
-  <li>
-    <p>启动appium 服务</p>
-
-    <p><code class="highlighter-rouge">
-  	 appium
-  	</code></p>
-  </li>
-  <li>
-    <p>cd到<strong>sample-code-master/sample-code/examples/python</strong>目录下，运行下面命令就可以成功运行示例了</p>
-
-    <p><code class="highlighter-rouge">
- 	 python ios_simple.py
- 	</code>
- 	成功运行截图：</p>
-  </li>
+  <li>启动appium 服务</li>
 </ol>
+
+<div class="highlighter-rouge"><pre class="highlight"><code> appium
+</code></pre>
+</div>
+<ol>
+  <li>cd到<code class="highlighter-rouge">sample-code-master/sample-code/examples/python</code>目录下，运行下面命令就可以成功运行示例了</li>
+</ol>
+
+<div class="highlighter-rouge"><pre class="highlight"><code> python ios_simple.py
+</code></pre>
+</div>
+
+ 	成功运行截图：
 
  	Server端成功运行：
 
  	<img src="/assets/image/appium-install/appium_server.png" alt="" />
+
  	Client端成功运行:
 
- 	<img src="/assets/image/appium-install/appium_client.png" alt="" />
+<p><img src="/assets/image/appium-install/appium_client.png" alt="" /></p>
 
  	 要成功运行，得满足以下条件：
 
@@ -411,52 +397,57 @@ sudo gem install xcpretty
 
 <p>到这里不出问题的话，恭喜你已经可以成功使用Appium自动化测试框架了</p>
 
-<h3 id="踩过的坑">踩过的坑</h3>
+<h3 id="遇到的问题">遇到的问题</h3>
+
+<p>这个过程中磕磕绊绊碰到了不少问题，现在只能列出稍微还记得的一些问题吧。</p>
 
 <h4 id="1-通过appium-inspector-xpath获取到的react-native页面封装的textinput不能使用sendkeys或set_value输入">1. 通过appium inspector Xpath获取到的React Native页面封装的TextInput不能使用sendkeys或set_Value输入。</h4>
 
-<p>下图便是appium inspector+Xcode7.3.1+iOS9.3上react native页面元素，后面和android端同事比对下xpath路径，发现iOS这边路径明显比安卓短很多，后面通过app-inspector获取到也是要长很多，应该appium inspector对rn的适配还没那么好导致的。</p>
+<p>下图便是appium inspector+Xcode7.3.1+iOS9.3上react native页面元素，后面和android端同事比对下xpath路径，发现iOS这边路径明显比安卓短很多，后面通过app-inspector获取到也是要长很多(获取到的是基于XCUITest的,元素都是以XCUIElementType标识)，也就是说只有appium基于UIAutomation的版本RN的‘textfield’不支持直接使用send_keys或set_value来输入，应该appium 1.5.3中inspector对rn的适配还没那么好导致的。</p>
 
 <p><img src="/assets/image/appium-install/inspector.png" alt="" /></p>
 
-<p>解决方法：app-inspector检查元素得到xpath即可正常输入。（尝试过WebDriveAgent获取xpath，rn页面整个是个label文字显示；也尝试过查找键盘上对应健再click，速度太慢不能接受）</p>
+<p>解决方法：app-inspector检查元素得到xpath即可正常输入。（尝试过WebDriveAgent获取xpath，rn页面整个是个label文字显示；也尝试过查找键盘上对应键再click，速度太慢不能接受）</p>
 
 <p>app-inspector使用方法:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code> app-inspector -u &lt;设备/模拟器UDID&gt;  //加 --verbose可查看详情
+<div class="highlighter-rouge"><pre class="highlight"><code>app-inspector -u &lt;设备/模拟器UDID&gt;  //加 --verbose可查看详情
 </code></pre>
 </div>
-<p><img src="/assets/image/appium-install/app-inspector.png" alt="" /></p>
+
+<p><img src="/assets/image/appium-install/app-inspector-client.png" alt="" /></p>
 
 <h4 id="2-app-inspector模拟器运行报错">2. app-inspector模拟器运行报错</h4>
 
-<div class="highlighter-rouge"><pre class="highlight"><code> server.js:16:12 [master] pid:32216 server start with config:
+<div class="highlighter-rouge"><pre class="highlight"><code>server.js:16:12 [master] pid:32216 server start with config:
 	{ port: 5678,
 	verbose: true,
 	udid: 'DC8E88DF-EDA7-487A-9D34-77AA58B3ADB5',
 	ip: '10.180.185.87',
 	host: 'iStevendeMacBook-Pro.local',
 	loaded_time: '2017-02-27 16:42:19' }
-	app-inspector.js:42:10 [master] pid:32216 server start at: http://10.180.185.87:5678
-	xctest-client.js:56:14 [master] pid:32216 project path: /Users/iSteven/.nvm/versions/node/v6.3.1/lib/node_modules/app-inspector/node_modules/xctest-client/node_modules/webdriveragent/WebDriverAgent/WebDriverAgent.xcodeproj
+app-inspector.js:42:10 [master] pid:32216 server start at: http://10.180.185.87:5678
+xctest-client.js:56:14 [master] pid:32216 project path: /Users/iSteven/.nvm/versions/node/v6.3.1/lib/node_modules/app-inspector/node_modules/xctest-client/node_modules/webdriveragent/WebDriverAgent/WebDriverAgent.xcodeproj
 	xctest-client start with port: 8900
-	xctest-client.js:233:14 [master] pid:32216 xcode version: 7.3.1
+xctest-client.js:233:14 [master] pid:32216 xcode version: 7.3.1
 	WebDriverAgent version: 1.0.41
-	xctest-client.js:99:16 [master] pid:32216 tail: /Users/iSteven/Library/Logs/CoreSimulator/DC8E88DF-EDA7-487A-9D34-77AA58B3ADB5/system.log: No such file or directory
-	xctest-client.js:107:16 [master] pid:32216 simulator log process exit with code: 1, signal: null
-	xctest-client.js:255:14 [master] pid:32216 Fail to start xctest: undefined
-	xctest-client.js:267:14 [master] pid:32216 killing deviceLogProc pid: 32220
-	xctest-client.js:272:14 [master] pid:32216 killing runnerProc pid: 32221
-	app-inspector:66:44 [master] pid:32216 undefined
-	xctest-client.js:181:14 [master] pid:32216 xctest client exit with code: null, signal: SIGKILL
+xctest-client.js:99:16 [master] pid:32216 tail: /Users/iSteven/Library/Logs/CoreSimulator/DC8E88DF-EDA7-487A-9D34-77AA58B3ADB5/system.log: No such file or directory
+xctest-client.js:107:16 [master] pid:32216 simulator log process exit with code: 1, signal: null
+xctest-client.js:255:14 [master] pid:32216 Fail to start xctest: undefined
+xctest-client.js:267:14 [master] pid:32216 killing deviceLogProc pid: 32220
+xctest-client.js:272:14 [master] pid:32216 killing runnerProc pid: 32221
+app-inspector:66:44 [master] pid:32216 undefined
+xctest-client.js:181:14 [master] pid:32216 xctest client exit with code: null, signal: SIGKILL
 </code></pre>
 </div>
+
 <p>这个问题还去提了issue，但是后面自己卸载再重装就好了,也不知道是什么东西没装好还是咋的，希望有清楚的可以回答下</p>
 
 <p>遇到这样问题可按这里配置下环境试试<a href="https://macacajs.github.io/zh/environment-setup">macaca环境配置</a></p>
 
-<p>成功运行之后就是可以看到下图，并且会自动打开浏览器，load模拟器或者真机。
- <img src="/assets/image/appium-install/app-inspector-client.png" alt="" /></p>
+<p>成功运行之后就是可以看到下图，并且会自动打开浏览器，load模拟器或者真机。</p>
+
+<p><img src="/assets/image/appium-install/app-inspector.png" alt="" /></p>
 
 <h4 id="3-app-inspector真机运行报错">3. app-inspector真机运行报错</h4>
 
@@ -478,19 +469,14 @@ sudo gem install xcpretty
 	13  libsystem_pthread.dylib             0x00007fffacfdb712 _pthread_wqthread + 1299
 	14  libsystem_pthread.dylib             0x00007fffacfdb1ed start_wqthread + 13
 	), NSLocalizedRecoverySuggestion=This application's 	application-identifier entitlement does not match that of the installed application. These values must match for an upgrade to be allowed., NSLocalizedDescription=App installation failed}
-
 	&gt;&gt; xctest-client.js:171:14 [master] pid:11850 please check project: /Users/iSteven/.nvm/versions/node/v6.3.1/lib/node_modules/app-inspector/node_modules/webdriveragent/WebDriverAgent/WebDriverAgent.xcodeproj
 	&gt;&gt; xctest-client.js:170:14 [master] pid:11850 2017-03-03 16:09:44.301 xcodebuild[11856:248062] Error Domain=IDETestOperationsObserverErrorDomain Code=5 "Early unexpected exit, operation never finished bootstrapping - no restart will be attempted" UserInfo={NSLocalizedDescription=Early unexpected exit, operation never finished bootstrapping - no restart will be attempted}
-
 	&gt;&gt; xctest-client.js:171:14 [master] pid:11850 please check project: /Users/iSteven/.nvm/versions/node/v6.3.1/lib/node_modules/app-inspector/node_modules/webdriveragent/WebDriverAgent/WebDriverAgent.xcodeproj
 	&gt;&gt; xctest-client.js:170:14 [master] pid:11850 
 	Testing failed:
 	Test target WebDriverAgentRunner encountered an error (Early unexpected exit, operation never finished bootstrapping - no restart will be attempted)
-
 	&gt;&gt; xctest-client.js:171:14 [master] pid:11850 please check project: /Users/iSteven/.nvm/versions/node/v6.3.1/lib/node_modules/app-inspector/node_modules/webdriveragent/WebDriverAgent/WebDriverAgent.xcodeproj
 	&gt;&gt; xctest-client.js:170:14 [master] pid:11850 ** TEST FAILED **
-
-
 	&gt;&gt; xctest-client.js:171:14 [master] pid:11850 please check project: /Users/iSteven/.nvm/versions/node/v6.3.1/lib/node_modules/app-inspector/node_modules/webdriveragent/WebDriverAgent/WebDriverAgent.xcodeproj
 	&gt;&gt; xctest-client.js:267:14 [master] pid:11850 killing deviceLogProc pid: 11853
 	&gt;&gt; xctest-client.js:272:14 [master] pid:11850 killing runnerProc pid: 11856
@@ -505,13 +491,49 @@ sudo gem install xcpretty
 
 <p>捕捉关键信息</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code> &gt;&gt; xctest-client.js:171:14 [master] pid:11850 please check project: /Users/iSteven/.nvm/versions/node/v6.3.1/lib/node_modules/app-inspector/node_modules/webdriveragent/WebDriverAgent/WebDriverAgent.xcodeproj
+<div class="highlighter-rouge"><pre class="highlight"><code>  	&gt;&gt; xctest-client.js:171:14 [master] pid:11850 please check project: /Users/iSteven/.nvm/versions/node/v6.3.1/lib/node_modules/app-inspector/node_modules/webdriveragent/WebDriverAgent/WebDriverAgent.xcodeproj
 	&gt;&gt; xctest-client.js:170:14 [master] pid:11850 
  2017-03-03 16:09:44.301 xcodebuild[11856:248062] Error Domain=com.apple.dtdevicekit Code=-402652994 "App installation failed" UserInfo={NSLocalizedFailureReason=This application's application-identifier entitlement does not match that of the installed application. These values must match for an upgrade to be allowed., 
 </code></pre>
 </div>
 
 <p>从上面看就是bundle-id错误,进到WebDriverAgent工程目录下修改工程bundle-id重新运行即可</p>
+
+<h4 id="4-团队里有人因为先安装appium后再安装xcode获取不到xcode版本问题具体错误信息如下">4. 团队里有人因为先安装Appium后再安装Xcode获取不到Xcode版本问题,具体错误信息如下：</h4>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>WebDriverException: Message: An unknown server-side error occurred while processing the command. Original error: Could not determine Xcode version: Could not get Xcode version. /Library/Developer/Info.plist does not exist on disk.
+</code></pre>
+</div>
+
+<p>解决办法： 卸载Appium，重新安装</p>
+
+<h4 id="5-webdriveragent相关依赖安装出错">5. WebDriverAgent相关依赖安装出错</h4>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>[Xcode] 2017-04-05 16:09:12.331 xcodebuild[91135:3418654] Error Domain=IDEFoundationErrorDomain Code=1 "Cannot launch simulated executable: no file found at /Users/Chetwyn/Library/Developer/Xcode/DerivedData/WebDriverAgent-cvqckynzuuktkogfpkkkgyompmoj/Build/Products/Debug-iphonesimulator/WebDriverAgentRunner-Runner.app" UserInfo={NSLocalizedDescription=Cannot launch simulated executable: no file found at /Users/Chetwyn/Library/Developer/Xcode/DerivedData/WebDriverAgent-cvqckynzuuktkogfpkkkgyompmoj/Build/Products/Debug-iphonesimulator/WebDriverAgentRunner-Runner.app}
+[Xcode] 
+[Xcode] 2017-04-05 16:09:12.331 xcodebuild[91135:3418654] Error Domain=IDETestOperationsObserverErrorDomain Code=6 "Early unexpected exit, operation never finished bootstrapping - no restart will be attempted" UserInfo={NSLocalizedDescription=Early unexpected exit, operation never finished bootstrapping - no restart will be attempted}
+</code></pre>
+</div>
+<p><img src="/assets/image/appium-install/wda.png" alt="" /></p>
+
+<p>解决办法： 卸载appium-xcuitest-driver，重新安装,再执行./Scripts/bootstrap.sh -d</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>npm uninstall appium-xcuitest-driver
+nom install appium-xcuitest-driver
+./Scripts/bootstrap.sh -d
+</code></pre>
+</div>
+
+<h4 id="6-最近xcode升级到83-webdriveragent工程跑不起来报错误xcuisiriservice-is-partial-introduced-in-ios-103-xcuideviceh">6. 最近Xcode升级到8.3， WebDriverAgent工程跑不起来，报错误：”XCUISiriService is partial: introduced in iOS 10.3 XCUIDevice.h”</h4>
+
+<p>解决办法： 找到WebDriverAgent/Configurations/ProjectSettings.xcconfig文件，在原来
+<code class="highlighter-rouge">WARNING_CFLAGS = $(inherited) -Weverything -Wno-objc-missing-property-synthesis -Wno-unused-macros -Wno-disabled-macro-expansion -Wno-gnu-statement-expression -Wno-language-extension-token -Wno-overriding-method-mismatch -Wno-missing-variable-declarations -Rno-module-build -Wno-auto-import -Wno-objc-interface-ivars -Wno-documentation-unknown-command -Wno-reserved-id-macro -Wno-unused-parameter -Wno-gnu-conditional-omitted-operand -Wno-explicit-ownership-type -Wno-date-time -Wno-cast-align -Wno-cstring-format-directive -Wno-double-promotion -Wno-partial-availability</code></p>
+
+<p>后面加上<code class="highlighter-rouge">-Wno-partial-availability</code>即可</p>
+
+<p>WebdirverAgent上相关issue： <a href="https://github.com/facebook/WebDriverAgent/pull/525">Silence unguarded availability warning from Xcode 8.3 #525</a></p>
+
+<p>最后找到其解决的<a href="https://github.com/facebook/WebDriverAgent/commit/16e9c8d90cc743d77355567a1a041dd608377d9e">commit</a></p>
 
 <h3 id="参考资料">参考资料</h3>
 
@@ -525,28 +547,19 @@ sudo gem install xcpretty
   <li><a href="http://www.jianshu.com/p/05943804c25e">http://www.jianshu.com/p/05943804c25e</a></li>
 </ul>
 
-
   </section>
 </article>
 
 <section class="read-more">
    
    
-   <div class="read-more-item">
-       <span class="read-more-item-dim">最近的文章</span>
-       <h2 class="post-list__post-title post-title"><a href="/2017/02/appium-exception/" title="link to Appium FAQ">Appium FAQ</a></h2>
-       <p class="excerpt">Q1: 真机运行报无法安装错误  环境：xcode7.3.1+appium1.5.3+iOS8.4desired_capabilities设置如下：app = 'com.tzbank.pingAnFF'self.driver = webdriver.Remote(	command_executor='http://127.0.0.1:4723/wd/hub',	desired_capabilities={		'deviceName': 'iPhone 6',		'app': app,		'...&hellip;</p>
-       <div class="post-list__meta"><time datetime="2017-02-26 00:00:00 +0800" class="post-list__meta--date date">2017-02-26</time> &#8226; <span class="post-list__meta--tags tags"></span><a class="btn-border-small" href=/2017/02/appium-exception/>继续阅读</a></div>
-   </div>
-   
-   
    
    
    <div class="read-more-item">
        <span class="read-more-item-dim">更早的文章</span>
-       <h2 class="post-list__post-title post-title"><a href="/2017/02/WebdriverAgent/" title="link to WebDriverAgent">WebDriverAgent</a></h2>
-       <p class="excerpt">      下载WebDriverAgent     git clone https://github.com/facebook/WebDriverAgent.git            安装    下载工程后还需通过Carthage安装工程相关的依赖，进到工程目录下，执行以下命令:     ./Scripts/bootstrap.sh -d            运行        模拟器      xcodebuild -project WebDriverAgent.xcodepro...&hellip;</p>
-       <div class="post-list__meta"><time datetime="2017-02-23 00:00:00 +0800" class="post-list__meta--date date">2017-02-23</time> &#8226; <span class="post-list__meta--tags tags"></span><a class="btn-border-small" href=/2017/02/WebdriverAgent/>继续阅读</a></div>
+       <h2 class="post-list__post-title post-title"><a href="/2017/02/ssh-login-with-publickey/" title="link to SSH原理与运用（一）：远程登录">SSH原理与运用（一）：远程登录</a></h2>
+       <p class="excerpt">转载自阮一峰SSH是每一台Linux电脑的标准配置。随着Linux设备从电脑逐渐扩展到手机、外设和家用电器，SSH的使用范围也越来越广。不仅程序员离不开它，很多普通用户也每天使用。SSH具备多种功能，可以用于很多场合。有些事情，没有它就是办不成。本文是我的学习笔记，总结和解释了SSH的常见用法，希望对大家有用。虽然本文内容只涉及初级应用，较为简单，但是需要读者具备最基本的”Shell知识”和了解”公钥加密”的概念。如果你对它们不熟悉，我推荐先阅读《UNIX / Linux 初学者教程》和《...&hellip;</p>
+       <div class="post-list__meta"><time datetime="2017-02-17 00:00:00 +0800" class="post-list__meta--date date">2017-02-17</time> &#8226; <span class="post-list__meta--tags tags"></span><a class="btn-border-small" href=/2017/02/ssh-login-with-publickey/>继续阅读</a></div>
    </div>
    
 </section>
@@ -582,7 +595,7 @@ sudo gem install xcpretty
             <section class="footer">
     <footer>
     	<span class="footer__copyright">本站点采用<a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享 署名-非商业性使用-相同方式共享 4.0 国际 许可协议</a></span>
-        <span class="footer__copyright">由 <a href="https://jekyllrb.com">Jekyll</a> 于 2017-03-23 生成，感谢 <a href="https://pages.github.com">Github Pages</a> 为本站提供稳定的 VPS 服务</span>
+        <span class="footer__copyright">由 <a href="https://jekyllrb.com">Jekyll</a> 于 2017-06-14 生成，感谢 <a href="https://pages.github.com">Github Pages</a> 为本站提供稳定的 VPS 服务</span>
         <span class="footer__copyright">本站由 <a href="http://gcgbz.com.cn">@iSteven</a> 创建，采用 <a href="https://github.com/onevcat/vno-jekyll">Vno - Jekyll</a> 作为主题，您可以在 GitHub 找到<a href="https://github.com/onevcat/OneV-s-Den">本站源码</a> - &copy; 2017</span>
     </footer>
 </section>
