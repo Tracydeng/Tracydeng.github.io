@@ -5,9 +5,222 @@
     <description>记录自己的点滴</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 14 Jun 2017 22:48:15 +0800</pubDate>
-    <lastBuildDate>Wed, 14 Jun 2017 22:48:15 +0800</lastBuildDate>
+    <pubDate>Tue, 22 Aug 2017 07:51:14 +0800</pubDate>
+    <lastBuildDate>Tue, 22 Aug 2017 07:51:14 +0800</lastBuildDate>
     <generator>Jekyll v3.4.3</generator>
+    
+      <item>
+        <title>UC电话面试</title>
+        <description>&lt;h4 id=&quot;1介绍自己经历项目&quot;&gt;1.介绍自己，经历，项目&lt;/h4&gt;
+
+&lt;h4 id=&quot;2项目中做过哪些工作项目的结构是怎么样的具体说一下&quot;&gt;2.项目中做过哪些工作，项目的结构是怎么样的，具体说一下&lt;/h4&gt;
+
+&lt;h4 id=&quot;3runtime是什么和c的运行时有什么不同&quot;&gt;3.runtime是什么，和C++的运行时有什么不同&lt;/h4&gt;
+
+&lt;p&gt;这都是问烂了的题目&lt;/p&gt;
+
+&lt;h4 id=&quot;4对象的isa指针指向的是什么&quot;&gt;4.对象的isa指针指向的是什么&lt;/h4&gt;
+
+&lt;p&gt;实例的isa指针指向类对象，类对象的isa指针指向元类对象；&lt;/p&gt;
+
+&lt;p&gt;类对象里面维护着实例方法列表，类方法列表维护在元类对象中，这也就能理解实例方法和类方法调用的区别了&lt;/p&gt;
+
+&lt;h4 id=&quot;5你觉的苹果在msg_send上面做过哪些优化&quot;&gt;5.你觉的苹果在msg_send()上面做过哪些优化？  &lt;/h4&gt;
+&lt;p&gt;查找方法设置缓存 	
+先到自己类缓存查找（如果没缓存，创建缓存），没找到就到方法列表查找，还未找到，父类缓存查找，再到父类方法列表查找&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://blog.ibireme.com/2013/11/26/objective-c-messaging/#more-41432&quot;&gt;https://blog.ibireme.com/2013/11/26/objective-c-messaging/#more-41432&lt;/a&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;6-runloop是什么&quot;&gt;6. runloop是什么&lt;/h4&gt;
+
+&lt;p&gt;理解了就能应对各种变种的问题&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://blog.ibireme.com/2015/05/18/runloop/&quot;&gt;https://blog.ibireme.com/2015/05/18/runloop/&lt;/a&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;7-主线程的runloop做了什么工作&quot;&gt;7. 主线程的runloop做了什么工作&lt;/h4&gt;
+
+&lt;p&gt;看过上面文章也就应该知道了：&lt;/p&gt;
+
+&lt;p&gt;timer事件
+source事件： 包括一般的source0被动事件（UI响应，监听的自动释放池push,pop等等），以及一般基于mach_port主动触发的source1事件（一般硬件接口触发）&lt;/p&gt;
+
+&lt;h4 id=&quot;8-delegate和kvo分别是什么&quot;&gt;8. delegate和kvo分别是什么&lt;/h4&gt;
+
+&lt;h4 id=&quot;9-多线程你一般用的什么&quot;&gt;9. 多线程你一般用的什么&lt;/h4&gt;
+
+&lt;h4 id=&quot;10-多线程同步对象的方式&quot;&gt;10. 多线程同步对象的方式&lt;/h4&gt;
+&lt;ul&gt;
+  &lt;li&gt;原子操作&lt;/li&gt;
+  &lt;li&gt;线程锁&lt;/li&gt;
+  &lt;li&gt;条件/信号量&lt;/li&gt;
+  &lt;li&gt;使用Selector&lt;/li&gt;
+  &lt;li&gt;内存屏障和Volatile&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://www.dreamingwish.com/article/the-ios-multithreaded-programming-guide-4-thread-synchronization.html&quot;&gt;http://www.dreamingwish.com/article/the-ios-multithreaded-programming-guide-4-thread-synchronization.html&lt;/a&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;11-dispatch_once的实现&quot;&gt;11. dispatch_once的实现&lt;/h4&gt;
+
+&lt;p&gt;主要从两方面考虑：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;1.保证执行一次；&lt;/li&gt;
+  &lt;li&gt;2.线程安全&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;dispatch_once 使用标记保证执行一次，在保证线程安全上使用的是原子操作（硬件级的锁）
+使用DISPATCH_EXPECT(x,v) __built_expect((x),(v)),帮助编译器判断条件跳转的预期值，以减少指令跳转带来的性能降低&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://www.dreamingwish.com/article/gcd-guide-dispatch-once-1.html
+https://bestswifter.com/deep-gcd/&quot;&gt;http://www.dreamingwish.com/article/gcd-guide-dispatch-once-1.html
+https://bestswifter.com/deep-gcd/&lt;/a&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;12-有没有做过socket方面的网络编程说一下tcpudp的不同udp发送的数据包最大是多少tcpudp属于哪一层udp通信有哪些地方可以优化&quot;&gt;12. 有没有做过socket方面的网络编程，说一下TCP/UDP的不同，UDP发送的数据包最大是多少，TCP/UDP属于哪一层，UDP通信有哪些地方可以优化？ &lt;/h4&gt;
+&lt;p&gt;TCP是面向数据流，有连接的（三次握手建立），所以是可靠的&lt;/p&gt;
+
+&lt;p&gt;UDP是面向数据包，无连接的，在复杂网络环境存在丢包可能，是不可靠的&lt;/p&gt;
+
+&lt;p&gt;都有各自的应用场景，比如做音视频的实时通信，就一般采用UDP，过程中丢一两帧无所谓，但是采用可靠连接，网络不好，重发造成的延时体验就不好了&lt;/p&gt;
+
+&lt;p&gt;TCP／UDP都属于传输层协议（也有叫运输层的）&lt;/p&gt;
+
+&lt;p&gt;数据链路层MTU限制最大1500字节，出去IP头部占用20字节，UDP头部占用8字节，所以实际数据最大只有1472字节，如果数据超过该大小就会被分片&lt;/p&gt;
+
+&lt;h4 id=&quot;13-有用过什么来做数据持久化数据库操作可以在哪些方面来优化&quot;&gt;13. 有用过什么来做数据持久化，数据库操作可以在哪些方面来优化&lt;/h4&gt;
+
+&lt;p&gt;为需要频繁查询的列创建索引，索引有序的数据结构虽然可以提高查询效率，但同时会在维护索引时增加性能的损耗（增删操作都要对应修改索引）和空间的占用&lt;/p&gt;
+
+&lt;p&gt;索引：一般是平衡树(B-Tree)或者平衡树变种(B+Tree,B*Tree)的数据结构&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;聚集索引 (一个表只能有一个聚集索引，其保持和表一样的物理顺序)&lt;/li&gt;
+  &lt;li&gt;非聚集索引&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;14-uiview和calayer是什么关系分别处理什么&quot;&gt;14. UIView和CAlayer是什么关系，分别处理什么&lt;/h4&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;UIView&lt;/code&gt;继承UIResponder  再继承NSObject，持有layer，frame，bounds，center;&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;CALayer&lt;/code&gt;直接继承自NSObject，拥有frame，bounds，position，anchorpoint等属性;&lt;/p&gt;
+
+&lt;p&gt;从上面看UIView是可以接收时间响应的，UIView可以看作是CALayer的管理器，接收事件响应，而真正去做视图绘制的是CALayer，两者都有树状层级结构&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://www.jianshu.com/p/079e5cf0f014&quot;&gt;http://www.jianshu.com/p/079e5cf0f014&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://kittenyang.com/anchorpoint/&quot;&gt;Layer的anchorpoint和position&lt;/a&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;15-有没有做过性能优化方面的东西具体说一些自己在项目中做的性能优化的例子&quot;&gt;15. 有没有做过性能优化方面的东西，具体说一些自己在项目中做的性能优化的例子 &lt;/h4&gt;
+&lt;p&gt;UI耗性能的地方一般在：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Layout ：文本宽高计算，视图布局计算&lt;/li&gt;
+  &lt;li&gt;Rendering：文本渲染，图片解码，图形绘制&lt;/li&gt;
+  &lt;li&gt;UIKit Objects：对象创建，调整，销毁 &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;由于UIView和CALayer都属于非线程安全的，其对象的处理都需要放在主线中，过多的操作必然阻塞主线程，造成性能问题 &lt;/p&gt;
+
+&lt;p&gt;UI性能上有做优化的开源项目： &lt;/p&gt;
+&lt;h5 id=&quot;asyncdisplaykit&quot;&gt;AsyncDisplayKit &lt;/h5&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;创建线程安全的ASDispalyNode类，包装常见的视图属性frame/bounds/alpha/transform/backGroundColor 等，然后同样使用UIView-&amp;gt;CALayer一样的方式管理UIView &lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;视图不需要响应事件时，直接使用CALayer&lt;/li&gt;
+  &lt;li&gt;图层预合成&lt;/li&gt;
+  &lt;li&gt;异步并发操作&lt;/li&gt;
+  &lt;li&gt;RunLoop任务分发（注册一个Observer，在进入休眠前，Core Anitmation处理完事件后，来执行该loop内提交的必须在主线程执行的任务） &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h5 id=&quot;yyasynclayer&quot;&gt;YYAsyncLayer&lt;/h5&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;使用异步绘制，&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h5 id=&quot;fdtemplatelayoutcell&quot;&gt;FDTemplateLayoutCell&lt;/h5&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;使用了Runloop实现cell高度预计算，并缓存下来，以减少cell绘制时重复的计算，cell绘制重复计算的频率惊人，具体&lt;a href=&quot;http://blog.sunnyxx.com/2015/05/17/cell-height-calculation/&quot;&gt;戳这里&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h5 id=&quot;vvebotableviewdemo&quot;&gt;VVeboTableViewDemo&lt;/h5&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;当滑动时，松开手指后，立刻计算出滑动停止时 Cell 的位置，并预先绘制那个位置附近的几个 Cell，而忽略当前滑动中的 Cell。这个方法比较有技巧性，并且对于滑动性能来说提升也很大，唯一的缺点就是快速滑动中会出现大量空白内容。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://blog.ibireme.com/2015/11/12/smooth_user_interfaces_for_ios/&quot;&gt;https://blog.ibireme.com/2015/11/12/smooth_user_interfaces_for_ios/&lt;/a&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;16-用过bugly知道bugly是怎么做到还原代码行的吗bugly-sdk手机堆栈信息上报然后使用atos工具配合符号表将堆栈对应的地址转化为代码行包括行号这是需要上传符号表时期的bugly&quot;&gt;16. 用过bugly，知道bugly是怎么做到还原代码行的吗  bugly SDK手机堆栈信息上报，然后使用atos工具配合符号表，将堆栈对应的地址转化为代码行，包括行号（这是需要上传符号表时期的bugly）  &lt;/h4&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$xcrun atos -o executable -arch architecture -l loadAddress address ...  
+
+说明：
+ loadAddress表示函数的动态加载地址，对应崩溃地址堆栈中 + 号前面的地址，即0x000ef000
+ address表示运行时地址、对应崩溃地址堆栈中第一个地址，即0x0010143b
+ 实际上，崩溃地址堆栈中+号前后的地址相加即是运行时地址，即0x000ef000 + 74808 = 0x0010143b   [http://blog.csdn.net/tencent_bugly/article/details/46275773](http://blog.csdn.net/tencent_bugly/article/details/46275773)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h4 id=&quot;17-平时是怎么定位crash的怎么关注app性能方面问题的&quot;&gt;17. 平时是怎么定位crash的，怎么关注app性能方面问题的&lt;/h4&gt;
+
+&lt;h4 id=&quot;18-oc的字典是怎么实现的效率是多少使用的什么类型的hashmap如果是一个1000数据的字典和一个100w数据的字典查找效率有没有不一样&quot;&gt;18. OC的字典是怎么实现的，效率是多少，使用的什么类型的hashmap，如果是一个1000数据的字典和一个100w数据的字典，查找效率有没有不一样&lt;/h4&gt;
+
+&lt;p&gt;哈希表的实现主要关注：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;1.如何构造哈希函数（函数冲突碰撞概率小，函数的效率）&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;2.如何处理冲突&lt;/p&gt;
+
+    &lt;p&gt;哈希构造函数一般有五种：数字分析法，平方取中法，分段叠加法，除留余数法，伪随机数法&lt;/p&gt;
+
+    &lt;p&gt;处理冲突方法：开放地址法（散列法），再哈希法，链地址法&lt;/p&gt;
+
+    &lt;p&gt;一般的哈希表的数据结构采用链表形式，出现冲突都是直接插入对应key所在链表的后面，也就很容易实现扩容，但存在一次二级指针的获取开销；而OC的字典实现是数组，（基于预估冲突很少发生才这么设计）一旦冲突很多，效率就低了，频繁的扩容 alloc，free开销就很大了&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://ibloodline.com/articles/2016/07/11/NSDictionary.html&quot;&gt;http://ibloodline.com/articles/2016/07/11/NSDictionary.html&lt;/a&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;19-你做过react-native开发有没有了解过阿里的weex&quot;&gt;19. 你做过react-native开发，有没有了解过阿里的weex&lt;/h4&gt;
+
+&lt;h4 id=&quot;20-有没有遇到过什么难的问题最后怎么解决的&quot;&gt;20. 有没有遇到过什么难的问题，最后怎么解决的  &lt;/h4&gt;
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;最近的自动化测试脚本遇到执行卡死问题  
+  &lt;a href=&quot;https://testerhome.com/topics/8429&quot;&gt;https://testerhome.com/topics/8429&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;python subprocess子进程执行tail命令读取模拟器系统日志，存在偶然读取不到情况，后面发现存在两个原因： &lt;/p&gt;
+    &lt;ol&gt;
+      &lt;li&gt;app中使用DDLog打印日志，存在打印日志线程crash了，日志并未写入到system.log &lt;/li&gt;
+      &lt;li&gt;系统日志中有，但是正则未匹配上，这个不好说，还一直处于猜测和调试中&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;现在在app中不修改组件库代码，只用分类中swizzle对应方法（装饰器模式）在debug模式下添加socket 上报日志，python这边创建socket server单例，储存一个全局的日志栈，当系统日志文件未匹配到的时候再到这里匹配（涉及多线程数据同步问题，加锁），定时（一个case执行完）清除日志栈，双重保险机制&lt;/p&gt;
+
+&lt;h4 id=&quot;21-你觉得你们目前项目还有没有哪些地方可以优化的&quot;&gt;21. 你觉得你们目前项目还有没有哪些地方可以优化的&lt;/h4&gt;
+
+&lt;h4 id=&quot;22-讲讲自己用到的设计模式&quot;&gt;22. 讲讲自己用到的设计模式&lt;/h4&gt;
+
+&lt;p&gt;最后一个问题：&lt;/p&gt;
+
+&lt;h4 id=&quot;23-如果让你实现僵尸对象引起的crash的补救怎么设计&quot;&gt;23. 如果让你实现僵尸对象引起的crash的补救怎么设计 &lt;/h4&gt;
+
+&lt;p&gt;在所有对象的dealloc方法中，通过运行时创建加个前缀标示的类来替换该类，并实现该类（Xcode使用的就是NSZombie这个类，该类没有任何方法，也没有父类，所有调用都会crash），然后在三次补救转发方法中去前缀，打印出类和调用的方法 
+ &lt;a href=&quot;http://ibloodline.com/articles/2016/09/01/NSZombie.html&quot;&gt;http://ibloodline.com/articles/2016/09/01/NSZombie.html&lt;/a&gt;&lt;/p&gt;
+
+</description>
+        <pubDate>Mon, 21 Aug 2017 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2017/08/UC-interview/</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/08/UC-interview/</guid>
+        
+        
+      </item>
     
       <item>
         <title>我的Appium踩坑之旅</title>
@@ -1507,216 +1720,6 @@ NSMutableString *stringMCopy = [string mutableCopy];
         <pubDate>Thu, 14 Apr 2016 00:00:00 +0800</pubDate>
         <link>http://localhost:4000/2016/04/load-initialize/</link>
         <guid isPermaLink="true">http://localhost:4000/2016/04/load-initialize/</guid>
-        
-        
-      </item>
-    
-      <item>
-        <title>iOS-appledoc文档添加</title>
-        <description>&lt;h3 id=&quot;一安装过程&quot;&gt;一.安装过程&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;下载安装&lt;/p&gt;
-
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git clone git://github.com/tomaz/appledoc.git
-cd ./appledoc
-sudo sh install-appledoc.sh
-&lt;/code&gt;&lt;/pre&gt;
-    &lt;/div&gt;
-    &lt;p&gt;稍等一会，安装OK&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;验证安装&lt;/p&gt;
-
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;appledoc --version
-&lt;/code&gt;&lt;/pre&gt;
-    &lt;/div&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;二使用&quot;&gt;二.使用&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;进入工程代码所在文件夹：打开终端&lt;/p&gt;
-
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cd + &quot;文件夹目录&quot;  //直接拖到终端就行
-&lt;/code&gt;&lt;/pre&gt;
-    &lt;/div&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;输出文档&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;project-name:项目名称&lt;/li&gt;
-  &lt;li&gt;project-company:公司名称&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; appledoc --project-name MaizuoMovie --project-company HYX ./
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;之后你会在项目目录下多处一个文件，稍后会说这个文件的作用：&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/image/appledoc.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;再到Xcode－&amp;gt;Window-&amp;gt;Documentation and API Refrence，你就已经可以查看到项目输出的文档了，和苹果官方文档一样的格式
- &lt;img src=&quot;/assets/image/docset.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;如果想了解更多， 可以查看帮助：&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; appledoc --help
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;集成进我们的工程&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;在你的工程中创建新的Target，选择Other中的Aggregate,如图：&lt;/p&gt;
-
-    &lt;p&gt;&lt;img src=&quot;/assets/image/target.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;在新创建的Target中的Build Phases中添加Run Script，如图&lt;/p&gt;
-
-    &lt;p&gt;&lt;img src=&quot;/assets/image/run_script.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;打开Run Script, Shell下面的文档区域添加这样的模版&lt;/p&gt;
-
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;#appledoc Xcode script  
-# Start constants  
-company=&quot;ACME&quot;;  
- companyID=&quot;com.ACME&quot;;
- companyURL=&quot;http://ACME.com&quot;;
-target=&quot;iphoneos&quot;;
-#target=&quot;macosx&quot;;
-outputPath=&quot;~/help&quot;;
-# End constants
-/usr/local/bin/appledoc \
---project-name &quot;${PROJECT_NAME}&quot; \
---project-company &quot;${company}&quot; \
---company-id &quot;${companyID}&quot; \
---docset-atom-filename &quot;${company}.atom&quot; \
---docset-feed-url &quot;${companyURL}/${company}/%DOCSETATOMFILENAME&quot; \
---docset-package-url &quot;${companyURL}/${company}/%DOCSETPACKAGEFILENAME&quot; \
---docset-fallback-url &quot;${companyURL}/${company}&quot; \
---output &quot;${outputPath}&quot; \
---publish-docset \
---docset-platform-family &quot;${target}&quot; \
---logformat xcode \
---keep-intermediate-files \
---no-repeat-first-par \
---no-warn-invalid-crossref \
---exit-threshold 2 \
-&quot;${PROJECT_DIR}&quot;   
-&lt;/code&gt;&lt;/pre&gt;
-    &lt;/div&gt;
-  &lt;/li&gt;
-  &lt;li&gt;Xcode左上方选择这个Target,然后Build编译&lt;/li&gt;
-  &lt;li&gt;文档就会编译好并自动安装进Xcode了（重启Xcode生效）。&lt;/li&gt;
-  &lt;li&gt;生成的文／Mitchell（简书作者）docset-installed.txt文件啦，打开它：看到以一个 Path 了吧：直接复制，然后在 Finder 中前往文件夹：
-&lt;img src=&quot;/assets/image/docset_path.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
-  &lt;li&gt;前往文件夹，就可以看到,右键－&amp;gt;显示包内容，就可以看到所有注释导出来的文档了
-&lt;img src=&quot;/assets/image/111.png&quot; alt=&quot;&quot; /&gt;
-&lt;img src=&quot;/assets/image/docset_file.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;三-关于appledoc的一些问题&quot;&gt;三. 关于appledoc的一些问题&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;appledoc 支持的注释类型&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; 
-	/// 这是单行注释。
-	/** 这也是单行注释 */
-	/*! 同样是单行注释 */
-	/** 这也是单行注释，
-	*  第二行会接上第一行。
-	*/
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;用法示例&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;```&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cm&quot;&gt;/** 第一行是类的简介
-在简介的下面,就是类的详细介绍了。
-没有间隔换行会被消除，就像Html那样。
-下面是常用的markdown语法
-- - -
-无序列表: (每行以 '*'、'-'、'+' 开头):
-* this is the first line
-* this is the second line
-* this is the third line
-有序列表: (每行以 1.2.3、a.b.c 开头):
-a. this is the first line
-b. this is the secode line
-多级列表:
-* this is the first line
- 	 a. this is line a
- 	 b. this is line b
-* this is the second line
-  	 1. this in line 1
-  	 2. this is line 2
-标题:
-# This is an H1
-## This is an H2
-### This is an H3
-#### This is an h4
-##### This is an h5
-###### This is an H6
-链接:
-普通URL直接写上，appledoc会自动翻译成链接: http://blog.ibireme.com
-[这个](http://example.net/) 链接会隐藏实际URL.
-表格:
-| header1 | header2 | header3 |
-|---------|:-------:|--------:|
-| normal  |  center |  right  |
-| cell    | cell    | cell    |
-引用:
-这里会引用到方法 `someMethod:`，这里会引用到类 `YYColor`
-这里会引用到一个代码块
- 	  void CMYK2RGB(float c, float m, float y, float k, 
-              float *r, float *g, float *b) {
-  	 *r = (1 - c) * (1 - k);
- 	  *g = (1 - m) * (1 - k);
- 	  *b = (1 - y) * (1 - k);
-  	 }
-@since iOS5.0
-*/&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;@interface&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;AppledocExample&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;NSObject&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;///这里是属性的说明
-&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;@property&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nonatomic&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;strong&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;NSString&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;cm&quot;&gt;/** 
-@brief 这里是方法的简介。该Tag不能放到类注释里。
-@exception UIColorException 这里是方法抛出异常的说明
-@see YYColor
-@see someMethod:
-@warning 这里是警告，会显示成蓝色的框框
-@bug 这里是bug，会显示成黄色的框框
-@param red   这里是参数说明1
-@param green 这里是参数说明2
-@param blue   这里是参数说明3
-@return  这里是返回值说明
-*/&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;UIColor&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;initWithRed&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;red&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;green&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;green&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;blue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;blue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;someMethod&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;NSString&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;@end&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;&lt;a href=&quot;http://www.jianshu.com/p/f4c3bd04b887&quot;&gt;转自Mitchell的简书&lt;/a&gt;&lt;/p&gt;
-</description>
-        <pubDate>Tue, 15 Mar 2016 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2016/03/appledoc/</link>
-        <guid isPermaLink="true">http://localhost:4000/2016/03/appledoc/</guid>
         
         
       </item>
